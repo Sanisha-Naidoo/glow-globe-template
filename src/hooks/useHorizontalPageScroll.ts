@@ -22,6 +22,7 @@ export const useHorizontalPageScroll = () => {
   const callbacksRef = useRef<((progress: number, velocity: number, horizontalProgress: number, isHorizontalActive: boolean) => void)[]>([]);
   const [horizontalThreshold, setHorizontalThreshold] = useState(0.7);
   const debugLogging = useRef(false);
+  const scrollDirection = useRef<'up' | 'down'>('down');
 
   const smoothScroll = useCallback(() => {
     const scrollData = scrollDataRef.current;
@@ -46,37 +47,38 @@ export const useHorizontalPageScroll = () => {
     const progress = maxScroll > 0 ? Math.min(scrollData.current / maxScroll, 1) : 0;
     
     if (debugLogging.current) {
-      console.log('Scroll progress:', progress.toFixed(3), 'Threshold:', horizontalThreshold);
+      console.log('Scroll progress:', progress.toFixed(3), 'Threshold:', horizontalThreshold, 'Direction:', scrollDirection.current);
     }
     
-    // Threshold management with hysteresis
+    // Improved threshold management with easier exit
     const thresholdReached = progress >= horizontalThreshold;
-    const exitThreshold = horizontalThreshold - 0.05; // 5% hysteresis
+    const exitThreshold = horizontalThreshold - 0.02; // Reduced hysteresis for easier exit
     
-    if (thresholdReached && !horizontalData.isActive) {
+    // Allow exit when scrolling up OR when below exit threshold
+    if (thresholdReached && !horizontalData.isActive && scrollDirection.current === 'down') {
       horizontalData.isActive = true;
       if (debugLogging.current) console.log('Horizontal mode activated');
-    } else if (progress < exitThreshold && horizontalData.isActive) {
+    } else if ((progress < exitThreshold || scrollDirection.current === 'up') && horizontalData.isActive) {
       horizontalData.isActive = false;
       horizontalData.current = 0;
       horizontalData.target = 0;
       if (debugLogging.current) console.log('Horizontal mode deactivated');
     }
 
-    // Horizontal scroll logic
+    // Horizontal scroll logic with slower speed
     if (horizontalData.isActive) {
       const hDiff = horizontalData.target - horizontalData.current;
       horizontalData.velocity = hDiff * ease;
       horizontalData.current += horizontalData.velocity;
       
-      // Clamp horizontal bounds
-      const maxHorizontal = window.innerWidth * 3;
+      // Reduced maximum horizontal distance for better control
+      const maxHorizontal = window.innerWidth * 2.5;
       horizontalData.current = Math.max(0, Math.min(maxHorizontal, horizontalData.current));
       horizontalData.target = Math.max(0, Math.min(maxHorizontal, horizontalData.target));
     }
 
     // Normalize horizontal progress
-    const horizontalProgress = horizontalData.current / (window.innerWidth * 3);
+    const horizontalProgress = horizontalData.current / (window.innerWidth * 2.5);
 
     // Trigger callbacks
     callbacksRef.current.forEach(callback => {
@@ -99,21 +101,42 @@ export const useHorizontalPageScroll = () => {
     const scrollData = scrollDataRef.current;
     const horizontalData = horizontalDataRef.current;
     
-    const delta = e.deltaY * 1.2;
+    // Reduced delta multiplier for slower, more controlled movement
+    const delta = e.deltaY * 0.4; // Reduced from 1.2 to 0.4
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
 
-    if (horizontalData.isActive) {
-      // Horizontal scrolling mode
-      const maxHorizontal = window.innerWidth * 3;
+    // Track scroll direction
+    scrollDirection.current = delta > 0 ? 'down' : 'up';
+
+    if (horizontalData.isActive && scrollDirection.current === 'down') {
+      // Horizontal scrolling mode - only when scrolling down
+      const maxHorizontal = window.innerWidth * 2.5;
       horizontalData.target = Math.max(0, Math.min(maxHorizontal, horizontalData.target + delta));
     } else {
-      // Vertical scrolling mode
+      // Vertical scrolling mode - always allow upward scrolling
       scrollData.target = Math.max(0, Math.min(maxScroll, scrollData.target + delta));
     }
 
     // Start smooth scroll animation if not already running
     if (!animationRef.current) {
       animationRef.current = requestAnimationFrame(smoothScroll);
+    }
+  }, [smoothScroll]);
+
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    const horizontalData = horizontalDataRef.current;
+    
+    // ESC key exits horizontal mode
+    if (e.key === 'Escape' && horizontalData.isActive) {
+      horizontalData.isActive = false;
+      horizontalData.current = 0;
+      horizontalData.target = 0;
+      scrollDirection.current = 'up';
+      
+      // Start animation to update UI
+      if (!animationRef.current) {
+        animationRef.current = requestAnimationFrame(smoothScroll);
+      }
     }
   }, [smoothScroll]);
 
@@ -142,17 +165,19 @@ export const useHorizontalPageScroll = () => {
     scrollDataRef.current.current = currentScroll;
     scrollDataRef.current.target = currentScroll;
 
-    // Add wheel event listener
+    // Add event listeners
     document.addEventListener('wheel', handleWheel, { passive: false });
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
       document.removeEventListener('wheel', handleWheel);
+      document.removeEventListener('keydown', handleKeyDown);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
         animationRef.current = undefined;
       }
     };
-  }, [handleWheel]);
+  }, [handleWheel, handleKeyDown]);
 
   return { subscribeToScroll, setThreshold, toggleDebug };
 };

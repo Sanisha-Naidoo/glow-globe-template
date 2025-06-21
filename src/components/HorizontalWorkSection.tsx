@@ -1,10 +1,11 @@
-
 import { useRef, useEffect } from 'react';
+import { ArrowUp, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useHorizontalPageScroll } from '../hooks/useHorizontalPageScroll';
 
 const HorizontalWorkSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { subscribeToScroll } = useHorizontalPageScroll();
+  const currentScreenRef = useRef(0);
 
   const workScreens = [
     {
@@ -33,23 +34,54 @@ const HorizontalWorkSection = () => {
     }
   ];
 
+  const returnToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   useEffect(() => {
     const unsubscribe = subscribeToScroll((progress, velocity, horizontalProgress, isHorizontalActive) => {
       if (containerRef.current && isHorizontalActive) {
         // Transform the container horizontally with smooth animation
         const translateX = -horizontalProgress * 100;
         containerRef.current.style.transform = `translate3d(${translateX}%, 0, 0)`;
+        
+        // Update current screen based on progress
+        currentScreenRef.current = Math.floor(horizontalProgress * workScreens.length);
       }
     });
 
     return unsubscribe;
-  }, [subscribeToScroll]);
+  }, [subscribeToScroll, workScreens.length]);
 
   return (
     <section 
-      className="w-full h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 overflow-hidden"
+      className="w-full h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 overflow-hidden relative"
       style={{ willChange: 'transform' }}
     >
+      {/* Return to Top Button */}
+      <button
+        onClick={returnToTop}
+        className="fixed top-8 left-8 z-30 p-3 backdrop-blur-2xl bg-slate-800/20 border border-slate-600/30 rounded-full text-slate-300 hover:text-white hover:border-slate-500/50 transition-all duration-300 group"
+        title="Return to top (or press ESC)"
+      >
+        <ArrowUp size={20} className="group-hover:-translate-y-1 transition-transform duration-300" />
+      </button>
+
+      {/* Navigation Instructions */}
+      <div className="fixed top-8 right-8 z-30 text-right">
+        <div className="backdrop-blur-2xl bg-slate-800/10 border border-slate-600/20 rounded-lg p-4 text-slate-400 text-xs">
+          <div className="flex items-center gap-2 mb-2">
+            <ArrowUp size={14} />
+            <span>Scroll up or press ESC to return</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <ArrowLeft size={14} />
+            <ArrowRight size={14} />
+            <span>Scroll to navigate sections</span>
+          </div>
+        </div>
+      </div>
+
       <div 
         ref={containerRef}
         className="flex h-full w-[400%] transition-transform duration-100 ease-out"
@@ -114,16 +146,17 @@ const HorizontalWorkSection = () => {
         ))}
       </div>
 
-      {/* Progress indicator */}
+      {/* Enhanced Progress indicator */}
       <div className="absolute top-1/2 right-8 transform -translate-y-1/2 z-20">
         <div className="flex flex-col items-center space-y-3 text-slate-400">
           <span className="text-xs font-extralight tracking-[0.3em] uppercase writing-mode-vertical">Progress</span>
           <div className="w-px h-32 bg-slate-600 relative">
             <div 
               className="absolute top-0 left-0 w-full bg-gradient-to-b from-slate-300 to-slate-500 transition-all duration-300"
-              style={{ height: '25%' }}
+              style={{ height: `${(currentScreenRef.current + 1) * 25}%` }}
             />
           </div>
+          <span className="text-xs text-slate-500">{currentScreenRef.current + 1}/4</span>
         </div>
       </div>
     </section>
