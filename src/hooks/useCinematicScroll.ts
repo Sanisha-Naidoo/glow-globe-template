@@ -26,31 +26,38 @@ export const useCinematicScroll = () => {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const progress = Math.min(scrollData.current / maxScroll, 1);
 
-    // Trigger callbacks with progress and momentum
+    // Stop at 70% for horizontal transition
+    const clampedProgress = Math.min(progress, 0.7);
+
+    // Trigger callbacks with clamped progress and momentum
     callbacksRef.current.forEach(callback => {
-      callback(progress, scrollData.momentum);
+      callback(clampedProgress, scrollData.momentum);
     });
 
-    // Continue animation if there's significant movement
-    if (Math.abs(scrollData.velocity) > 0.1) {
+    // Continue animation if there's significant movement and we haven't reached the threshold
+    if (Math.abs(scrollData.velocity) > 0.1 && progress < 0.7) {
       animationRef.current = requestAnimationFrame(smoothScroll);
     }
   }, []);
 
   const handleWheel = useCallback((e: WheelEvent) => {
-    e.preventDefault();
     const scrollData = scrollDataRef.current;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const currentProgress = scrollData.current / maxScroll;
     
-    // Enhanced sensitivity for trackpad
-    const delta = e.deltaY * 1.2;
-    scrollData.target = Math.max(0, Math.min(
-      document.documentElement.scrollHeight - window.innerHeight,
-      scrollData.target + delta
-    ));
+    // Only handle vertical scrolling if we haven't reached the horizontal threshold
+    if (currentProgress < 0.7) {
+      e.preventDefault();
+      const delta = e.deltaY * 1.2;
+      scrollData.target = Math.max(0, Math.min(
+        maxScroll * 0.7, // Cap at 70% of total scroll
+        scrollData.target + delta
+      ));
 
-    // Start smooth scroll animation
-    if (!animationRef.current) {
-      animationRef.current = requestAnimationFrame(smoothScroll);
+      // Start smooth scroll animation
+      if (!animationRef.current) {
+        animationRef.current = requestAnimationFrame(smoothScroll);
+      }
     }
   }, [smoothScroll]);
 
