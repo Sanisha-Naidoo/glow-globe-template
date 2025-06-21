@@ -44,11 +44,11 @@ const HeroSection = () => {
       
       <div 
         ref={heroRef}
-        className={`relative z-20 text-center max-w-5xl mx-auto px-8 transition-all duration-[2000ms] ease-out will-change-transform ${textVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+        className={`relative z-20 text-center max-w-5xl mx-auto px-8 transition-all duration-[2000ms] ease-out will-change-transform -mt-16 ${textVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
         style={{ willChange: 'transform, opacity' }}
       >
-        <h1 className="text-8xl md:text-[10rem] font-light mb-12 text-white tracking-[0.1em] leading-[0.9] drop-shadow-lg">
-          CREATE
+        <h1 className="text-6xl md:text-7xl font-light mb-12 text-white tracking-[0.1em] leading-[0.9] drop-shadow-lg">
+          imagination lab
         </h1>
         <h2 className="text-2xl md:text-3xl font-normal mb-16 text-white tracking-[0.2em] uppercase drop-shadow-md">
           Cinematic digital experiences
