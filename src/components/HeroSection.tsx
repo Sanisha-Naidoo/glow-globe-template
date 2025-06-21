@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useRef } from 'react';
 import { ArrowDown } from 'lucide-react';
 import ParticleAnimation from './ParticleAnimation';
@@ -49,6 +50,9 @@ const HeroSection = () => {
         <h1 className="text-6xl md:text-7xl font-light mb-12 text-white tracking-[0.1em] leading-[0.9] drop-shadow-lg">
           imagination lab
         </h1>
+        <h2 className="text-2xl md:text-3xl font-normal mb-16 text-white tracking-[0.2em] uppercase drop-shadow-md">
+          Cinematic digital experiences
+        </h2>
         <p className="text-lg md:text-xl text-white max-w-2xl mx-auto leading-[1.7] font-normal tracking-wide drop-shadow-md">
           Where motion meets emotion, crafting immersive narratives through cinematic interaction design
         </p>
