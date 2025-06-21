@@ -1,5 +1,7 @@
 
 import { useEffect, useState, useRef } from 'react';
+import { ArrowDown } from 'lucide-react';
+import ParticleAnimation from './ParticleAnimation';
 import { useCinematicScroll } from '../hooks/useCinematicScroll';
 
 const HeroSection = () => {
@@ -28,8 +30,14 @@ const HeroSection = () => {
     return unsubscribe;
   }, [subscribeToScroll]);
 
+  const scrollToNext = () => {
+    const aboutSection = document.getElementById('about');
+    aboutSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800">
+    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
+      <ParticleAnimation />
       
       <div 
         ref={heroRef}
@@ -46,6 +54,17 @@ const HeroSection = () => {
           Where motion meets emotion, crafting immersive narratives through cinematic interaction design
         </p>
       </div>
+      
+      <button 
+        onClick={scrollToNext}
+        className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-20 group"
+      >
+        <div className="flex flex-col items-center space-y-3 text-slate-400 hover:text-white transition-all duration-700 ease-out">
+          <span className="text-xs font-extralight tracking-[0.3em] uppercase">Explore</span>
+          <div className="w-px h-8 bg-gradient-to-b from-slate-400 to-transparent"></div>
+          <ArrowDown className="w-3 h-3 group-hover:translate-y-1 transition-transform duration-700 ease-out" />
+        </div>
+      </button>
     </section>
   );
 };
