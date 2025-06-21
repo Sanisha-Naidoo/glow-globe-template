@@ -2,90 +2,99 @@
 const WorkSection = () => {
   const projects = [
     {
-      title: "Interactive Portfolio",
-      description: "A modern portfolio website with 3D particle animations and smooth transitions.",
-      tech: ["React", "Three.js", "WebGL"],
-      image: "🎨"
+      title: "Financial Platform",
+      description: "Redesigned trading interface with real-time data visualization and intuitive portfolio management.",
+      tech: ["React", "D3.js", "WebSocket"],
+      category: "Fintech"
     },
     {
-      title: "E-commerce Platform",
-      description: "Full-stack e-commerce solution with modern UI and seamless user experience.",
-      tech: ["Next.js", "Node.js", "PostgreSQL"],
-      image: "🛒"
+      title: "Healthcare Dashboard",
+      description: "Clinical workflow optimization through streamlined interface design and data architecture.",
+      tech: ["Vue.js", "Python", "PostgreSQL"],
+      category: "Healthcare"
     },
     {
-      title: "Data Visualization Tool",
-      description: "Interactive dashboard for complex data analysis with beautiful charts and graphs.",
-      tech: ["D3.js", "React", "Python"],
-      image: "📊"
-    },
-    {
-      title: "Mobile App Design",
-      description: "Clean and intuitive mobile app design focusing on user experience and accessibility.",
-      tech: ["Figma", "UI/UX", "Prototyping"],
-      image: "📱"
-    },
-    {
-      title: "Creative Coding Project",
-      description: "Experimental project exploring generative art and interactive installations.",
-      tech: ["p5.js", "WebGL", "Creative Coding"],
-      image: "🎭"
+      title: "E-commerce Experience",
+      description: "Complete platform redesign focusing on conversion optimization and user journey mapping.",
+      tech: ["Next.js", "Stripe", "Sanity"],
+      category: "E-commerce"
     },
     {
       title: "Brand Identity System",
-      description: "Complete brand identity design including logo, colors, and visual guidelines.",
-      tech: ["Branding", "Graphic Design", "Typography"],
-      image: "✨"
+      description: "Comprehensive visual identity including logo design, color systems, and brand guidelines.",
+      tech: ["Figma", "After Effects", "Principle"],
+      category: "Branding"
+    },
+    {
+      title: "Data Visualization Tool",
+      description: "Interactive dashboard for complex dataset analysis with custom charting components.",
+      tech: ["Three.js", "WebGL", "Node.js"],
+      category: "Data"
+    },
+    {
+      title: "Mobile Banking App",
+      description: "Complete UX redesign focusing on accessibility and simplified financial management.",
+      tech: ["React Native", "Figma", "Prototyping"],
+      category: "Mobile"
     }
   ];
 
   return (
-    <section id="work" className="min-h-screen py-20 relative">
+    <section id="work" className="min-h-screen py-32 relative">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-light mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            My Work
+        <div className="mb-24">
+          <h2 className="text-6xl md:text-7xl font-extralight text-white mb-8 tracking-wide">
+            Work
           </h2>
-          <p className="text-xl text-white/70 max-w-2xl mx-auto">
-            A selection of projects that showcase my passion for creating beautiful, functional digital experiences.
+          <div className="w-24 h-px bg-gradient-to-r from-teal-400 to-transparent mb-12"></div>
+          <p className="text-xl text-slate-300 max-w-2xl font-light leading-relaxed">
+            Selected projects that demonstrate thoughtful problem-solving and 
+            attention to craft across various industries and challenges.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <div
               key={index}
-              className="group relative p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-500 hover:transform hover:scale-105"
+              className="group relative"
             >
-              {/* Background Glow */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-600/10 to-pink-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Content */}
-              <div className="relative z-10">
-                <div className="text-4xl mb-4">{project.image}</div>
+              {/* Card container with glassmorphism */}
+              <div className="relative p-8 h-full backdrop-blur-xl bg-gradient-to-br from-slate-800/20 to-slate-700/10 border border-slate-600/20 rounded-lg hover:border-slate-500/30 transition-all duration-500">
                 
-                <h3 className="text-xl font-semibold mb-3 text-white group-hover:text-purple-200 transition-colors duration-300">
-                  {project.title}
-                </h3>
+                {/* Category */}
+                <div className="mb-6">
+                  <span className="text-xs font-light tracking-widest text-teal-400 uppercase">
+                    {project.category}
+                  </span>
+                </div>
                 
-                <p className="text-white/70 mb-4 leading-relaxed">
-                  {project.description}
-                </p>
+                {/* Content */}
+                <div className="space-y-4 mb-8">
+                  <h3 className="text-xl font-light text-white group-hover:text-slate-100 transition-colors duration-300">
+                    {project.title}
+                  </h3>
+                  
+                  <p className="text-slate-300 leading-relaxed font-light text-sm">
+                    {project.description}
+                  </p>
+                </div>
                 
+                {/* Tech stack */}
                 <div className="flex flex-wrap gap-2">
                   {project.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 text-sm rounded-full bg-white/10 text-white/80 border border-white/20"
+                      className="px-3 py-1 text-xs font-light text-slate-400 border border-slate-600/30 rounded-full"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
-              </div>
 
-              {/* Hover Effect */}
-              <div className="absolute top-2 right-2 w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {/* Hover indicator */}
+                <div className="absolute top-4 right-4 w-2 h-2 bg-teal-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
             </div>
           ))}
         </div>

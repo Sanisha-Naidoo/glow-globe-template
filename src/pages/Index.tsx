@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from 'react';
-import { ArrowDown } from 'lucide-react';
 import ParticleAnimation from '../components/ParticleAnimation';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
@@ -19,26 +18,13 @@ const Index = () => {
   }, []);
 
   return (
-    <div className={`${darkMode ? 'dark' : ''} transition-all duration-300`}>
-      <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 dark:from-slate-950 dark:via-purple-950 dark:to-slate-950 text-white min-h-screen">
+    <div className={`${darkMode ? 'dark' : ''} transition-all duration-500`}>
+      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white min-h-screen">
         <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
-        
-        {/* Hero Section with Particle Animation */}
         <HeroSection scrollY={scrollY} />
-        
-        {/* About Section */}
         <AboutSection />
-        
-        {/* Work Section */}
         <WorkSection />
-        
-        {/* Contact Section */}
         <ContactSection />
-        
-        {/* Scroll Indicator */}
-        <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ArrowDown className="w-6 h-6 text-white/60" />
-        </div>
       </div>
     </div>
   );

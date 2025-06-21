@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
 
 interface NavigationProps {
   darkMode: boolean;
@@ -8,47 +9,75 @@ interface NavigationProps {
 
 const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 2000);
+    const timer = setTimeout(() => setIsVisible(true), 2500);
     return () => clearTimeout(timer);
   }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     element?.scrollIntoView({ behavior: 'smooth' });
+    setIsMobileMenuOpen(false);
   };
+
+  const navItems = [
+    { name: 'Home', id: 'home' },
+    { name: 'About', id: 'about' },
+    { name: 'Work', id: 'work' },
+    { name: 'Contact', id: 'contact' }
+  ];
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-      <div className="backdrop-blur-md bg-white/5 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+      <div className="backdrop-blur-xl bg-slate-950/20 border-b border-slate-700/30">
+        <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex justify-between items-center">
-            <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <div className="text-xl font-light tracking-wider text-white">
               Portfolio
             </div>
             
-            <div className="hidden md:flex space-x-8">
-              {['Home', 'About', 'Work', 'Contact'].map((item) => (
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-12">
+              {navItems.map((item) => (
                 <button
-                  key={item}
-                  onClick={() => scrollToSection(item.toLowerCase())}
-                  className="text-white/80 hover:text-white transition-colors duration-300 relative group"
+                  key={item.name}
+                  onClick={() => scrollToSection(item.id)}
+                  className="text-slate-300 hover:text-white transition-colors duration-300 text-sm font-light tracking-wide relative group"
                 >
-                  {item}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
+                  {item.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-gradient-to-r from-teal-400 to-cyan-400 group-hover:w-full transition-all duration-500"></span>
                 </button>
               ))}
             </div>
             
+            {/* Mobile Menu Button */}
             <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-300"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-slate-300 hover:text-white transition-colors duration-300"
             >
-              {darkMode ? '☀️' : '🌙'}
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
+        
+        {/* Mobile Navigation */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden backdrop-blur-xl bg-slate-950/95 border-t border-slate-700/30">
+            <div className="px-6 py-4 space-y-4">
+              {navItems.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.id)}
+                  className="block w-full text-left text-slate-300 hover:text-white transition-colors duration-300 text-sm font-light tracking-wide py-2"
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
