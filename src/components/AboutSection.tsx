@@ -39,25 +39,25 @@ const AboutSection = () => {
             style={{ willChange: 'transform, opacity' }}
           >
             <div>
-              <h2 className="text-7xl md:text-8xl font-extralight text-white mb-12 tracking-[0.05em]">
+              <h2 className="text-7xl md:text-8xl font-light text-white mb-12 tracking-[0.05em] drop-shadow-lg">
                 Vision
               </h2>
-              <div className="w-16 h-px bg-gradient-to-r from-slate-200 to-transparent mb-16"></div>
+              <div className="w-20 h-px bg-gradient-to-r from-white to-transparent mb-16"></div>
             </div>
             
-            <div className="space-y-12 text-lg text-slate-100 leading-[1.9] font-extralight">
-              <p>
+            <div className="space-y-12 text-xl text-white leading-[1.8] font-normal">
+              <p className="drop-shadow-md">
                 I craft digital experiences that move beyond the ordinary — where every interaction 
                 feels cinematic, every transition tells a story, and every moment captivates.
               </p>
               
-              <p>
+              <p className="drop-shadow-md">
                 My work exists at the intersection of motion design and human psychology, 
                 creating interfaces that don't just function, but inspire and delight through 
                 carefully orchestrated movement and timing.
               </p>
               
-              <p>
+              <p className="drop-shadow-md">
                 Collaborating with visionary brands and individuals who understand that 
                 exceptional digital experiences require both technical mastery and artistic vision.
               </p>
@@ -81,10 +81,10 @@ const AboutSection = () => {
                   description: 'Pushing the boundaries of what\'s possible in the browser'
                 }
               ].map((skill, index) => (
-                <div key={index} className="space-y-4 border-l border-slate-600 pl-8 transform hover:translate-x-2 transition-transform duration-500">
-                  <h4 className="text-white font-extralight text-base tracking-[0.1em] uppercase">{skill.label}</h4>
-                  <p className="text-blue-200 text-sm font-extralight tracking-wide">{skill.focus}</p>
-                  <p className="text-slate-200 text-xs font-extralight leading-relaxed">{skill.description}</p>
+                <div key={index} className="space-y-4 border-l-2 border-blue-400 pl-8 transform hover:translate-x-2 transition-transform duration-500 bg-slate-800/40 backdrop-blur-sm p-6 rounded-sm">
+                  <h4 className="text-white font-medium text-lg tracking-[0.1em] uppercase drop-shadow-md">{skill.label}</h4>
+                  <p className="text-blue-200 text-base font-normal tracking-wide drop-shadow-sm">{skill.focus}</p>
+                  <p className="text-gray-100 text-sm font-normal leading-relaxed">{skill.description}</p>
                 </div>
               ))}
             </div>
@@ -96,19 +96,19 @@ const AboutSection = () => {
             style={{ willChange: 'transform, opacity' }}
           >
             <div className="relative w-full h-[700px] rounded-sm overflow-hidden group">
-              <div className="absolute inset-0 backdrop-blur-3xl bg-gradient-to-br from-slate-700/20 to-slate-600/15 border border-slate-500/40 transition-all duration-700 group-hover:border-slate-400/60"></div>
+              <div className="absolute inset-0 backdrop-blur-3xl bg-gradient-to-br from-slate-700/40 to-slate-600/30 border-2 border-slate-400/60 transition-all duration-700 group-hover:border-blue-400/80"></div>
               
               <div className="absolute inset-12 flex items-center justify-center">
                 <div className="relative w-full h-full">
-                  <div className="absolute top-1/3 left-1/3 w-24 h-24 border border-slate-300/50 rotate-45 rounded-sm transition-all duration-700 group-hover:rotate-[60deg] group-hover:scale-110"></div>
-                  <div className="absolute bottom-1/2 right-1/4 w-16 h-16 bg-gradient-to-br from-blue-400/25 to-transparent rounded-full transition-all duration-700 group-hover:scale-125"></div>
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-px bg-gradient-to-r from-transparent via-slate-100/70 to-transparent"></div>
-                  <div className="absolute bottom-1/3 left-1/2 transform -translate-x-1/2 w-px h-24 bg-gradient-to-b from-slate-100/70 to-transparent"></div>
+                  <div className="absolute top-1/3 left-1/3 w-24 h-24 border-2 border-white/70 rotate-45 rounded-sm transition-all duration-700 group-hover:rotate-[60deg] group-hover:scale-110"></div>
+                  <div className="absolute bottom-1/2 right-1/4 w-16 h-16 bg-gradient-to-br from-blue-400/40 to-transparent rounded-full transition-all duration-700 group-hover:scale-125"></div>
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent"></div>
+                  <div className="absolute bottom-1/3 left-1/2 transform -translate-x-1/2 w-px h-24 bg-gradient-to-b from-white/90 to-transparent"></div>
                 </div>
               </div>
               
-              <div className="absolute -top-12 -right-12 w-24 h-24 bg-blue-300/20 rounded-full blur-3xl transition-all duration-700 group-hover:scale-150"></div>
-              <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-slate-100/15 rounded-full blur-3xl transition-all duration-700 group-hover:scale-125"></div>
+              <div className="absolute -top-12 -right-12 w-24 h-24 bg-blue-300/30 rounded-full blur-3xl transition-all duration-700 group-hover:scale-150"></div>
+              <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-slate-100/25 rounded-full blur-3xl transition-all duration-700 group-hover:scale-125"></div>
             </div>
           </div>
         </div>

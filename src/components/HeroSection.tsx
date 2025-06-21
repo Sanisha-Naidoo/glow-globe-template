@@ -47,13 +47,13 @@ const HeroSection = () => {
         className={`relative z-20 text-center max-w-5xl mx-auto px-8 transition-all duration-[2000ms] ease-out will-change-transform ${textVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
         style={{ willChange: 'transform, opacity' }}
       >
-        <h1 className="text-8xl md:text-[10rem] font-extralight mb-12 text-white tracking-[0.1em] leading-[0.9]">
+        <h1 className="text-8xl md:text-[10rem] font-light mb-12 text-white tracking-[0.1em] leading-[0.9] drop-shadow-lg">
           CREATE
         </h1>
-        <h2 className="text-xl md:text-2xl font-extralight mb-16 text-slate-100 tracking-[0.2em] uppercase">
+        <h2 className="text-2xl md:text-3xl font-normal mb-16 text-white tracking-[0.2em] uppercase drop-shadow-md">
           Cinematic digital experiences
         </h2>
-        <p className="text-base md:text-lg text-slate-200 max-w-2xl mx-auto leading-[1.8] font-extralight tracking-wide">
+        <p className="text-lg md:text-xl text-white max-w-2xl mx-auto leading-[1.7] font-normal tracking-wide drop-shadow-md">
           Where motion meets emotion, crafting immersive narratives through cinematic interaction design
         </p>
       </div>
@@ -62,10 +62,10 @@ const HeroSection = () => {
         onClick={scrollToNext}
         className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-20 group"
       >
-        <div className="flex flex-col items-center space-y-3 text-slate-300 hover:text-white transition-all duration-700 ease-out">
-          <span className="text-xs font-extralight tracking-[0.3em] uppercase">Explore</span>
-          <div className="w-px h-8 bg-gradient-to-b from-slate-300 to-transparent"></div>
-          <ArrowDown className="w-3 h-3 group-hover:translate-y-1 transition-transform duration-700 ease-out" />
+        <div className="flex flex-col items-center space-y-3 text-white hover:text-gray-100 transition-all duration-700 ease-out drop-shadow-md">
+          <span className="text-sm font-normal tracking-[0.3em] uppercase">Explore</span>
+          <div className="w-px h-8 bg-gradient-to-b from-white to-transparent"></div>
+          <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform duration-700 ease-out" />
         </div>
       </button>
     </section>

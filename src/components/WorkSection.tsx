@@ -1,3 +1,4 @@
+
 import { useRef, useEffect } from 'react';
 import { useSplitTransition } from '../hooks/useSplitTransition';
 import { useCinematicScroll } from '../hooks/useCinematicScroll';
@@ -85,22 +86,22 @@ const WorkSection = ({ onEnterGallery }: WorkSectionProps) => {
     >
       <div className="max-w-7xl mx-auto px-8">
         <div className="mb-16">
-          <h2 className="text-7xl md:text-8xl font-extralight text-white mb-12 tracking-[0.05em]">
+          <h2 className="text-7xl md:text-8xl font-light text-white mb-12 tracking-[0.05em] drop-shadow-lg">
             Projects
           </h2>
-          <div className="w-16 h-px bg-gradient-to-r from-slate-200 to-transparent mb-8"></div>
+          <div className="w-20 h-px bg-gradient-to-r from-white to-transparent mb-8"></div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
-            <p className="text-xl text-slate-100 max-w-3xl font-extralight leading-[1.8] tracking-wide">
+            <p className="text-xl text-white max-w-3xl font-normal leading-[1.7] tracking-wide drop-shadow-md">
               Selected works that push the boundaries of digital interaction, 
               each crafted with cinematic precision and innovative technology.
             </p>
             <Button
               onClick={onEnterGallery}
-              className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white border border-blue-400/50 backdrop-blur-sm transition-all duration-500 group flex-shrink-0"
+              className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white border-2 border-blue-400/70 backdrop-blur-sm transition-all duration-500 group flex-shrink-0 text-base font-medium px-8 py-4"
               size="lg"
             >
-              <span className="font-extralight tracking-wide">Explore Gallery</span>
-              <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+              <span className="font-medium tracking-wide">Explore Gallery</span>
+              <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
           </div>
         </div>
@@ -127,35 +128,35 @@ const WorkSection = ({ onEnterGallery }: WorkSectionProps) => {
                     transformStyle: 'preserve-3d'
                   }}
                 >
-                  <div className="relative p-8 h-80 backdrop-blur-3xl bg-gradient-to-br from-slate-700/20 to-slate-600/10 border border-slate-500/30 rounded-sm hover:border-slate-400/50 transition-all duration-1000 ease-out transform hover:scale-[1.02] hover:-translate-y-2 cursor-pointer">
+                  <div className="relative p-8 h-80 backdrop-blur-3xl bg-gradient-to-br from-slate-700/40 to-slate-600/30 border-2 border-slate-400/50 rounded-sm hover:border-blue-400/70 transition-all duration-1000 ease-out transform hover:scale-[1.02] hover:-translate-y-2 cursor-pointer">
                     
                     <div className="flex justify-between items-start mb-6">
-                      <span className="text-xs font-extralight tracking-[0.3em] text-blue-200 uppercase">
+                      <span className="text-sm font-medium tracking-[0.3em] text-blue-200 uppercase drop-shadow-sm">
                         {project.approach}
                       </span>
-                      <span className="text-xs font-extralight tracking-[0.2em] text-slate-300">
+                      <span className="text-sm font-normal tracking-[0.2em] text-white">
                         {project.year}
                       </span>
                     </div>
                     
                     <div className="space-y-4 mb-8">
-                      <h3 className="text-xl font-extralight text-white group-hover:text-slate-50 transition-colors duration-700 tracking-[0.05em]">
+                      <h3 className="text-xl font-medium text-white group-hover:text-gray-100 transition-colors duration-700 tracking-[0.05em] drop-shadow-md">
                         {project.title}
                       </h3>
                       
-                      <p className="text-slate-100 leading-[1.6] font-extralight text-sm tracking-wide">
+                      <p className="text-white leading-[1.5] font-normal text-base tracking-wide drop-shadow-sm">
                         {project.description}
                       </p>
                     </div>
                     
-                    <div className="absolute bottom-6 left-8 flex items-center space-x-3 text-slate-200 group-hover:text-white transition-colors duration-700">
-                      <span className="text-xs font-extralight tracking-[0.2em] uppercase">Explore</span>
-                      <div className="w-6 h-px bg-gradient-to-r from-blue-300 to-transparent group-hover:w-12 transition-all duration-700"></div>
+                    <div className="absolute bottom-6 left-8 flex items-center space-x-3 text-white group-hover:text-gray-100 transition-colors duration-700">
+                      <span className="text-sm font-normal tracking-[0.2em] uppercase">Explore</span>
+                      <div className="w-8 h-px bg-gradient-to-r from-blue-300 to-transparent group-hover:w-16 transition-all duration-700"></div>
                     </div>
 
-                    <div className="absolute top-4 right-4 w-1 h-1 bg-blue-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                    <div className="absolute top-4 right-4 w-2 h-2 bg-blue-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                     
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-100/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-sm"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-100/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-sm"></div>
                   </div>
                 </div>
               ))}

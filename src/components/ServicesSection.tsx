@@ -1,3 +1,4 @@
+
 import { useRef, useEffect } from 'react';
 import { useSplitTransition } from '../hooks/useSplitTransition';
 import { useCinematicScroll } from '../hooks/useCinematicScroll';
@@ -95,11 +96,11 @@ const ServicesSection = () => {
           className="mb-16"
           style={{ willChange: 'transform, opacity' }}
         >
-          <h2 className="text-7xl md:text-8xl font-extralight text-white mb-12 tracking-[0.05em]">
+          <h2 className="text-7xl md:text-8xl font-light text-white mb-12 tracking-[0.05em] drop-shadow-lg">
             Services
           </h2>
-          <div className="w-16 h-px bg-gradient-to-r from-slate-200 to-transparent mb-8"></div>
-          <p className="text-xl text-slate-100 max-w-3xl font-extralight leading-[1.8] tracking-wide">
+          <div className="w-20 h-px bg-gradient-to-r from-white to-transparent mb-8"></div>
+          <p className="text-xl text-white max-w-3xl font-normal leading-[1.7] tracking-wide drop-shadow-md">
             Comprehensive digital solutions that blend technical expertise 
             with creative vision to deliver exceptional user experiences.
           </p>
@@ -124,20 +125,20 @@ const ServicesSection = () => {
                   className="group relative opacity-0 flex-shrink-0 w-80"
                   style={{ willChange: 'transform, opacity' }}
                 >
-                  <div className="relative p-8 h-96 backdrop-blur-2xl bg-gradient-to-br from-slate-700/25 to-slate-600/15 border border-slate-500/30 rounded-sm hover:border-slate-400/50 transition-all duration-700 ease-out">
+                  <div className="relative p-8 h-96 backdrop-blur-2xl bg-gradient-to-br from-slate-700/40 to-slate-600/30 border-2 border-slate-400/50 rounded-sm hover:border-blue-400/70 transition-all duration-700 ease-out">
                     
                     <div className="mb-6">
-                      <span className="text-xs font-extralight tracking-[0.3em] text-blue-200 uppercase">
+                      <span className="text-sm font-medium tracking-[0.3em] text-blue-200 uppercase drop-shadow-sm">
                         {service.focus}
                       </span>
                     </div>
                     
                     <div className="space-y-6 mb-8">
-                      <h3 className="text-2xl font-extralight text-white group-hover:text-slate-50 transition-colors duration-500 tracking-[0.05em]">
+                      <h3 className="text-2xl font-medium text-white group-hover:text-gray-100 transition-colors duration-500 tracking-[0.05em] drop-shadow-md">
                         {service.title}
                       </h3>
                       
-                      <p className="text-slate-100 leading-[1.7] font-extralight text-sm tracking-wide">
+                      <p className="text-white leading-[1.6] font-normal text-base tracking-wide drop-shadow-sm">
                         {service.description}
                       </p>
                     </div>
@@ -145,19 +146,19 @@ const ServicesSection = () => {
                     <div className="space-y-3">
                       {service.capabilities.map((capability, capIndex) => (
                         <div key={capIndex} className="flex items-center space-x-3">
-                          <div className="w-1 h-1 bg-blue-300 rounded-full"></div>
-                          <span className="text-xs text-slate-200 font-extralight tracking-wide">
+                          <div className="w-2 h-2 bg-blue-300 rounded-full"></div>
+                          <span className="text-sm text-white font-normal tracking-wide">
                             {capability}
                           </span>
                         </div>
                       ))}
                     </div>
                     
-                    <div className="absolute bottom-6 left-8 flex items-center space-x-2 text-slate-200 group-hover:text-white transition-colors duration-500">
-                      <div className="w-4 h-px bg-gradient-to-r from-blue-300 to-transparent group-hover:w-8 transition-all duration-500"></div>
+                    <div className="absolute bottom-6 left-8 flex items-center space-x-2 text-white group-hover:text-gray-100 transition-colors duration-500">
+                      <div className="w-6 h-px bg-gradient-to-r from-blue-300 to-transparent group-hover:w-12 transition-all duration-500"></div>
                     </div>
                     
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-100/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-sm"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-100/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-sm"></div>
                   </div>
                 </div>
               ))}

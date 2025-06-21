@@ -15,11 +15,11 @@ const ContactSection = () => {
           {/* Contact Info */}
           <div className="space-y-16">
             <div>
-              <h2 className="text-7xl md:text-8xl font-extralight text-white mb-12 tracking-[0.05em]">
+              <h2 className="text-7xl md:text-8xl font-light text-white mb-12 tracking-[0.05em] drop-shadow-lg">
                 Connect
               </h2>
-              <div className="w-16 h-px bg-gradient-to-r from-slate-200 to-transparent mb-16"></div>
-              <p className="text-xl text-slate-100 font-extralight leading-[1.8] tracking-wide">
+              <div className="w-20 h-px bg-gradient-to-r from-white to-transparent mb-16"></div>
+              <p className="text-xl text-white font-normal leading-[1.7] tracking-wide drop-shadow-md">
                 Let's explore the possibilities of creating something extraordinary together.
               </p>
             </div>
@@ -30,13 +30,13 @@ const ContactSection = () => {
                 { label: 'LinkedIn', value: 'linkedin.com/in/yourprofile', link: 'https://linkedin.com' },
                 { label: 'Behance', value: 'behance.net/yourprofile', link: 'https://behance.net' }
               ].map((contact, index) => (
-                <div key={index} className="group border-l border-slate-600 pl-8 hover:border-blue-400/50 transition-colors duration-700">
-                  <p className="text-xs font-extralight tracking-[0.3em] text-blue-200 mb-3 uppercase">
+                <div key={index} className="group border-l-2 border-blue-400 pl-8 hover:border-blue-300 transition-colors duration-700 bg-slate-800/40 backdrop-blur-sm p-6 rounded-sm">
+                  <p className="text-sm font-medium tracking-[0.3em] text-blue-200 mb-3 uppercase drop-shadow-sm">
                     {contact.label}
                   </p>
                   <a 
                     href={contact.link}
-                    className="text-slate-100 hover:text-white transition-colors duration-500 font-extralight text-base tracking-wide"
+                    className="text-white hover:text-gray-100 transition-colors duration-500 font-normal text-base tracking-wide drop-shadow-sm"
                   >
                     {contact.value}
                   </a>
@@ -47,49 +47,49 @@ const ContactSection = () => {
 
           {/* Contact Form */}
           <div className="relative">
-            <div className="backdrop-blur-3xl bg-gradient-to-br from-slate-700/15 to-slate-600/10 border border-slate-500/30 rounded-sm p-12">
+            <div className="backdrop-blur-3xl bg-gradient-to-br from-slate-700/40 to-slate-600/30 border-2 border-slate-400/50 rounded-sm p-12">
               <form className="space-y-12">
                 <div className="grid grid-cols-2 gap-8">
                   <div>
-                    <label className="block text-slate-100 mb-4 text-sm font-extralight tracking-[0.1em] uppercase">
+                    <label className="block text-white mb-4 text-base font-medium tracking-[0.1em] uppercase drop-shadow-sm">
                       Name
                     </label>
                     <input
                       type="text"
-                      className="w-full px-0 py-4 bg-transparent border-0 border-b border-slate-500/50 text-white placeholder-slate-300 focus:outline-none focus:border-blue-300/70 transition-colors duration-700 font-extralight tracking-wide"
+                      className="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-slate-400/70 text-white placeholder-gray-200 focus:outline-none focus:border-blue-300 transition-colors duration-700 font-normal tracking-wide text-base"
                       placeholder="Your name"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-slate-100 mb-4 text-sm font-extralight tracking-[0.1em] uppercase">
+                    <label className="block text-white mb-4 text-base font-medium tracking-[0.1em] uppercase drop-shadow-sm">
                       Email
                     </label>
                     <input
                       type="email"
-                      className="w-full px-0 py-4 bg-transparent border-0 border-b border-slate-500/50 text-white placeholder-slate-300 focus:outline-none focus:border-blue-300/70 transition-colors duration-700 font-extralight tracking-wide"
+                      className="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-slate-400/70 text-white placeholder-gray-200 focus:outline-none focus:border-blue-300 transition-colors duration-700 font-normal tracking-wide text-base"
                       placeholder="your@email.com"
                     />
                   </div>
                 </div>
                 
                 <div>
-                  <label className="block text-slate-100 mb-4 text-sm font-extralight tracking-[0.1em] uppercase">
+                  <label className="block text-white mb-4 text-base font-medium tracking-[0.1em] uppercase drop-shadow-sm">
                     Vision
                   </label>
                   <textarea
                     rows={4}
-                    className="w-full px-0 py-4 bg-transparent border-0 border-b border-slate-500/50 text-white placeholder-slate-300 focus:outline-none focus:border-blue-300/70 transition-colors duration-700 resize-none font-extralight tracking-wide leading-relaxed"
+                    className="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-slate-400/70 text-white placeholder-gray-200 focus:outline-none focus:border-blue-300 transition-colors duration-700 resize-none font-normal tracking-wide leading-relaxed text-base"
                     placeholder="Tell me about your vision..."
                   />
                 </div>
                 
                 <button
                   type="submit"
-                  className="group relative px-12 py-6 bg-gradient-to-r from-blue-600/20 to-blue-500/20 border border-blue-400/40 hover:border-blue-300/60 text-slate-100 hover:text-white transition-all duration-700 font-extralight tracking-[0.15em] text-sm uppercase backdrop-blur-sm"
+                  className="group relative px-12 py-6 bg-gradient-to-r from-blue-600/40 to-blue-500/40 border-2 border-blue-400/60 hover:border-blue-300/80 text-white hover:text-gray-100 transition-all duration-700 font-medium tracking-[0.15em] text-base uppercase backdrop-blur-sm"
                 >
                   Send Message
-                  <div className="absolute inset-0 bg-blue-300/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                  <div className="absolute inset-0 bg-blue-300/15 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                   <div className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-blue-300 to-transparent group-hover:w-full transition-all duration-1000 ease-out"></div>
                 </button>
               </form>
@@ -98,8 +98,8 @@ const ContactSection = () => {
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-48 pt-16 border-t border-slate-600/30">
-          <p className="text-slate-300 font-extralight text-xs tracking-[0.2em] uppercase">
+        <div className="text-center mt-48 pt-16 border-t border-slate-400/40">
+          <p className="text-white font-normal text-sm tracking-[0.2em] uppercase drop-shadow-sm">
             © 2024 — Crafted with intention and care
           </p>
         </div>
