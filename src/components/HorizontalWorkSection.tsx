@@ -36,10 +36,9 @@ const HorizontalWorkSection = () => {
   useEffect(() => {
     const unsubscribe = subscribeToScroll((progress, velocity, horizontalProgress, isHorizontalActive) => {
       if (containerRef.current && isHorizontalActive) {
-        // Transform the container horizontally
+        // Transform the container horizontally with smooth animation
         const translateX = -horizontalProgress * 100;
         containerRef.current.style.transform = `translate3d(${translateX}%, 0, 0)`;
-        console.log('Horizontal transform:', translateX);
       }
     });
 
@@ -53,7 +52,7 @@ const HorizontalWorkSection = () => {
     >
       <div 
         ref={containerRef}
-        className="flex h-full w-[400%]"
+        className="flex h-full w-[400%] transition-transform duration-100 ease-out"
         style={{ willChange: 'transform' }}
       >
         {workScreens.map((screen, index) => (

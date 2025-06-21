@@ -13,40 +13,43 @@ const Index = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [showHorizontalWork, setShowHorizontalWork] = useState(false);
   const mainContentRef = useRef<HTMLDivElement>(null);
-  const { subscribeToScroll, setThreshold } = useHorizontalPageScroll();
+  const { subscribeToScroll, setThreshold, toggleDebug } = useHorizontalPageScroll();
 
   useEffect(() => {
     // Set threshold to 70% of page scroll
     setThreshold(0.7);
+    
+    // Enable debug logging temporarily
+    toggleDebug(false); // Set to true for debugging
 
     const unsubscribe = subscribeToScroll((progress, velocity, horizontalProgress, isHorizontalActive) => {
-      console.log('Scroll data:', { progress, velocity, horizontalProgress, isHorizontalActive });
-      
       setShowHorizontalWork(isHorizontalActive);
       
       if (mainContentRef.current) {
         if (isHorizontalActive) {
-          // Smooth transition instead of harsh fade
-          mainContentRef.current.style.opacity = '0.8';
-          mainContentRef.current.style.transform = 'scale(0.98)';
-          mainContentRef.current.style.filter = 'blur(1px)';
+          // Smoother transition with better visibility
+          mainContentRef.current.style.opacity = '0.6';
+          mainContentRef.current.style.transform = 'scale(0.99)';
+          mainContentRef.current.style.filter = 'blur(0.5px)';
+          mainContentRef.current.style.pointerEvents = 'none';
         } else {
           // Restore main content
           mainContentRef.current.style.opacity = '1';
           mainContentRef.current.style.transform = 'scale(1)';
           mainContentRef.current.style.filter = 'blur(0px)';
+          mainContentRef.current.style.pointerEvents = 'all';
         }
       }
     });
 
     return unsubscribe;
-  }, [subscribeToScroll, setThreshold]);
+  }, [subscribeToScroll, setThreshold, toggleDebug]);
 
   return (
     <div className={`${darkMode ? 'dark' : ''} transition-all duration-500`}>
       <div 
         ref={mainContentRef}
-        className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white min-h-screen relative overflow-x-hidden transition-all duration-700 ease-out"
+        className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white min-h-screen relative overflow-x-hidden transition-all duration-500 ease-out"
         style={{ willChange: 'transform, opacity, filter' }}
       >
         <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
@@ -59,7 +62,7 @@ const Index = () => {
       
       {/* Horizontal Work Section Overlay */}
       {showHorizontalWork && (
-        <div className="fixed inset-0 z-50">
+        <div className="fixed inset-0 z-50 transition-opacity duration-500">
           <HorizontalWorkSection />
         </div>
       )}
