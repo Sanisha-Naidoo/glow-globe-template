@@ -3,12 +3,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Smooth scroll behavior */
+/* Cinematic scroll foundation */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Disable default smooth scroll for custom implementation */
+  overflow-x: hidden;
 }
 
-/* Custom smooth scrolling with momentum */
+body {
+  overflow-x: hidden;
+  font-feature-settings: "liga" 1, "kern" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hardware acceleration for smooth animations */
 * {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -18,43 +27,118 @@ html {
   display: none;
 }
 
-/* Navigation visibility states */
+/* GPU acceleration utilities */
+.gpu-accelerated {
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* 3D perspective container */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-2000 {
+  perspective: 2000px;
+}
+
+/* Enhanced navigation states */
 .nav-hidden {
   opacity: 0;
-  transform: translateY(-100%);
+  transform: translate3d(0, -100%, 0);
   pointer-events: none;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
   pointer-events: all;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Fade in up animation */
-@keyframes fadeInUp {
+/* Cinematic fade animations */
+@keyframes cinematicFadeIn {
   from {
     opacity: 0;
-    transform: translateY(2rem);
+    transform: translate3d(0, 2rem, 0) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 1.5s ease-out forwards;
-}
-
-/* Enhanced smooth scrolling for webkit browsers */
-@supports (scroll-behavior: smooth) {
-  html {
-    scroll-behavior: smooth;
+@keyframes lateralSlideIn {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
 
-/* Definition of the design system */
+@keyframes diagonalSlideIn {
+  from {
+    opacity: 0;
+    transform: translate3d(50%, 50%, 0) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.animate-cinematic-fade {
+  animation: cinematicFadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-lateral-slide {
+  animation: lateralSlideIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-diagonal-slide {
+  animation: diagonalSlideIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Enhanced hover effects with 3D transforms */
+.hover-tilt:hover {
+  transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(10px);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translate3d(0, -8px, 0) scale(1.02);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Parallax scroll effects */
+.parallax-slow {
+  transform: translate3d(0, calc(var(--scroll-y, 0) * -0.2px), 0);
+}
+
+.parallax-fast {
+  transform: translate3d(0, calc(var(--scroll-y, 0) * -0.5px), 0);
+}
+
+/* Motion blur effect for high-velocity scroll */
+.motion-blur {
+  filter: blur(calc(var(--scroll-velocity, 0) * 0.5px));
+  transition: filter 0.1s ease-out;
+}
+
+/* Cinematic gradients */
+.gradient-cinematic {
+  background: linear-gradient(135deg, 
+    rgba(15, 23, 42, 0.9) 0%,
+    rgba(30, 41, 59, 0.7) 50%,
+    rgba(51, 65, 85, 0.5) 100%);
+}
+
+/* Design system variables */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -125,9 +209,5 @@ html {
 
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "liga" 1, "kern" 1;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 }

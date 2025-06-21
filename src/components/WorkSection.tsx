@@ -1,8 +1,12 @@
 
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { useRef, useEffect } from 'react';
+import { useSplitTransition } from '../hooks/useSplitTransition';
+import { useCinematicScroll } from '../hooks/useCinematicScroll';
 
 const WorkSection = () => {
-  const sectionRef = useScrollAnimation();
+  const sectionRef = useSplitTransition({ direction: 'right', triggerPoint: 0.1 });
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const { subscribeToScroll } = useCinematicScroll();
 
   const projects = [
     {
@@ -14,7 +18,7 @@ const WorkSection = () => {
     {
       title: "Neural Pathways",
       description: "Data visualization platform that transforms complex neural network behaviors into intuitive, explorable landscapes.",
-      approach: "Data Visualization",
+      approach: "Data Visualization", 
       year: "2024"
     },
     {
@@ -28,26 +32,37 @@ const WorkSection = () => {
       description: "Research project investigating quantum computing concepts through interactive visual metaphors and gestural interfaces.",
       approach: "Research & Development",
       year: "2023"
-    },
-    {
-      title: "Liminal Spaces",
-      description: "Virtual reality experience exploring the boundaries between physical and digital presence in architectural contexts.",
-      approach: "Spatial Computing",
-      year: "2023"
-    },
-    {
-      title: "Resonance Fields",
-      description: "Generative audio-visual installation responding to environmental data through machine learning and procedural generation.",
-      approach: "Generative Art",
-      year: "2022"
     }
   ];
+
+  useEffect(() => {
+    const unsubscribe = subscribeToScroll((progress) => {
+      if (cardsRef.current) {
+        const cards = cardsRef.current.children;
+        Array.from(cards).forEach((card, index) => {
+          const element = card as HTMLElement;
+          const delay = index * 0.1;
+          const cardProgress = Math.max(0, Math.min(1, (progress - 0.3 - delay) * 2));
+          
+          const translateX = (1 - cardProgress) * 50;
+          const rotateY = (1 - cardProgress) * 15;
+          const opacity = cardProgress;
+          
+          element.style.transform = `translate3d(-${translateX}px, 0, 0) rotateY(${rotateY}deg)`;
+          element.style.opacity = opacity.toString();
+        });
+      }
+    });
+
+    return unsubscribe;
+  }, [subscribeToScroll]);
 
   return (
     <section 
       id="work" 
       ref={sectionRef}
-      className="min-h-screen py-32 relative opacity-0 translate-y-8 transition-all duration-[1500ms] ease-out"
+      className="min-h-screen py-32 relative bg-gradient-to-b from-slate-900/30 to-slate-950/50"
+      style={{ willChange: 'transform, opacity' }}
     >
       <div className="max-w-7xl mx-auto px-8">
         <div className="mb-32">
@@ -56,21 +71,26 @@ const WorkSection = () => {
           </h2>
           <div className="w-16 h-px bg-gradient-to-r from-slate-300 to-transparent mb-16"></div>
           <p className="text-xl text-slate-200 max-w-3xl font-extralight leading-[1.8] tracking-wide">
-            Selected works that explore the boundaries between technology and human experience, 
-            each project a meditation on possibility and craft.
+            Selected works that push the boundaries of digital interaction, 
+            each crafted with cinematic precision and innovative technology.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div 
+          ref={cardsRef}
+          className="grid lg:grid-cols-2 gap-8 perspective-1000"
+        >
           {projects.map((project, index) => (
             <div
               key={index}
-              className="group relative"
+              className="group relative opacity-0"
+              style={{ 
+                willChange: 'transform, opacity',
+                transformStyle: 'preserve-3d'
+              }}
             >
-              {/* Card container with refined glassmorphism */}
-              <div className="relative p-12 h-full backdrop-blur-3xl bg-gradient-to-br from-slate-800/5 to-slate-600/5 border border-slate-600/10 rounded-sm hover:border-slate-500/20 transition-all duration-1000 ease-out">
+              <div className="relative p-12 h-full backdrop-blur-3xl bg-gradient-to-br from-slate-800/8 to-slate-600/4 border border-slate-600/15 rounded-sm hover:border-slate-500/25 transition-all duration-1000 ease-out transform hover:scale-[1.02] hover:-translate-y-2">
                 
-                {/* Year and approach */}
                 <div className="flex justify-between items-start mb-8">
                   <span className="text-xs font-extralight tracking-[0.3em] text-slate-400 uppercase">
                     {project.approach}
@@ -80,7 +100,6 @@ const WorkSection = () => {
                   </span>
                 </div>
                 
-                {/* Content */}
                 <div className="space-y-6 mb-12">
                   <h3 className="text-2xl font-extralight text-white group-hover:text-slate-100 transition-colors duration-700 tracking-[0.05em]">
                     {project.title}
@@ -91,14 +110,15 @@ const WorkSection = () => {
                   </p>
                 </div>
                 
-                {/* Explore indicator */}
                 <div className="flex items-center space-x-3 text-slate-400 group-hover:text-slate-200 transition-colors duration-700">
                   <span className="text-xs font-extralight tracking-[0.2em] uppercase">Explore</span>
-                  <div className="w-8 h-px bg-gradient-to-r from-slate-400 to-transparent group-hover:w-12 transition-all duration-700"></div>
+                  <div className="w-8 h-px bg-gradient-to-r from-slate-400 to-transparent group-hover:w-16 transition-all duration-700"></div>
                 </div>
 
-                {/* Subtle hover indicator */}
                 <div className="absolute top-6 right-6 w-1 h-1 bg-slate-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                
+                {/* 3D hover effect overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-200/2 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-sm"></div>
               </div>
             </div>
           ))}

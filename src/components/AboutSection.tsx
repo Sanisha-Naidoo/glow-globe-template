@@ -1,18 +1,23 @@
 
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { useSplitTransition } from '../hooks/useSplitTransition';
 
 const AboutSection = () => {
-  const sectionRef = useScrollAnimation();
+  const sectionRef = useSplitTransition({ direction: 'right', triggerPoint: 0.2 });
+  const imageRef = useSplitTransition({ direction: 'left', triggerPoint: 0.4 });
 
   return (
     <section 
       id="about" 
-      ref={sectionRef}
-      className="min-h-screen py-32 relative opacity-0 translate-y-8 transition-all duration-[1500ms] ease-out"
+      className="min-h-screen py-32 relative bg-gradient-to-b from-slate-950/50 to-slate-900/30"
+      style={{ willChange: 'transform' }}
     >
       <div className="max-w-7xl mx-auto px-8">
         <div className="grid lg:grid-cols-2 gap-32 items-start">
-          <div className="space-y-16">
+          <div 
+            ref={sectionRef}
+            className="space-y-16"
+            style={{ willChange: 'transform, opacity' }}
+          >
             <div>
               <h2 className="text-7xl md:text-8xl font-extralight text-white mb-12 tracking-[0.05em]">
                 Vision
@@ -22,43 +27,41 @@ const AboutSection = () => {
             
             <div className="space-y-12 text-lg text-slate-200 leading-[1.9] font-extralight">
               <p>
-                I believe in the power of intentional design — where every element serves a purpose, 
-                where silence speaks as loudly as content, and where technology becomes invisible 
-                in service of human connection.
+                I craft digital experiences that move beyond the ordinary — where every interaction 
+                feels cinematic, every transition tells a story, and every moment captivates.
               </p>
               
               <p>
-                My practice centers on creating digital experiences that feel inevitable, as if they 
-                couldn't exist any other way. This pursuit requires patience, restraint, and an 
-                unwavering commitment to craft over convenience.
+                My work exists at the intersection of motion design and human psychology, 
+                creating interfaces that don't just function, but inspire and delight through 
+                carefully orchestrated movement and timing.
               </p>
               
               <p>
-                Working at the intersection of strategy, design, and development, I collaborate with 
-                visionary clients who understand that exceptional work emerges from the space between 
-                ambition and execution.
+                Collaborating with visionary brands and individuals who understand that 
+                exceptional digital experiences require both technical mastery and artistic vision.
               </p>
             </div>
 
             <div className="grid grid-cols-1 gap-12 pt-12">
               {[
                 { 
-                  label: 'Creative Development', 
-                  focus: 'React, Three.js, Advanced Animations',
-                  description: 'Building interactive experiences that push boundaries'
+                  label: 'Motion Design', 
+                  focus: 'GPU-Accelerated Animations, WebGL',
+                  description: 'Creating fluid, cinematic interactions that feel alive'
                 },
                 { 
-                  label: 'Strategic Design', 
-                  focus: 'User Experience, Information Architecture',
-                  description: 'Crafting purposeful narratives through design'
+                  label: 'Interaction Design', 
+                  focus: 'Scroll Choreography, Gesture Recognition',
+                  description: 'Designing intuitive experiences that respond to human touch'
                 },
                 { 
-                  label: 'Digital Craft', 
-                  focus: 'WebGL, Custom Shaders, Performance',
-                  description: 'Technical mastery in service of artistic vision'
+                  label: 'Technical Artistry', 
+                  focus: 'Three.js, Custom Shaders, Performance',
+                  description: 'Pushing the boundaries of what\'s possible in the browser'
                 }
               ].map((skill, index) => (
-                <div key={index} className="space-y-4 border-l border-slate-700/30 pl-8">
+                <div key={index} className="space-y-4 border-l border-slate-700/30 pl-8 transform hover:translate-x-2 transition-transform duration-500">
                   <h4 className="text-white font-extralight text-base tracking-[0.1em] uppercase">{skill.label}</h4>
                   <p className="text-slate-300 text-sm font-extralight tracking-wide">{skill.focus}</p>
                   <p className="text-slate-400 text-xs font-extralight leading-relaxed">{skill.description}</p>
@@ -67,25 +70,25 @@ const AboutSection = () => {
             </div>
           </div>
           
-          <div className="relative lg:mt-32">
-            <div className="relative w-full h-[700px] rounded-sm overflow-hidden">
-              {/* Refined glassmorphism container */}
-              <div className="absolute inset-0 backdrop-blur-3xl bg-gradient-to-br from-slate-800/5 to-slate-600/5 border border-slate-600/10"></div>
+          <div 
+            ref={imageRef}
+            className="relative lg:mt-32"
+            style={{ willChange: 'transform, opacity' }}
+          >
+            <div className="relative w-full h-[700px] rounded-sm overflow-hidden group">
+              <div className="absolute inset-0 backdrop-blur-3xl bg-gradient-to-br from-slate-800/10 to-slate-600/5 border border-slate-600/20 transition-all duration-700 group-hover:border-slate-500/30"></div>
               
-              {/* Minimalist geometric content */}
               <div className="absolute inset-12 flex items-center justify-center">
                 <div className="relative w-full h-full">
-                  {/* Refined geometric shapes */}
-                  <div className="absolute top-1/3 left-1/3 w-24 h-24 border border-slate-400/20 rotate-45 rounded-sm"></div>
-                  <div className="absolute bottom-1/2 right-1/4 w-16 h-16 bg-gradient-to-br from-slate-300/10 to-transparent rounded-full"></div>
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-px bg-gradient-to-r from-transparent via-slate-200/40 to-transparent"></div>
-                  <div className="absolute bottom-1/3 left-1/2 transform -translate-x-1/2 w-px h-24 bg-gradient-to-b from-slate-200/40 to-transparent"></div>
+                  <div className="absolute top-1/3 left-1/3 w-24 h-24 border border-slate-400/30 rotate-45 rounded-sm transition-all duration-700 group-hover:rotate-[60deg] group-hover:scale-110"></div>
+                  <div className="absolute bottom-1/2 right-1/4 w-16 h-16 bg-gradient-to-br from-slate-300/15 to-transparent rounded-full transition-all duration-700 group-hover:scale-125"></div>
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent"></div>
+                  <div className="absolute bottom-1/3 left-1/2 transform -translate-x-1/2 w-px h-24 bg-gradient-to-b from-slate-200/50 to-transparent"></div>
                 </div>
               </div>
               
-              {/* Subtle glow effects */}
-              <div className="absolute -top-12 -right-12 w-24 h-24 bg-slate-300/5 rounded-full blur-3xl"></div>
-              <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-slate-200/5 rounded-full blur-3xl"></div>
+              <div className="absolute -top-12 -right-12 w-24 h-24 bg-slate-300/10 rounded-full blur-3xl transition-all duration-700 group-hover:scale-150"></div>
+              <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-slate-200/8 rounded-full blur-3xl transition-all duration-700 group-hover:scale-125"></div>
             </div>
           </div>
         </div>
