@@ -1,10 +1,17 @@
+
 import { useRef, useEffect } from 'react';
 import { useSplitTransition } from '../hooks/useSplitTransition';
 import { useCinematicScroll } from '../hooks/useCinematicScroll';
 import { useHorizontalScroll } from '../hooks/useHorizontalScroll';
+import { Button } from './ui/button';
+import { ArrowRight } from 'lucide-react';
 import HorizontalScrollIndicator from './HorizontalScrollIndicator';
 
-const WorkSection = () => {
+interface WorkSectionProps {
+  onEnterGallery: () => void;
+}
+
+const WorkSection = ({ onEnterGallery }: WorkSectionProps) => {
   const sectionRef = useSplitTransition({ direction: 'right', triggerPoint: 0.1 });
   const horizontalScrollRef = useHorizontalScroll({ scrollSpeed: 1.2 });
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -46,18 +53,6 @@ const WorkSection = () => {
       description: "Spatial audio environments that transform architectural spaces into immersive sound sculptures using AI composition.",
       approach: "Audio-Visual",
       year: "2023"
-    },
-    {
-      title: "Memory Fragments",
-      description: "AR experience reconstructing personal memories through machine learning interpretation of photographs and objects.",
-      approach: "Augmented Reality",
-      year: "2024"
-    },
-    {
-      title: "Digital Organisms",
-      description: "Self-evolving digital creatures that learn and adapt based on user interactions across multiple installation sites.",
-      approach: "Artificial Life",
-      year: "2023"
     }
   ];
 
@@ -95,10 +90,20 @@ const WorkSection = () => {
             Projects
           </h2>
           <div className="w-16 h-px bg-gradient-to-r from-slate-300 to-transparent mb-8"></div>
-          <p className="text-xl text-slate-200 max-w-3xl font-extralight leading-[1.8] tracking-wide">
-            Selected works that push the boundaries of digital interaction, 
-            each crafted with cinematic precision and innovative technology.
-          </p>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+            <p className="text-xl text-slate-200 max-w-3xl font-extralight leading-[1.8] tracking-wide">
+              Selected works that push the boundaries of digital interaction, 
+              each crafted with cinematic precision and innovative technology.
+            </p>
+            <Button
+              onClick={onEnterGallery}
+              className="bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-600 hover:to-slate-500 text-white border border-slate-500/30 backdrop-blur-sm transition-all duration-500 group flex-shrink-0"
+              size="lg"
+            >
+              <span className="font-extralight tracking-wide">Explore Gallery</span>
+              <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+            </Button>
+          </div>
         </div>
 
         <div className="relative">
@@ -123,7 +128,7 @@ const WorkSection = () => {
                     transformStyle: 'preserve-3d'
                   }}
                 >
-                  <div className="relative p-8 h-80 backdrop-blur-3xl bg-gradient-to-br from-slate-800/8 to-slate-600/4 border border-slate-600/15 rounded-sm hover:border-slate-500/25 transition-all duration-1000 ease-out transform hover:scale-[1.02] hover:-translate-y-2">
+                  <div className="relative p-8 h-80 backdrop-blur-3xl bg-gradient-to-br from-slate-800/8 to-slate-600/4 border border-slate-600/15 rounded-sm hover:border-slate-500/25 transition-all duration-1000 ease-out transform hover:scale-[1.02] hover:-translate-y-2 cursor-pointer">
                     
                     <div className="flex justify-between items-start mb-6">
                       <span className="text-xs font-extralight tracking-[0.3em] text-slate-400 uppercase">
