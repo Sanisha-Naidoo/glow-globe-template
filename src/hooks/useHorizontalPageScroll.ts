@@ -20,7 +20,7 @@ export const useHorizontalPageScroll = () => {
   const horizontalDataRef = useRef<HorizontalScrollData>({ current: 0, target: 0, velocity: 0, isActive: false });
   const animationRef = useRef<number>();
   const callbacksRef = useRef<((progress: number, velocity: number, horizontalProgress: number, isHorizontalActive: boolean) => void)[]>([]);
-  const [horizontalThreshold, setHorizontalThreshold] = useState(0);
+  const [horizontalThreshold, setHorizontalThreshold] = useState(0.7);
 
   const smoothScroll = useCallback(() => {
     const scrollData = scrollDataRef.current;
@@ -33,14 +33,19 @@ export const useHorizontalPageScroll = () => {
     scrollData.current += scrollData.velocity;
     scrollData.momentum = Math.abs(scrollData.velocity);
 
-    // Check if we've reached the horizontal threshold
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    // Calculate scroll progress
+    const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
     const progress = Math.min(scrollData.current / maxScroll, 1);
+    
+    console.log('Scroll progress:', progress, 'Threshold:', horizontalThreshold);
+    
+    // Check if we've reached the horizontal threshold
     const thresholdReached = progress >= horizontalThreshold;
 
     // Horizontal scroll logic
     if (thresholdReached && !horizontalData.isActive) {
       horizontalData.isActive = true;
+      console.log('Horizontal mode activated');
     }
 
     if (horizontalData.isActive) {
@@ -49,8 +54,13 @@ export const useHorizontalPageScroll = () => {
       horizontalData.current += horizontalData.velocity;
     }
 
-    // Normalize horizontal progress (0-1 across 4 screens)
+    // Normalize horizontal progress (0-1 across multiple screens)
     const horizontalProgress = Math.min(horizontalData.current / (window.innerWidth * 3), 1);
+
+    // Sync actual scroll position with our virtual scroll
+    if (Math.abs(window.scrollY - scrollData.current) > 1) {
+      window.scrollTo(0, scrollData.current);
+    }
 
     // Trigger callbacks
     callbacksRef.current.forEach(callback => {
@@ -76,12 +86,15 @@ export const useHorizontalPageScroll = () => {
         window.innerWidth * 3, // 4 screens total
         horizontalData.target + delta
       ));
+      console.log('Horizontal scroll target:', horizontalData.target);
     } else {
       // Vertical scrolling mode
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       scrollData.target = Math.max(0, Math.min(
-        document.documentElement.scrollHeight - window.innerHeight,
+        maxScroll,
         scrollData.target + delta
       ));
+      console.log('Vertical scroll target:', scrollData.target);
     }
 
     // Start smooth scroll animation
@@ -102,10 +115,11 @@ export const useHorizontalPageScroll = () => {
 
   const setThreshold = useCallback((threshold: number) => {
     setHorizontalThreshold(threshold);
+    console.log('Threshold set to:', threshold);
   }, []);
 
   useEffect(() => {
-    // Initialize scroll position
+    // Initialize scroll positions
     scrollDataRef.current.current = window.scrollY;
     scrollDataRef.current.target = window.scrollY;
 

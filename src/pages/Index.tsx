@@ -13,34 +13,41 @@ const Index = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [showHorizontalWork, setShowHorizontalWork] = useState(false);
   const mainContentRef = useRef<HTMLDivElement>(null);
-  const { subscribeToScroll } = useHorizontalPageScroll();
+  const { subscribeToScroll, setThreshold } = useHorizontalPageScroll();
 
   useEffect(() => {
+    // Set threshold to 70% of page scroll
+    setThreshold(0.7);
+
     const unsubscribe = subscribeToScroll((progress, velocity, horizontalProgress, isHorizontalActive) => {
+      console.log('Scroll data:', { progress, velocity, horizontalProgress, isHorizontalActive });
+      
       setShowHorizontalWork(isHorizontalActive);
       
       if (mainContentRef.current) {
         if (isHorizontalActive) {
-          // Fade out main content when horizontal section is active
-          mainContentRef.current.style.opacity = '0.3';
-          mainContentRef.current.style.transform = 'scale(0.95)';
+          // Smooth transition instead of harsh fade
+          mainContentRef.current.style.opacity = '0.8';
+          mainContentRef.current.style.transform = 'scale(0.98)';
+          mainContentRef.current.style.filter = 'blur(1px)';
         } else {
           // Restore main content
           mainContentRef.current.style.opacity = '1';
           mainContentRef.current.style.transform = 'scale(1)';
+          mainContentRef.current.style.filter = 'blur(0px)';
         }
       }
     });
 
     return unsubscribe;
-  }, [subscribeToScroll]);
+  }, [subscribeToScroll, setThreshold]);
 
   return (
-    <div className={`${darkMode ? 'dark' : ''} transition-all duration-500 gpu-accelerated`}>
+    <div className={`${darkMode ? 'dark' : ''} transition-all duration-500`}>
       <div 
         ref={mainContentRef}
-        className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white min-h-screen relative overflow-x-hidden transition-all duration-1000"
-        style={{ willChange: 'transform, opacity' }}
+        className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white min-h-screen relative overflow-x-hidden transition-all duration-700 ease-out"
+        style={{ willChange: 'transform, opacity, filter' }}
       >
         <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
         <HeroSection />
@@ -51,7 +58,11 @@ const Index = () => {
       </div>
       
       {/* Horizontal Work Section Overlay */}
-      {showHorizontalWork && <HorizontalWorkSection />}
+      {showHorizontalWork && (
+        <div className="fixed inset-0 z-50">
+          <HorizontalWorkSection />
+        </div>
+      )}
     </div>
   );
 };

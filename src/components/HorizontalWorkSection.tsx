@@ -3,9 +3,8 @@ import { useRef, useEffect } from 'react';
 import { useHorizontalPageScroll } from '../hooks/useHorizontalPageScroll';
 
 const HorizontalWorkSection = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { subscribeToScroll, setThreshold } = useHorizontalPageScroll();
+  const { subscribeToScroll } = useHorizontalPageScroll();
 
   const workScreens = [
     {
@@ -35,25 +34,21 @@ const HorizontalWorkSection = () => {
   ];
 
   useEffect(() => {
-    // Set the threshold for horizontal transition (e.g., 70% down the page)
-    setThreshold(0.7);
-
     const unsubscribe = subscribeToScroll((progress, velocity, horizontalProgress, isHorizontalActive) => {
       if (containerRef.current && isHorizontalActive) {
         // Transform the container horizontally
         const translateX = -horizontalProgress * 100;
         containerRef.current.style.transform = `translate3d(${translateX}%, 0, 0)`;
+        console.log('Horizontal transform:', translateX);
       }
     });
 
     return unsubscribe;
-  }, [subscribeToScroll, setThreshold]);
+  }, [subscribeToScroll]);
 
   return (
     <section 
-      id="horizontal-work" 
-      ref={sectionRef}
-      className="fixed inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 overflow-hidden z-10"
+      className="w-full h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 overflow-hidden"
       style={{ willChange: 'transform' }}
     >
       <div 
