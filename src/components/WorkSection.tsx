@@ -1,4 +1,3 @@
-
 import { useRef, useEffect } from 'react';
 import { useSplitTransition } from '../hooks/useSplitTransition';
 import { useCinematicScroll } from '../hooks/useCinematicScroll';
@@ -108,8 +107,7 @@ const WorkSection = () => {
             className="flex gap-8 overflow-x-auto scrollbar-hide pb-8 scroll-smooth"
             style={{ 
               scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-              WebkitScrollbar: { display: 'none' }
+              msOverflowStyle: 'none'
             }}
           >
             <div 
