@@ -102,7 +102,7 @@ const ParticleAnimation = () => {
         };
       };
 
-      // Initialize particle data
+      // Initialize particle data with neon colors
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
         
@@ -121,14 +121,35 @@ const ParticleAnimation = () => {
         positions[i3 + 1] = heartPos.y;
         positions[i3 + 2] = heartPos.z;
 
-        // Improved color palette with better variation
+        // Bright neon color palette
         const t = i / particleCount;
-        colors[i3] = 0.7 + t * 0.2;     // Reduced red intensity
-        colors[i3 + 1] = 0.3 + t * 0.3; // Balanced green
-        colors[i3 + 2] = 0.4 + t * 0.4; // Balanced blue
+        const colorVariant = Math.floor(t * 4); // 4 color variants
+        
+        switch (colorVariant) {
+          case 0: // Electric blue/cyan
+            colors[i3] = 0.2 + t * 0.3;     // Low red
+            colors[i3 + 1] = 0.8 + t * 0.2; // High green
+            colors[i3 + 2] = 1.0;           // Max blue
+            break;
+          case 1: // Hot pink/magenta
+            colors[i3] = 1.0;               // Max red
+            colors[i3 + 1] = 0.2 + t * 0.3; // Low green
+            colors[i3 + 2] = 0.8 + t * 0.2; // High blue
+            break;
+          case 2: // Bright green/lime
+            colors[i3] = 0.3 + t * 0.4;     // Medium red
+            colors[i3 + 1] = 1.0;           // Max green
+            colors[i3 + 2] = 0.2 + t * 0.3; // Low blue
+            break;
+          default: // Purple/violet
+            colors[i3] = 0.8 + t * 0.2;     // High red
+            colors[i3 + 1] = 0.2 + t * 0.2; // Low green
+            colors[i3 + 2] = 1.0;           // Max blue
+            break;
+        }
 
-        // Smaller, more consistent particle sizes
-        sizes[i] = 0.6 + Math.random() * 0.3; // Much smaller particles
+        // Larger particles for better neon visibility
+        sizes[i] = 0.8 + Math.random() * 0.4;
       }
 
       particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -137,7 +158,7 @@ const ParticleAnimation = () => {
 
       console.log('🎨 Particle attributes set successfully');
 
-      // Improved shader material with better alpha blending
+      // Enhanced neon shader material with additive blending
       const material = new THREE.ShaderMaterial({
         uniforms: {
           time: { value: 0 },
@@ -149,6 +170,7 @@ const ParticleAnimation = () => {
           varying vec3 vColor;
           varying float vAlpha;
           varying float vDepth;
+          varying float vGlow;
           uniform float time;
           uniform float morphProgress;
           uniform float visibility;
@@ -157,20 +179,21 @@ const ParticleAnimation = () => {
             vColor = color;
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
             
-            // Subtle floating motion
+            // Subtle floating motion with neon flickering
             mvPosition.x += sin(time * 0.2 + position.y * 0.2) * 0.02;
             mvPosition.y += cos(time * 0.15 + position.x * 0.2) * 0.02;
             
-            // Depth for better 3D effect
+            // Depth for 3D effect and glow calculation
             vDepth = -mvPosition.z;
+            vGlow = 1.0 + sin(time * 2.0 + position.x * 5.0) * 0.2; // Pulsing glow
             
-            // Distance-based alpha with visibility control
+            // Enhanced alpha with brightness boost
             float distance = length(position.xy);
-            vAlpha = (1.0 - distance * 0.08) * visibility;
+            vAlpha = (1.2 - distance * 0.05) * visibility; // Brighter base
             vAlpha = clamp(vAlpha, 0.0, 1.0);
             
-            // Smaller particle sizing without morph multiplier
-            gl_PointSize = size * (80.0 / -mvPosition.z);
+            // Larger particle sizing for neon effect
+            gl_PointSize = size * (100.0 / -mvPosition.z) * vGlow;
             gl_Position = projectionMatrix * mvPosition;
           }
         `,
@@ -178,25 +201,29 @@ const ParticleAnimation = () => {
           varying vec3 vColor;
           varying float vAlpha;
           varying float vDepth;
+          varying float vGlow;
           
           void main() {
             float r = distance(gl_PointCoord, vec2(0.5, 0.5));
             if (r > 0.5) discard;
             
-            // Improved alpha falloff for better particle definition
-            float alpha = (1.0 - r * 2.0) * vAlpha;
-            alpha = pow(alpha, 2.0); // More aggressive falloff
+            // Neon glow effect with soft falloff
+            float alpha = (1.0 - r * 1.5) * vAlpha;
+            alpha = pow(alpha, 1.5); // Softer falloff for glow
             
-            // Depth-based color variation for better 3D effect
+            // Depth-based brightness for 3D pop
             float depthFactor = clamp(vDepth * 0.1, 0.0, 1.0);
-            vec3 finalColor = vColor * (0.8 + depthFactor * 0.2);
+            float brightness = 1.5 + depthFactor * 0.5; // Overall brightness boost
             
-            // Reduced alpha to prevent over-brightening
-            gl_FragColor = vec4(finalColor, alpha * 0.6);
+            // Enhanced neon colors with glow multiplier
+            vec3 finalColor = vColor * brightness * vGlow;
+            
+            // Bright alpha for neon visibility
+            gl_FragColor = vec4(finalColor, alpha);
           }
         `,
-        blending: THREE.NormalBlending, // Changed from AdditiveBlending
-        depthTest: true, // Enable depth testing
+        blending: THREE.AdditiveBlending, // Additive blending for neon glow
+        depthTest: false, // Disable depth test for better glow
         transparent: true,
         vertexColors: true
       });
