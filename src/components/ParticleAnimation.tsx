@@ -48,8 +48,8 @@ const ParticleAnimation = () => {
 
       console.log('WebGL renderer initialized successfully');
 
-      // Enhanced particle system
-      const particleCount = 2000;
+      // Enhanced particle system with higher resolution
+      const particleCount = 5000; // Increased from 2000 for better resolution
       const particles = new THREE.BufferGeometry();
       const positions = new Float32Array(particleCount * 3);
       const colors = new Float32Array(particleCount * 3);
@@ -72,19 +72,27 @@ const ParticleAnimation = () => {
         };
       };
 
-      // Original scattered globe shape (restored from beginning)
+      // Improved globe shape using Fibonacci sphere distribution
       const createGlobeShape = (index: number) => {
-        const phi = Math.acos(-1 + (2 * index) / particleCount);
-        const theta = Math.sqrt(particleCount * Math.PI) * phi;
+        // Fibonacci sphere for uniform distribution
+        const i = index + 0.5;
+        const theta = Math.acos(1 - 2 * i / particleCount);
+        const phi = Math.PI * (1 + Math.sqrt(5)) * i;
         
-        // Add organic scatter
-        const scatter = 0.3;
-        const radius = 1.5 + (Math.random() - 0.5) * scatter;
+        const radius = 1.5;
+        
+        // Calculate sphere coordinates with minimal scatter for cleaner definition
+        const x = radius * Math.sin(theta) * Math.cos(phi);
+        const y = radius * Math.sin(theta) * Math.sin(phi);
+        const z = radius * Math.cos(theta);
+        
+        // Add very subtle organic variation (reduced from 0.3 to 0.1)
+        const scatter = 0.1;
         
         return {
-          x: radius * Math.cos(theta) * Math.sin(phi) + (Math.random() - 0.5) * 0.2,
-          y: radius * Math.sin(theta) * Math.sin(phi) + (Math.random() - 0.5) * 0.2,
-          z: radius * Math.cos(phi) + (Math.random() - 0.5) * 0.2
+          x: x + (Math.random() - 0.5) * scatter,
+          y: y + (Math.random() - 0.5) * scatter,
+          z: z + (Math.random() - 0.5) * scatter
         };
       };
 
@@ -113,7 +121,8 @@ const ParticleAnimation = () => {
         colors[i3 + 1] = 0.3 + t * 0.4;
         colors[i3 + 2] = 0.4 + t * 0.6;
 
-        sizes[i] = Math.random() * 1.5 + 0.5;
+        // More consistent particle sizes for better sphere definition
+        sizes[i] = Math.random() * 1.2 + 0.8; // Reduced variation
       }
 
       particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -183,7 +192,7 @@ const ParticleAnimation = () => {
       scene.add(particleSystem);
       camera.position.z = 5;
 
-      console.log('Particle system created successfully');
+      console.log('Particle system created successfully with', particleCount, 'particles');
 
       // Store scene reference
       sceneRef.current = {
@@ -229,10 +238,10 @@ const ParticleAnimation = () => {
         }
         positionAttribute.needsUpdate = true;
 
-        // Globe rotation starts immediately when morphing is complete
+        // Significantly slowed down globe rotation for more cinematic feel
         if (sceneRef.current.morphProgress >= 1.0) {
-          sceneRef.current.particles.rotation.y += 0.01;
-          sceneRef.current.particles.rotation.x += 0.003;
+          sceneRef.current.particles.rotation.y += 0.002; // Reduced from 0.01
+          sceneRef.current.particles.rotation.x += 0.001; // Reduced from 0.003
         }
 
         sceneRef.current.renderer.render(sceneRef.current.scene, sceneRef.current.camera);
