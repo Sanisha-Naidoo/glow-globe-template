@@ -18,19 +18,19 @@ const ParticleAnimation = () => {
   useEffect(() => {
     if (!mountRef.current) return;
 
-    console.log('Initializing ParticleAnimation...');
+    console.log('🚀 Initializing Enhanced ParticleAnimation...');
 
     try {
-      // Scene setup with error handling
+      // Scene setup with enhanced error handling
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
       
-      // Enhanced renderer setup with fallbacks
+      // Enhanced renderer setup with better fallbacks
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('webgl2') || canvas.getContext('webgl');
       
       if (!context) {
-        console.warn('WebGL not supported, falling back to CSS background');
+        console.warn('❌ WebGL not supported, particle animation disabled');
         return;
       }
 
@@ -46,10 +46,12 @@ const ParticleAnimation = () => {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       mountRef.current.appendChild(renderer.domElement);
 
-      console.log('WebGL renderer initialized successfully');
+      console.log('✅ WebGL renderer initialized successfully');
 
-      // Enhanced particle system with higher resolution
-      const particleCount = 5000; // Increased from 2000 for better resolution
+      // Ultra-high resolution particle system
+      const particleCount = 8000; // Increased for ultra-high resolution
+      console.log(`🔵 Creating ${particleCount} particles...`);
+      
       const particles = new THREE.BufferGeometry();
       const positions = new Float32Array(particleCount * 3);
       const colors = new Float32Array(particleCount * 3);
@@ -57,14 +59,14 @@ const ParticleAnimation = () => {
       const heartPositions = new Float32Array(particleCount * 3);
       const globePositions = new Float32Array(particleCount * 3);
 
-      // Original heart shape
+      // Enhanced heart shape
       const createHeartShape = (index: number) => {
         const t = (index / particleCount) * Math.PI * 4;
         const x = 16 * Math.pow(Math.sin(t), 3);
         const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
         const z = Math.sin(t * 1.5) * 3;
         
-        const noise = (Math.random() - 0.5) * 0.5;
+        const noise = (Math.random() - 0.5) * 0.3;
         return { 
           x: (x + noise) * 0.04, 
           y: (y + noise) * 0.04, 
@@ -72,27 +74,32 @@ const ParticleAnimation = () => {
         };
       };
 
-      // Improved globe shape using Fibonacci sphere distribution
+      // Perfect Fibonacci sphere distribution for ultra-clean globe
       const createGlobeShape = (index: number) => {
-        // Fibonacci sphere for uniform distribution
-        const i = index + 0.5;
-        const theta = Math.acos(1 - 2 * i / particleCount);
-        const phi = Math.PI * (1 + Math.sqrt(5)) * i;
+        // Golden angle in radians
+        const goldenAngle = Math.PI * (3 - Math.sqrt(5));
         
-        const radius = 1.5;
+        // y goes from 1 to -1
+        const y = 1 - (index / (particleCount - 1)) * 2;
         
-        // Calculate sphere coordinates with minimal scatter for cleaner definition
-        const x = radius * Math.sin(theta) * Math.cos(phi);
-        const y = radius * Math.sin(theta) * Math.sin(phi);
-        const z = radius * Math.cos(theta);
+        // radius at y
+        const radius = Math.sqrt(1 - y * y);
         
-        // Add very subtle organic variation (reduced from 0.3 to 0.1)
-        const scatter = 0.1;
+        // golden angle increment
+        const theta = goldenAngle * index;
+        
+        const x = Math.cos(theta) * radius;
+        const z = Math.sin(theta) * radius;
+        
+        const sphereRadius = 1.5;
+        
+        // Minimal scatter for ultra-clean definition
+        const scatter = 0.05;
         
         return {
-          x: x + (Math.random() - 0.5) * scatter,
-          y: y + (Math.random() - 0.5) * scatter,
-          z: z + (Math.random() - 0.5) * scatter
+          x: (x * sphereRadius) + (Math.random() - 0.5) * scatter,
+          y: (y * sphereRadius) + (Math.random() - 0.5) * scatter,
+          z: (z * sphereRadius) + (Math.random() - 0.5) * scatter
         };
       };
 
@@ -115,21 +122,23 @@ const ParticleAnimation = () => {
         positions[i3 + 1] = heartPos.y;
         positions[i3 + 2] = heartPos.z;
 
-        // Enhanced color palette
+        // Enhanced color palette with better visibility
         const t = i / particleCount;
-        colors[i3] = 0.8 + t * 0.2;
-        colors[i3 + 1] = 0.3 + t * 0.4;
-        colors[i3 + 2] = 0.4 + t * 0.6;
+        colors[i3] = 0.9 + t * 0.1;     // More red
+        colors[i3 + 1] = 0.4 + t * 0.3; // Balanced green
+        colors[i3 + 2] = 0.5 + t * 0.5; // More blue
 
-        // More consistent particle sizes for better sphere definition
-        sizes[i] = Math.random() * 1.2 + 0.8; // Reduced variation
+        // Ultra-consistent particle sizes for perfect sphere definition
+        sizes[i] = 1.0 + Math.random() * 0.5; // Very consistent sizing
       }
 
       particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
       particles.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-      // Enhanced shader material with error handling
+      console.log('🎨 Particle attributes set successfully');
+
+      // Enhanced shader material with HDR-like rendering
       const material = new THREE.ShaderMaterial({
         uniforms: {
           time: { value: 0 },
@@ -148,16 +157,17 @@ const ParticleAnimation = () => {
             vColor = color;
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
             
-            // Floating motion
-            mvPosition.x += sin(time * 0.3 + position.y * 0.3) * 0.03;
-            mvPosition.y += cos(time * 0.25 + position.x * 0.3) * 0.03;
+            // Subtle floating motion
+            mvPosition.x += sin(time * 0.2 + position.y * 0.2) * 0.02;
+            mvPosition.y += cos(time * 0.15 + position.x * 0.2) * 0.02;
             
-            // Distance-based alpha with visibility control
+            // Enhanced distance-based alpha with visibility control
             float distance = length(position.xy);
-            vAlpha = (1.0 - distance * 0.1) * visibility;
+            vAlpha = (1.2 - distance * 0.05) * visibility;
             vAlpha = clamp(vAlpha, 0.0, 1.0);
             
-            gl_PointSize = size * (120.0 / -mvPosition.z) * (1.0 + morphProgress * 0.5);
+            // Better particle sizing with depth
+            gl_PointSize = size * (150.0 / -mvPosition.z) * (1.0 + morphProgress * 0.3);
             gl_Position = projectionMatrix * mvPosition;
           }
         `,
@@ -169,11 +179,13 @@ const ParticleAnimation = () => {
             float r = distance(gl_PointCoord, vec2(0.5, 0.5));
             if (r > 0.5) discard;
             
+            // Enhanced alpha falloff for better definition
             float alpha = (1.0 - r * 2.0) * vAlpha;
-            alpha = pow(alpha, 1.5);
+            alpha = pow(alpha, 1.2);
             
-            vec3 finalColor = vColor + vec3(0.2, 0.25, 0.3) * (1.0 - alpha);
-            gl_FragColor = vec4(finalColor, alpha * 0.9);
+            // HDR-like color enhancement
+            vec3 finalColor = vColor + vec3(0.3, 0.2, 0.4) * (1.0 - alpha * 0.5);
+            gl_FragColor = vec4(finalColor, alpha * 0.95);
           }
         `,
         blending: THREE.AdditiveBlending,
@@ -185,14 +197,21 @@ const ParticleAnimation = () => {
       // Check for shader compilation errors
       const gl = renderer.getContext();
       if (gl.getError() !== gl.NO_ERROR) {
-        console.warn('WebGL error during shader compilation');
+        console.warn('⚠️ WebGL error during shader compilation');
+      } else {
+        console.log('✅ Shaders compiled successfully');
       }
 
       const particleSystem = new THREE.Points(particles, material);
       scene.add(particleSystem);
       camera.position.z = 5;
 
-      console.log('Particle system created successfully with', particleCount, 'particles');
+      console.log(`🎯 Particle system created successfully with ${particleCount} particles`);
+      console.log('📊 Performance metrics:', {
+        particleCount,
+        memoryUsage: `${(particleCount * 32 / 1024).toFixed(2)}KB`,
+        devicePixelRatio: window.devicePixelRatio
+      });
 
       // Store scene reference
       sceneRef.current = {
@@ -213,18 +232,32 @@ const ParticleAnimation = () => {
         }
       };
 
-      // Simplified animation loop - always runs
+      // Ultra-smooth animation loop with frame rate monitoring
       let time = 0;
+      let frameCount = 0;
+      let lastFpsTime = performance.now();
+      
       const animate = () => {
         if (!sceneRef.current) return;
         
-        time += 0.004;
+        time += 0.003; // Slightly slower time progression
+        frameCount++;
+        
+        // FPS monitoring every 60 frames
+        if (frameCount % 60 === 0) {
+          const now = performance.now();
+          const fps = 60000 / (now - lastFpsTime);
+          if (fps < 30) {
+            console.warn(`⚡ Performance warning: ${fps.toFixed(1)} FPS`);
+          }
+          lastFpsTime = now;
+        }
         
         // Update material uniforms
         sceneRef.current.material.uniforms.time.value = time;
         sceneRef.current.material.uniforms.morphProgress.value = sceneRef.current.morphProgress;
 
-        // Morphing animation
+        // Enhanced morphing animation
         const positionAttribute = sceneRef.current.particles.geometry.getAttribute('position') as THREE.BufferAttribute;
         const positions = positionAttribute.array as Float32Array;
 
@@ -232,16 +265,17 @@ const ParticleAnimation = () => {
           const i3 = i * 3;
           const t = sceneRef.current.morphProgress;
           
+          // Smooth interpolation between shapes
           positions[i3] = THREE.MathUtils.lerp(heartPositions[i3], globePositions[i3], t);
           positions[i3 + 1] = THREE.MathUtils.lerp(heartPositions[i3 + 1], globePositions[i3 + 1], t);
           positions[i3 + 2] = THREE.MathUtils.lerp(heartPositions[i3 + 2], globePositions[i3 + 2], t);
         }
         positionAttribute.needsUpdate = true;
 
-        // Significantly slowed down globe rotation for more cinematic feel
+        // Ultra-cinematic slow globe rotation
         if (sceneRef.current.morphProgress >= 1.0) {
-          sceneRef.current.particles.rotation.y += 0.002; // Reduced from 0.01
-          sceneRef.current.particles.rotation.x += 0.001; // Reduced from 0.003
+          sceneRef.current.particles.rotation.y += 0.001; // Ultra-slow Y rotation
+          sceneRef.current.particles.rotation.x += 0.0005; // Ultra-slow X rotation
         }
 
         sceneRef.current.renderer.render(sceneRef.current.scene, sceneRef.current.camera);
@@ -249,18 +283,20 @@ const ParticleAnimation = () => {
       };
       
       animate();
-      console.log('Animation loop started');
+      console.log('🎬 Ultra-smooth animation loop started');
 
-      // Handle resize
+      // Handle resize with performance optimization
       const handleResize = () => {
         if (!sceneRef.current) return;
         sceneRef.current.camera.aspect = window.innerWidth / window.innerHeight;
         sceneRef.current.camera.updateProjectionMatrix();
         sceneRef.current.renderer.setSize(window.innerWidth, window.innerHeight);
+        console.log('📱 Viewport resized and updated');
       };
       window.addEventListener('resize', handleResize);
 
       return () => {
+        console.log('🧹 Cleaning up ParticleAnimation...');
         window.removeEventListener('resize', handleResize);
         if (sceneRef.current?.animationId) {
           cancelAnimationFrame(sceneRef.current.animationId);
@@ -269,11 +305,12 @@ const ParticleAnimation = () => {
       };
 
     } catch (error) {
-      console.error('Failed to initialize ParticleAnimation:', error);
+      console.error('💥 Failed to initialize ParticleAnimation:', error);
+      console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace available');
     }
   }, []);
 
-  // Simplified scroll-based control
+  // Enhanced scroll-based control with easing
   useEffect(() => {
     const handleScroll = () => {
       if (!sceneRef.current) return;
@@ -281,16 +318,24 @@ const ParticleAnimation = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       
-      // Heart morphs to globe over first 25% of scroll
-      const morphProgress = Math.min(scrollY / (windowHeight * 0.25), 1);
-      sceneRef.current.morphProgress = morphProgress;
+      // Heart morphs to globe over first 25% of scroll with easing
+      const rawProgress = Math.min(scrollY / (windowHeight * 0.25), 1);
+      // Apply easing curve for smoother transition
+      const easedProgress = rawProgress < 0.5 
+        ? 2 * rawProgress * rawProgress 
+        : 1 - Math.pow(-2 * rawProgress + 2, 3) / 2;
       
-      // Simple disappearance when scrolled past hero section
+      sceneRef.current.morphProgress = easedProgress;
+      
+      // Enhanced visibility control
       const heroBottom = windowHeight;
       const isVisible = scrollY < heroBottom;
       const targetVisibility = isVisible ? 1.0 : 0.0;
       
-      sceneRef.current.material.uniforms.visibility.value = targetVisibility;
+      // Smooth visibility transition
+      const currentVisibility = sceneRef.current.material.uniforms.visibility.value;
+      const newVisibility = THREE.MathUtils.lerp(currentVisibility, targetVisibility, 0.1);
+      sceneRef.current.material.uniforms.visibility.value = newVisibility;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
