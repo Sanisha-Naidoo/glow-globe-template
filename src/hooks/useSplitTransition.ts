@@ -10,7 +10,7 @@ interface SplitTransitionOptions {
 
 export const useSplitTransition = (options: SplitTransitionOptions = {}) => {
   const { triggerPoint = 0.3, duration = 0.8, direction = 'right' } = options;
-  const elementRef = useRef<HTMLElement>(null);
+  const elementRef = useRef<HTMLDivElement>(null);
   const { subscribeToScroll } = useCinematicScroll();
 
   useEffect(() => {

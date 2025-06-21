@@ -6,7 +6,7 @@ import { useCinematicScroll } from '../hooks/useCinematicScroll';
 
 const HeroSection = () => {
   const [textVisible, setTextVisible] = useState(false);
-  const heroRef = useRef<HTMLElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
   const { subscribeToScroll } = useCinematicScroll();
 
   useEffect(() => {
