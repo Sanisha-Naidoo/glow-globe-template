@@ -28,7 +28,7 @@ const AboutSection = () => {
     <section 
       id="about" 
       ref={parallaxRef}
-      className="min-h-screen py-32 relative bg-gradient-to-b from-slate-950/50 to-slate-900/30"
+      className="min-h-screen py-32 relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800"
       style={{ willChange: 'transform' }}
     >
       <div className="max-w-7xl mx-auto px-8">
@@ -42,10 +42,10 @@ const AboutSection = () => {
               <h2 className="text-7xl md:text-8xl font-extralight text-white mb-12 tracking-[0.05em]">
                 Vision
               </h2>
-              <div className="w-16 h-px bg-gradient-to-r from-slate-300 to-transparent mb-16"></div>
+              <div className="w-16 h-px bg-gradient-to-r from-slate-200 to-transparent mb-16"></div>
             </div>
             
-            <div className="space-y-12 text-lg text-slate-200 leading-[1.9] font-extralight">
+            <div className="space-y-12 text-lg text-slate-100 leading-[1.9] font-extralight">
               <p>
                 I craft digital experiences that move beyond the ordinary — where every interaction 
                 feels cinematic, every transition tells a story, and every moment captivates.
@@ -81,10 +81,10 @@ const AboutSection = () => {
                   description: 'Pushing the boundaries of what\'s possible in the browser'
                 }
               ].map((skill, index) => (
-                <div key={index} className="space-y-4 border-l border-slate-700/30 pl-8 transform hover:translate-x-2 transition-transform duration-500">
+                <div key={index} className="space-y-4 border-l border-slate-600 pl-8 transform hover:translate-x-2 transition-transform duration-500">
                   <h4 className="text-white font-extralight text-base tracking-[0.1em] uppercase">{skill.label}</h4>
-                  <p className="text-slate-300 text-sm font-extralight tracking-wide">{skill.focus}</p>
-                  <p className="text-slate-400 text-xs font-extralight leading-relaxed">{skill.description}</p>
+                  <p className="text-blue-200 text-sm font-extralight tracking-wide">{skill.focus}</p>
+                  <p className="text-slate-200 text-xs font-extralight leading-relaxed">{skill.description}</p>
                 </div>
               ))}
             </div>
@@ -96,19 +96,19 @@ const AboutSection = () => {
             style={{ willChange: 'transform, opacity' }}
           >
             <div className="relative w-full h-[700px] rounded-sm overflow-hidden group">
-              <div className="absolute inset-0 backdrop-blur-3xl bg-gradient-to-br from-slate-800/10 to-slate-600/5 border border-slate-600/20 transition-all duration-700 group-hover:border-slate-500/30"></div>
+              <div className="absolute inset-0 backdrop-blur-3xl bg-gradient-to-br from-slate-700/20 to-slate-600/15 border border-slate-500/40 transition-all duration-700 group-hover:border-slate-400/60"></div>
               
               <div className="absolute inset-12 flex items-center justify-center">
                 <div className="relative w-full h-full">
-                  <div className="absolute top-1/3 left-1/3 w-24 h-24 border border-slate-400/30 rotate-45 rounded-sm transition-all duration-700 group-hover:rotate-[60deg] group-hover:scale-110"></div>
-                  <div className="absolute bottom-1/2 right-1/4 w-16 h-16 bg-gradient-to-br from-slate-300/15 to-transparent rounded-full transition-all duration-700 group-hover:scale-125"></div>
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent"></div>
-                  <div className="absolute bottom-1/3 left-1/2 transform -translate-x-1/2 w-px h-24 bg-gradient-to-b from-slate-200/50 to-transparent"></div>
+                  <div className="absolute top-1/3 left-1/3 w-24 h-24 border border-slate-300/50 rotate-45 rounded-sm transition-all duration-700 group-hover:rotate-[60deg] group-hover:scale-110"></div>
+                  <div className="absolute bottom-1/2 right-1/4 w-16 h-16 bg-gradient-to-br from-blue-400/25 to-transparent rounded-full transition-all duration-700 group-hover:scale-125"></div>
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-px bg-gradient-to-r from-transparent via-slate-100/70 to-transparent"></div>
+                  <div className="absolute bottom-1/3 left-1/2 transform -translate-x-1/2 w-px h-24 bg-gradient-to-b from-slate-100/70 to-transparent"></div>
                 </div>
               </div>
               
-              <div className="absolute -top-12 -right-12 w-24 h-24 bg-slate-300/10 rounded-full blur-3xl transition-all duration-700 group-hover:scale-150"></div>
-              <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-slate-200/8 rounded-full blur-3xl transition-all duration-700 group-hover:scale-125"></div>
+              <div className="absolute -top-12 -right-12 w-24 h-24 bg-blue-300/20 rounded-full blur-3xl transition-all duration-700 group-hover:scale-150"></div>
+              <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-slate-100/15 rounded-full blur-3xl transition-all duration-700 group-hover:scale-125"></div>
             </div>
           </div>
         </div>

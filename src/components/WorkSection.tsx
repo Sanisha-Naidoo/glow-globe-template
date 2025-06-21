@@ -1,4 +1,3 @@
-
 import { useRef, useEffect } from 'react';
 import { useSplitTransition } from '../hooks/useSplitTransition';
 import { useCinematicScroll } from '../hooks/useCinematicScroll';
@@ -81,7 +80,7 @@ const WorkSection = ({ onEnterGallery }: WorkSectionProps) => {
     <section 
       id="work" 
       ref={sectionRef}
-      className="min-h-screen py-32 relative bg-gradient-to-b from-slate-900/30 to-slate-950/50"
+      className="min-h-screen py-32 relative bg-gradient-to-b from-slate-900 via-slate-950 to-slate-800"
       style={{ willChange: 'transform, opacity' }}
     >
       <div className="max-w-7xl mx-auto px-8">
@@ -89,15 +88,15 @@ const WorkSection = ({ onEnterGallery }: WorkSectionProps) => {
           <h2 className="text-7xl md:text-8xl font-extralight text-white mb-12 tracking-[0.05em]">
             Projects
           </h2>
-          <div className="w-16 h-px bg-gradient-to-r from-slate-300 to-transparent mb-8"></div>
+          <div className="w-16 h-px bg-gradient-to-r from-slate-200 to-transparent mb-8"></div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
-            <p className="text-xl text-slate-200 max-w-3xl font-extralight leading-[1.8] tracking-wide">
+            <p className="text-xl text-slate-100 max-w-3xl font-extralight leading-[1.8] tracking-wide">
               Selected works that push the boundaries of digital interaction, 
               each crafted with cinematic precision and innovative technology.
             </p>
             <Button
               onClick={onEnterGallery}
-              className="bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-600 hover:to-slate-500 text-white border border-slate-500/30 backdrop-blur-sm transition-all duration-500 group flex-shrink-0"
+              className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white border border-blue-400/50 backdrop-blur-sm transition-all duration-500 group flex-shrink-0"
               size="lg"
             >
               <span className="font-extralight tracking-wide">Explore Gallery</span>
@@ -128,35 +127,35 @@ const WorkSection = ({ onEnterGallery }: WorkSectionProps) => {
                     transformStyle: 'preserve-3d'
                   }}
                 >
-                  <div className="relative p-8 h-80 backdrop-blur-3xl bg-gradient-to-br from-slate-800/8 to-slate-600/4 border border-slate-600/15 rounded-sm hover:border-slate-500/25 transition-all duration-1000 ease-out transform hover:scale-[1.02] hover:-translate-y-2 cursor-pointer">
+                  <div className="relative p-8 h-80 backdrop-blur-3xl bg-gradient-to-br from-slate-700/20 to-slate-600/10 border border-slate-500/30 rounded-sm hover:border-slate-400/50 transition-all duration-1000 ease-out transform hover:scale-[1.02] hover:-translate-y-2 cursor-pointer">
                     
                     <div className="flex justify-between items-start mb-6">
-                      <span className="text-xs font-extralight tracking-[0.3em] text-slate-400 uppercase">
+                      <span className="text-xs font-extralight tracking-[0.3em] text-blue-200 uppercase">
                         {project.approach}
                       </span>
-                      <span className="text-xs font-extralight tracking-[0.2em] text-slate-500">
+                      <span className="text-xs font-extralight tracking-[0.2em] text-slate-300">
                         {project.year}
                       </span>
                     </div>
                     
                     <div className="space-y-4 mb-8">
-                      <h3 className="text-xl font-extralight text-white group-hover:text-slate-100 transition-colors duration-700 tracking-[0.05em]">
+                      <h3 className="text-xl font-extralight text-white group-hover:text-slate-50 transition-colors duration-700 tracking-[0.05em]">
                         {project.title}
                       </h3>
                       
-                      <p className="text-slate-300 leading-[1.6] font-extralight text-sm tracking-wide">
+                      <p className="text-slate-100 leading-[1.6] font-extralight text-sm tracking-wide">
                         {project.description}
                       </p>
                     </div>
                     
-                    <div className="absolute bottom-6 left-8 flex items-center space-x-3 text-slate-400 group-hover:text-slate-200 transition-colors duration-700">
+                    <div className="absolute bottom-6 left-8 flex items-center space-x-3 text-slate-200 group-hover:text-white transition-colors duration-700">
                       <span className="text-xs font-extralight tracking-[0.2em] uppercase">Explore</span>
-                      <div className="w-6 h-px bg-gradient-to-r from-slate-400 to-transparent group-hover:w-12 transition-all duration-700"></div>
+                      <div className="w-6 h-px bg-gradient-to-r from-blue-300 to-transparent group-hover:w-12 transition-all duration-700"></div>
                     </div>
 
-                    <div className="absolute top-4 right-4 w-1 h-1 bg-slate-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                    <div className="absolute top-4 right-4 w-1 h-1 bg-blue-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                     
-                    <div className="absolute inset-0 bg-gradient-to-br from-slate-200/2 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-sm"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-100/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-sm"></div>
                   </div>
                 </div>
               ))}
@@ -166,8 +165,8 @@ const WorkSection = ({ onEnterGallery }: WorkSectionProps) => {
           <HorizontalScrollIndicator containerRef={horizontalScrollRef} />
           
           {/* Fade edges */}
-          <div className="absolute top-0 left-0 w-16 h-full bg-gradient-to-r from-slate-950/50 to-transparent pointer-events-none z-10"></div>
-          <div className="absolute top-0 right-0 w-16 h-full bg-gradient-to-l from-slate-950/50 to-transparent pointer-events-none z-10"></div>
+          <div className="absolute top-0 left-0 w-16 h-full bg-gradient-to-r from-slate-800 to-transparent pointer-events-none z-10"></div>
+          <div className="absolute top-0 right-0 w-16 h-full bg-gradient-to-l from-slate-800 to-transparent pointer-events-none z-10"></div>
         </div>
       </div>
     </section>
