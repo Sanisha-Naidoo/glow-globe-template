@@ -56,11 +56,12 @@ const ParticleAnimation = () => {
       };
     };
 
-    // Enhanced globe with fibonacci distribution
+    // Original scattered globe shape
     const createGlobeShape = (index: number) => {
-      const phi = Math.acos(1 - 2 * (index / particleCount));
-      const theta = Math.PI * (1 + Math.sqrt(5)) * index;
-      const radius = 2.2;
+      // Create more organic, scattered distribution
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      const radius = 1.8 + (Math.random() - 0.5) * 0.8; // Varying radius for scatter
       
       return {
         x: radius * Math.sin(phi) * Math.cos(theta),
@@ -88,11 +89,11 @@ const ParticleAnimation = () => {
       positions[i3 + 1] = heartPos.y;
       positions[i3 + 2] = heartPos.z;
 
-      // Enhanced color palette
+      // Enhanced color palette with gradient
       const t = i / particleCount;
-      colors[i3] = 0.9 + t * 0.1;
-      colors[i3 + 1] = 0.4 + t * 0.3;
-      colors[i3 + 2] = 0.5 + t * 0.5;
+      colors[i3] = 0.8 + t * 0.2;
+      colors[i3 + 1] = 0.3 + t * 0.4;
+      colors[i3 + 2] = 0.4 + t * 0.6;
 
       sizes[i] = Math.random() * 1.5 + 0.5;
     }
@@ -101,7 +102,7 @@ const ParticleAnimation = () => {
     particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     particles.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-    // Updated shader material with improved visibility control
+    // Enhanced shader material
     const material = new THREE.ShaderMaterial({
       uniforms: {
         time: { value: 0 },
@@ -205,8 +206,8 @@ const ParticleAnimation = () => {
 
       // Start globe rotation immediately when morphing is complete
       if (sceneRef.current.morphProgress >= 1.0) {
-        sceneRef.current.particles.rotation.y += 0.008; // Increased rotation speed
-        sceneRef.current.particles.rotation.x += 0.002; // Add subtle x-axis rotation
+        sceneRef.current.particles.rotation.y += 0.01;
+        sceneRef.current.particles.rotation.x += 0.003;
       }
 
       sceneRef.current.renderer.render(sceneRef.current.scene, sceneRef.current.camera);
@@ -232,42 +233,7 @@ const ParticleAnimation = () => {
     };
   }, []);
 
-  // Intersection Observer for visibility
-  useEffect(() => {
-    if (!mountRef.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (sceneRef.current) {
-            sceneRef.current.isVisible = entry.isIntersecting;
-            sceneRef.current.material.uniforms.visibility.value = entry.isIntersecting ? 1.0 : 0.0;
-            
-            // Restart animation if visible
-            if (entry.isIntersecting && !sceneRef.current.animationId) {
-              const animate = () => {
-                if (!sceneRef.current || !sceneRef.current.isVisible) return;
-                
-                const time = performance.now() * 0.001;
-                sceneRef.current.material.uniforms.time.value = time;
-                
-                sceneRef.current.renderer.render(sceneRef.current.scene, sceneRef.current.camera);
-                sceneRef.current.animationId = requestAnimationFrame(animate);
-              };
-              animate();
-            }
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(mountRef.current);
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Scroll-based morphing
+  // Simplified scroll-based control
   useEffect(() => {
     const handleScroll = () => {
       if (!sceneRef.current) return;
@@ -275,19 +241,20 @@ const ParticleAnimation = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       
-      // Heart morphs to globe over first 30% of scroll (faster transition)
-      const morphProgress = Math.min(scrollY / (windowHeight * 0.3), 1);
+      // Heart morphs to globe over first 25% of scroll (faster transition)
+      const morphProgress = Math.min(scrollY / (windowHeight * 0.25), 1);
       sceneRef.current.morphProgress = morphProgress;
       
-      // Disappear when scrolling below the fold (hero section)
+      // Simple disappearance: fade out when scrolling below the fold
       const heroSection = document.getElementById('home');
       if (heroSection) {
         const heroRect = heroSection.getBoundingClientRect();
         const isHeroVisible = heroRect.bottom > 0;
         
         if (sceneRef.current) {
+          const targetVisibility = isHeroVisible ? 1.0 : 0.0;
+          sceneRef.current.material.uniforms.visibility.value = targetVisibility;
           sceneRef.current.isVisible = isHeroVisible;
-          sceneRef.current.material.uniforms.visibility.value = isHeroVisible ? 1.0 : 0.0;
         }
       }
     };

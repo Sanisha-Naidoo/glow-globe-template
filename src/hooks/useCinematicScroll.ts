@@ -22,7 +22,7 @@ export const useCinematicScroll = () => {
     scrollData.current += scrollData.velocity;
     scrollData.momentum = Math.abs(scrollData.velocity);
 
-    // Normalize scroll progress (0-1) - removed the 70% cap
+    // Full scroll progress (0-1) without any caps
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const progress = Math.min(scrollData.current / maxScroll, 1);
 
@@ -41,7 +41,7 @@ export const useCinematicScroll = () => {
     const scrollData = scrollDataRef.current;
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     
-    // Allow normal scrolling behavior - removed the 70% restriction
+    // Allow full range scrolling
     const delta = e.deltaY * 1.2;
     scrollData.target = Math.max(0, Math.min(maxScroll, scrollData.target + delta));
 
@@ -66,7 +66,7 @@ export const useCinematicScroll = () => {
     scrollDataRef.current.current = window.scrollY;
     scrollDataRef.current.target = window.scrollY;
 
-    // Use regular scroll listener instead of preventing default
+    // Enhanced scroll listener with better performance
     const handleScroll = () => {
       scrollDataRef.current.current = window.scrollY;
       scrollDataRef.current.target = window.scrollY;

@@ -17,14 +17,15 @@ const HeroSection = () => {
   useEffect(() => {
     const unsubscribe = subscribeToScroll((progress) => {
       if (heroRef.current) {
-        // Only apply transform effects for the first 30% of scroll (matching particle animation)
-        const heroProgress = Math.min(progress * 3.33, 1); // Maps 0-0.3 to 0-1
+        // Enhanced parallax effect for hero section
+        // Apply effects over first 40% of scroll for smoother transition
+        const heroProgress = Math.min(progress * 2.5, 1); // Maps 0-0.4 to 0-1
         
-        const scale = 1 - heroProgress * 0.3;
-        const translateX = -heroProgress * 30;
-        const opacity = 1 - heroProgress * 0.8;
+        const scale = 1 - heroProgress * 0.2;
+        const translateY = heroProgress * 20;
+        const opacity = 1 - heroProgress * 0.9;
         
-        heroRef.current.style.transform = `translate3d(${translateX}%, 0, 0) scale(${scale})`;
+        heroRef.current.style.transform = `translate3d(0, ${translateY}%, 0) scale(${scale})`;
         heroRef.current.style.opacity = opacity.toString();
       }
     });

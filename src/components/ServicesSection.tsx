@@ -1,4 +1,3 @@
-
 import { useRef, useEffect } from 'react';
 import { useSplitTransition } from '../hooks/useSplitTransition';
 import { useCinematicScroll } from '../hooks/useCinematicScroll';
@@ -9,6 +8,7 @@ const ServicesSection = () => {
   const sectionRef = useSplitTransition({ direction: 'left', triggerPoint: 0.1 });
   const horizontalScrollRef = useHorizontalScroll({ scrollSpeed: 1 });
   const cardsRef = useRef<HTMLDivElement>(null);
+  const parallaxRef = useRef<HTMLDivElement>(null);
   const { subscribeToScroll } = useCinematicScroll();
 
   const services = [
@@ -52,17 +52,28 @@ const ServicesSection = () => {
 
   useEffect(() => {
     const unsubscribe = subscribeToScroll((progress) => {
+      // Enhanced parallax for services section
+      if (parallaxRef.current) {
+        const servicesProgress = Math.max(0, Math.min(1, (progress - 0.3) * 2));
+        const translateY = -servicesProgress * 25;
+        const scale = 1 - servicesProgress * 0.03;
+        
+        parallaxRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
+      }
+
+      // Enhanced card animations
       if (cardsRef.current) {
         const cards = cardsRef.current.children;
         Array.from(cards).forEach((card, index) => {
           const element = card as HTMLElement;
           const delay = index * 0.03;
-          const cardProgress = Math.max(0, Math.min(1, (progress - 0.5 - delay) * 2));
+          const cardProgress = Math.max(0, Math.min(1, (progress - 0.4 - delay) * 2));
           
-          const scale = 0.9 + (cardProgress * 0.1);
+          const scale = 0.95 + (cardProgress * 0.05);
           const opacity = cardProgress;
+          const translateY = (1 - cardProgress) * 20;
           
-          element.style.transform = `scale(${scale})`;
+          element.style.transform = `scale(${scale}) translateY(${translateY}px)`;
           element.style.opacity = opacity.toString();
         });
       }
@@ -74,12 +85,16 @@ const ServicesSection = () => {
   return (
     <section 
       id="services"
-      ref={sectionRef}
+      ref={parallaxRef}
       className="min-h-screen py-32 relative bg-gradient-to-b from-slate-800/20 to-slate-900/40"
-      style={{ willChange: 'transform, opacity' }}
+      style={{ willChange: 'transform' }}
     >
       <div className="max-w-7xl mx-auto px-8">
-        <div className="mb-16">
+        <div 
+          ref={sectionRef}
+          className="mb-16"
+          style={{ willChange: 'transform, opacity' }}
+        >
           <h2 className="text-7xl md:text-8xl font-extralight text-white mb-12 tracking-[0.05em]">
             Services
           </h2>

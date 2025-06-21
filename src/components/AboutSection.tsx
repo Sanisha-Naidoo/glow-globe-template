@@ -1,13 +1,33 @@
 
+import { useRef, useEffect } from 'react';
 import { useSplitTransition } from '../hooks/useSplitTransition';
+import { useCinematicScroll } from '../hooks/useCinematicScroll';
 
 const AboutSection = () => {
   const sectionRef = useSplitTransition({ direction: 'right', triggerPoint: 0.2 });
   const imageRef = useSplitTransition({ direction: 'left', triggerPoint: 0.4 });
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  const { subscribeToScroll } = useCinematicScroll();
+
+  useEffect(() => {
+    const unsubscribe = subscribeToScroll((progress) => {
+      if (parallaxRef.current) {
+        // Apply subtle parallax effect when About section is in view
+        const aboutProgress = Math.max(0, Math.min(1, (progress - 0.15) * 3));
+        const translateY = -aboutProgress * 15;
+        const scale = 1 - aboutProgress * 0.05;
+        
+        parallaxRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
+      }
+    });
+
+    return unsubscribe;
+  }, [subscribeToScroll]);
 
   return (
     <section 
       id="about" 
+      ref={parallaxRef}
       className="min-h-screen py-32 relative bg-gradient-to-b from-slate-950/50 to-slate-900/30"
       style={{ willChange: 'transform' }}
     >
