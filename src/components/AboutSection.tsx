@@ -39,25 +39,25 @@ const AboutSection = () => {
             style={{ willChange: 'transform, opacity' }}
           >
             <div>
-              <h2 className="text-7xl md:text-8xl font-light text-white mb-12 tracking-[0.05em] drop-shadow-lg">
+              <h2 className="text-7xl md:text-8xl font-light text-white mb-12 tracking-wide leading-tight">
                 Vision
               </h2>
               <div className="w-20 h-px bg-gradient-to-r from-white to-transparent mb-16"></div>
             </div>
             
-            <div className="space-y-12 text-xl text-white leading-[1.8] font-normal">
-              <p className="drop-shadow-md">
+            <div className="space-y-12 text-xl text-white/90 leading-relaxed font-light">
+              <p>
                 I craft digital experiences that move beyond the ordinary — where every interaction 
                 feels cinematic, every transition tells a story, and every moment captivates.
               </p>
               
-              <p className="drop-shadow-md">
+              <p>
                 My work exists at the intersection of motion design and human psychology, 
                 creating interfaces that don't just function, but inspire and delight through 
                 carefully orchestrated movement and timing.
               </p>
               
-              <p className="drop-shadow-md">
+              <p>
                 Collaborating with visionary brands and individuals who understand that 
                 exceptional digital experiences require both technical mastery and artistic vision.
               </p>
@@ -82,9 +82,9 @@ const AboutSection = () => {
                 }
               ].map((skill, index) => (
                 <div key={index} className="space-y-4 border-l-2 border-blue-400 pl-8 transform hover:translate-x-2 transition-transform duration-500 bg-slate-800/40 backdrop-blur-sm p-6 rounded-sm">
-                  <h4 className="text-white font-medium text-lg tracking-[0.1em] uppercase drop-shadow-md">{skill.label}</h4>
-                  <p className="text-blue-200 text-base font-normal tracking-wide drop-shadow-sm">{skill.focus}</p>
-                  <p className="text-gray-100 text-sm font-normal leading-relaxed">{skill.description}</p>
+                  <h4 className="text-white font-normal text-lg tracking-wide uppercase">{skill.label}</h4>
+                  <p className="text-blue-200 text-base font-light tracking-wide">{skill.focus}</p>
+                  <p className="text-white/80 text-sm font-light leading-relaxed">{skill.description}</p>
                 </div>
               ))}
             </div>

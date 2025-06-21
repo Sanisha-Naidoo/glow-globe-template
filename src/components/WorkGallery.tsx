@@ -92,7 +92,7 @@ const WorkGallery = ({ onClose }: WorkGalleryProps) => {
           >
             <ArrowUp size={20} />
           </Button>
-          <span className="text-slate-400 text-sm">Press ESC or click to exit</span>
+          <span className="text-slate-400 text-sm font-light">Press ESC or click to exit</span>
         </div>
 
         {/* Navigation Controls */}
@@ -133,16 +133,16 @@ const WorkGallery = ({ onClose }: WorkGalleryProps) => {
           >
             <div className="max-w-4xl mx-auto text-center">
               <div className="mb-8">
-                <span className="text-xs font-extralight tracking-[0.3em] text-slate-400 uppercase block mb-4">
+                <span className="text-xs font-light tracking-widest text-slate-400 uppercase block mb-4">
                   {screen.subtitle}
                 </span>
-                <h2 className="text-4xl md:text-6xl lg:text-7xl font-extralight text-white mb-8 tracking-[0.05em]">
+                <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-white mb-8 tracking-wide leading-tight">
                   {screen.title}
                 </h2>
                 <div className="w-16 h-px bg-gradient-to-r from-slate-300 to-transparent mx-auto mb-8"></div>
               </div>
 
-              <p className="text-lg md:text-xl text-slate-200 mb-12 font-extralight leading-[1.8] tracking-wide max-w-3xl mx-auto">
+              <p className="text-lg md:text-xl text-slate-200 mb-12 font-light leading-relaxed tracking-wide max-w-3xl mx-auto">
                 {screen.content}
               </p>
 
@@ -155,12 +155,12 @@ const WorkGallery = ({ onClose }: WorkGalleryProps) => {
                     role="button"
                     aria-label={`Explore ${project}`}
                   >
-                    <h3 className="text-base md:text-lg font-extralight text-white group-hover:text-slate-100 transition-colors duration-500 tracking-[0.05em] mb-4">
+                    <h3 className="text-base md:text-lg font-light text-white group-hover:text-slate-100 transition-colors duration-500 tracking-wide mb-4">
                       {project}
                     </h3>
                     
                     <div className="flex items-center space-x-3 text-slate-400 group-hover:text-slate-200 transition-colors duration-500">
-                      <span className="text-xs font-extralight tracking-[0.2em] uppercase">Explore</span>
+                      <span className="text-xs font-light tracking-wider uppercase">Explore</span>
                       <div className="w-6 h-px bg-gradient-to-r from-slate-400 to-transparent group-hover:w-12 transition-all duration-500"></div>
                     </div>
 
@@ -189,7 +189,7 @@ const WorkGallery = ({ onClose }: WorkGalleryProps) => {
               aria-label={`Go to section ${index + 1}`}
             />
           ))}
-          <span className="text-xs text-slate-400 ml-2">
+          <span className="text-xs text-slate-400 ml-2 font-light">
             {currentIndex + 1} / {workScreens.length}
           </span>
         </div>
@@ -201,7 +201,7 @@ const WorkGallery = ({ onClose }: WorkGalleryProps) => {
           <div className="flex items-center gap-2">
             <ArrowLeft size={12} />
             <ArrowRight size={12} />
-            <span>Swipe to navigate</span>
+            <span className="font-light">Swipe to navigate</span>
           </div>
         </div>
       </div>

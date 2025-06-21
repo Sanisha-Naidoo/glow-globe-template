@@ -34,7 +34,7 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
       <div className="backdrop-blur-2xl bg-slate-950/10 border-b border-slate-700/20">
         <div className="max-w-7xl mx-auto px-8 py-6">
           <div className="flex justify-between items-center">
-            <div className="text-xl font-extralight tracking-[0.2em] text-white">
+            <div className="text-xl font-light tracking-widest text-white">
               PORTFOLIO
             </div>
             
@@ -44,7 +44,7 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-slate-300 hover:text-white transition-all duration-500 text-sm font-extralight tracking-[0.15em] relative group uppercase"
+                  className="text-slate-300 hover:text-white transition-all duration-500 text-sm font-light tracking-wider relative group uppercase"
                 >
                   {item.name}
                   <span className="absolute -bottom-2 left-1/2 w-0 h-px bg-gradient-to-r from-transparent via-white to-transparent group-hover:w-full group-hover:left-0 transition-all duration-700 ease-out"></span>
@@ -70,7 +70,7 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.id)}
-                  className="block w-full text-left text-slate-300 hover:text-white transition-colors duration-300 text-sm font-extralight tracking-[0.15em] py-2 uppercase"
+                  className="block w-full text-left text-slate-300 hover:text-white transition-colors duration-300 text-sm font-light tracking-wider py-2 uppercase"
                 >
                   {item.name}
                 </button>
