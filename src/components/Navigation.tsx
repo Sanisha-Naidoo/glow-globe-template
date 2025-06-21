@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useScrollNavigation } from '../hooks/useScrollAnimation';
 
 interface NavigationProps {
   darkMode: boolean;
@@ -8,17 +9,12 @@ interface NavigationProps {
 }
 
 const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
-  const [isVisible, setIsVisible] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 2500);
-    return () => clearTimeout(timer);
-  }, []);
+  const navRef = useScrollNavigation();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
-    element?.scrollIntoView({ behavior: 'smooth' });
+    element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     setIsMobileMenuOpen(false);
   };
 
@@ -30,24 +26,27 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-      <div className="backdrop-blur-xl bg-slate-950/20 border-b border-slate-700/30">
-        <div className="max-w-7xl mx-auto px-6 py-6">
+    <nav 
+      ref={navRef}
+      className="fixed top-0 w-full z-50 nav-hidden transition-all duration-700 ease-out"
+    >
+      <div className="backdrop-blur-2xl bg-slate-950/10 border-b border-slate-700/20">
+        <div className="max-w-7xl mx-auto px-8 py-6">
           <div className="flex justify-between items-center">
-            <div className="text-xl font-light tracking-wider text-white">
-              Portfolio
+            <div className="text-xl font-extralight tracking-[0.2em] text-white">
+              PORTFOLIO
             </div>
             
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-12">
+            <div className="hidden md:flex items-center space-x-16">
               {navItems.map((item) => (
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-slate-300 hover:text-white transition-colors duration-300 text-sm font-light tracking-wide relative group"
+                  className="text-slate-300 hover:text-white transition-all duration-500 text-sm font-extralight tracking-[0.15em] relative group uppercase"
                 >
                   {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-gradient-to-r from-teal-400 to-cyan-400 group-hover:w-full transition-all duration-500"></span>
+                  <span className="absolute -bottom-2 left-1/2 w-0 h-px bg-gradient-to-r from-transparent via-white to-transparent group-hover:w-full group-hover:left-0 transition-all duration-700 ease-out"></span>
                 </button>
               ))}
             </div>
@@ -64,13 +63,13 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
         
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden backdrop-blur-xl bg-slate-950/95 border-t border-slate-700/30">
-            <div className="px-6 py-4 space-y-4">
+          <div className="md:hidden backdrop-blur-2xl bg-slate-950/20 border-t border-slate-700/20">
+            <div className="px-8 py-6 space-y-6">
               {navItems.map((item) => (
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.id)}
-                  className="block w-full text-left text-slate-300 hover:text-white transition-colors duration-300 text-sm font-light tracking-wide py-2"
+                  className="block w-full text-left text-slate-300 hover:text-white transition-colors duration-300 text-sm font-extralight tracking-[0.15em] py-2 uppercase"
                 >
                   {item.name}
                 </button>

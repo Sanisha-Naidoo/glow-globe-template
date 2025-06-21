@@ -6,6 +6,14 @@ const ParticleAnimation = () => {
   const mountRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number>();
   const mouseRef = useRef({ x: 0, y: 0 });
+  const sceneRef = useRef<{
+    scene: THREE.Scene;
+    camera: THREE.PerspectiveCamera;
+    renderer: THREE.WebGLRenderer;
+    particles: THREE.Points;
+    material: THREE.ShaderMaterial;
+    cleanup: () => void;
+  } | null>(null);
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -19,50 +27,77 @@ const ParticleAnimation = () => {
     renderer.setClearColor(0x000000, 0);
     mountRef.current.appendChild(renderer.domElement);
 
-    // Refined particle system - more sophisticated and subtle
-    const particleCount = 2000;
+    // Heart-to-Globe particle system
+    const particleCount = 1500;
     const particles = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
     const sizes = new Float32Array(particleCount);
-    const velocities = new Float32Array(particleCount * 3);
+    const originalPositions = new Float32Array(particleCount * 3);
+    const targetPositions = new Float32Array(particleCount * 3);
 
-    // Create organic particle distribution
+    // Create heart shape positions
+    const createHeartShape = (index: number) => {
+      const t = (index / particleCount) * Math.PI * 2;
+      const x = 16 * Math.pow(Math.sin(t), 3);
+      const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+      const z = Math.sin(t * 2) * 2;
+      return { x: x * 0.05, y: y * 0.05, z: z * 0.05 };
+    };
+
+    // Create globe shape positions
+    const createGlobeShape = (index: number) => {
+      const phi = Math.acos(-1 + (2 * index) / particleCount);
+      const theta = Math.sqrt(particleCount * Math.PI) * phi;
+      const radius = 2;
+      
+      return {
+        x: radius * Math.cos(theta) * Math.sin(phi),
+        y: radius * Math.sin(theta) * Math.sin(phi),
+        z: radius * Math.cos(phi)
+      };
+    };
+
+    // Initialize particles
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
       
-      // Organic distribution instead of heart shape
-      const radius = Math.random() * 3;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.random() * Math.PI;
+      // Heart positions (starting state)
+      const heartPos = createHeartShape(i);
+      positions[i3] = heartPos.x;
+      positions[i3 + 1] = heartPos.y;
+      positions[i3 + 2] = heartPos.z;
       
-      positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
-      positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      positions[i3 + 2] = radius * Math.cos(phi);
+      originalPositions[i3] = heartPos.x;
+      originalPositions[i3 + 1] = heartPos.y;
+      originalPositions[i3 + 2] = heartPos.z;
 
-      // Refined color palette - deep teal to soft blue
-      const colorVariation = Math.random();
-      colors[i3] = 0.1 + colorVariation * 0.3;     // R - minimal red
-      colors[i3 + 1] = 0.4 + colorVariation * 0.4; // G - teal/cyan
-      colors[i3 + 2] = 0.7 + colorVariation * 0.3; // B - blue dominant
+      // Globe positions (target state)
+      const globePos = createGlobeShape(i);
+      targetPositions[i3] = globePos.x;
+      targetPositions[i3 + 1] = globePos.y;
+      targetPositions[i3 + 2] = globePos.z;
 
-      sizes[i] = Math.random() * 1.5 + 0.5; // Smaller, more subtle particles
-      
-      // Gentle velocities for organic movement
-      velocities[i3] = (Math.random() - 0.5) * 0.02;
-      velocities[i3 + 1] = (Math.random() - 0.5) * 0.02;
-      velocities[i3 + 2] = (Math.random() - 0.5) * 0.02;
+      // Refined color palette - warm to cool transition
+      const t = i / particleCount;
+      colors[i3] = 0.8 + t * 0.2;     // R - warm to neutral
+      colors[i3 + 1] = 0.3 + t * 0.4; // G - subtle teal
+      colors[i3 + 2] = 0.4 + t * 0.6; // B - cool blue
+
+      sizes[i] = Math.random() * 1.2 + 0.3;
     }
 
     particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     particles.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-    // Sophisticated shader material
+    // Advanced shader material
     const material = new THREE.ShaderMaterial({
       uniforms: {
         time: { value: 0 },
-        mouse: { value: new THREE.Vector2() }
+        mouse: { value: new THREE.Vector2() },
+        morphProgress: { value: 0 },
+        globalOpacity: { value: 1.0 }
       },
       vertexShader: `
         attribute float size;
@@ -71,25 +106,27 @@ const ParticleAnimation = () => {
         varying float vAlpha;
         uniform float time;
         uniform vec2 mouse;
+        uniform float morphProgress;
+        uniform float globalOpacity;
         
         void main() {
           vColor = color;
           vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
           
-          // Subtle mouse interaction
-          vec2 mouseEffect = mouse * 0.05;
+          // Subtle mouse parallax
+          vec2 mouseEffect = mouse * 0.03;
           float distance = length(position.xy);
-          mvPosition.xy += mouseEffect * (1.0 / (1.0 + distance));
+          mvPosition.xy += mouseEffect * (1.0 / (1.0 + distance * 0.5));
           
-          // Organic floating motion
-          mvPosition.x += sin(time * 0.5 + position.y * 0.1) * 0.1;
-          mvPosition.y += cos(time * 0.3 + position.x * 0.1) * 0.1;
+          // Gentle floating motion
+          mvPosition.x += sin(time * 0.4 + position.y * 0.2) * 0.05;
+          mvPosition.y += cos(time * 0.3 + position.x * 0.2) * 0.05;
           
           // Distance-based alpha for depth
-          vAlpha = 1.0 - (distance * 0.15);
-          vAlpha = clamp(vAlpha, 0.1, 0.8);
+          float depthAlpha = 1.0 - (distance * 0.1);
+          vAlpha = clamp(depthAlpha, 0.2, 1.0) * globalOpacity;
           
-          gl_PointSize = size * (200.0 / -mvPosition.z);
+          gl_PointSize = size * (150.0 / -mvPosition.z);
           gl_Position = projectionMatrix * mvPosition;
         }
       `,
@@ -102,11 +139,11 @@ const ParticleAnimation = () => {
           if (r > 0.5) discard;
           
           float alpha = (1.0 - r * 2.0) * vAlpha;
-          alpha = pow(alpha, 1.5);
+          alpha = pow(alpha, 1.2);
           
-          // Soft glow effect
-          vec3 finalColor = vColor + vec3(0.1, 0.2, 0.3) * (1.0 - alpha);
-          gl_FragColor = vec4(finalColor, alpha * 0.6);
+          // Soft luminous glow
+          vec3 finalColor = vColor + vec3(0.1, 0.15, 0.2) * (1.0 - alpha);
+          gl_FragColor = vec4(finalColor, alpha * 0.8);
         }
       `,
       blending: THREE.AdditiveBlending,
@@ -118,7 +155,7 @@ const ParticleAnimation = () => {
     const particleSystem = new THREE.Points(particles, material);
     scene.add(particleSystem);
 
-    camera.position.z = 5;
+    camera.position.z = 6;
 
     // Mouse movement tracking
     const handleMouseMove = (event: MouseEvent) => {
@@ -130,37 +167,42 @@ const ParticleAnimation = () => {
 
     // Animation loop
     let time = 0;
+    let morphProgress = 0;
+    const morphDuration = 6000; // 6 seconds for heart to globe transition
+    
     const animate = () => {
       time += 0.005;
+      morphProgress = Math.min(time * 1000 / morphDuration, 1);
       
       if (material.uniforms) {
         material.uniforms.time.value = time;
         material.uniforms.mouse.value.set(mouseRef.current.x, mouseRef.current.y);
+        material.uniforms.morphProgress.value = morphProgress;
       }
 
+      // Smooth morphing between heart and globe
       const positionAttribute = particles.getAttribute('position') as THREE.BufferAttribute;
       const positions = positionAttribute.array as Float32Array;
 
-      // Organic particle movement
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
+        const t = THREE.MathUtils.smoothstep(morphProgress, 0, 1);
         
-        // Subtle drift
-        positions[i3] += velocities[i3];
-        positions[i3 + 1] += velocities[i3 + 1];
-        positions[i3 + 2] += velocities[i3 + 2];
-        
-        // Boundary wrapping for continuous flow
-        if (Math.abs(positions[i3]) > 4) velocities[i3] *= -1;
-        if (Math.abs(positions[i3 + 1]) > 4) velocities[i3 + 1] *= -1;
-        if (Math.abs(positions[i3 + 2]) > 4) velocities[i3 + 2] *= -1;
+        positions[i3] = THREE.MathUtils.lerp(originalPositions[i3], targetPositions[i3], t);
+        positions[i3 + 1] = THREE.MathUtils.lerp(originalPositions[i3 + 1], targetPositions[i3 + 1], t);
+        positions[i3 + 2] = THREE.MathUtils.lerp(originalPositions[i3 + 2], targetPositions[i3 + 2], t);
       }
 
       positionAttribute.needsUpdate = true;
       
-      // Subtle camera movement
-      camera.position.x = Math.sin(time * 0.2) * 0.05;
-      camera.position.y = Math.cos(time * 0.15) * 0.05;
+      // Gentle camera movement
+      camera.position.x = Math.sin(time * 0.1) * 0.02;
+      camera.position.y = Math.cos(time * 0.08) * 0.02;
+
+      // Subtle rotation for globe phase
+      if (morphProgress > 0.7) {
+        particleSystem.rotation.y += 0.001;
+      }
 
       renderer.render(scene, camera);
       animationRef.current = requestAnimationFrame(animate);
@@ -177,18 +219,53 @@ const ParticleAnimation = () => {
     
     window.addEventListener('resize', handleResize);
 
+    // Store scene reference for external control
+    sceneRef.current = {
+      scene,
+      camera,
+      renderer,
+      particles: particleSystem,
+      material,
+      cleanup: () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('resize', handleResize);
+        if (mountRef.current && renderer.domElement) {
+          mountRef.current.removeChild(renderer.domElement);
+        }
+        renderer.dispose();
+        particles.dispose();
+        material.dispose();
+      }
+    };
+
     // Cleanup
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
-      document.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', handleResize);
-      if (mountRef.current && renderer.domElement) {
-        mountRef.current.removeChild(renderer.domElement);
-      }
-      renderer.dispose();
+      sceneRef.current?.cleanup();
     };
+  }, []);
+
+  // Method to fade out particles based on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (sceneRef.current?.material) {
+        const scrollY = window.scrollY;
+        const fadeStart = window.innerHeight * 0.3;
+        const fadeEnd = window.innerHeight * 0.8;
+        
+        let opacity = 1;
+        if (scrollY > fadeStart) {
+          opacity = 1 - Math.min((scrollY - fadeStart) / (fadeEnd - fadeStart), 1);
+        }
+        
+        sceneRef.current.material.uniforms.globalOpacity.value = opacity;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return <div ref={mountRef} className="absolute inset-0" />;

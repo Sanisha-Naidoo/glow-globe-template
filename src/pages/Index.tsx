@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from 'react';
-import ParticleAnimation from '../components/ParticleAnimation';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
@@ -13,7 +12,7 @@ const Index = () => {
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
