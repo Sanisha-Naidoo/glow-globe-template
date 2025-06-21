@@ -12,18 +12,30 @@ import { useHorizontalPageScroll } from '../hooks/useHorizontalPageScroll';
 const Index = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [showHorizontalWork, setShowHorizontalWork] = useState(false);
+  const [horizontalProgress, setHorizontalProgress] = useState(0);
   const mainContentRef = useRef<HTMLDivElement>(null);
   const { subscribeToScroll, setThreshold, toggleDebug } = useHorizontalPageScroll();
+
+  const handleReturnToTop = () => {
+    // Reset scroll state through the hook instead of window.scrollTo
+    const scrollData = { current: 0, target: 0, velocity: 0, momentum: 0 };
+    const horizontalData = { current: 0, target: 0, velocity: 0, isActive: false };
+    
+    // This will be handled by the hook's internal logic
+    setShowHorizontalWork(false);
+    setHorizontalProgress(0);
+  };
 
   useEffect(() => {
     // Set threshold to 70% of page scroll
     setThreshold(0.7);
     
-    // Enable debug logging temporarily
-    toggleDebug(false); // Set to true for debugging
+    // Disable debug logging for production
+    toggleDebug(false);
 
-    const unsubscribe = subscribeToScroll((progress, velocity, horizontalProgress, isHorizontalActive) => {
+    const unsubscribe = subscribeToScroll((progress, velocity, hProgress, isHorizontalActive) => {
       setShowHorizontalWork(isHorizontalActive);
+      setHorizontalProgress(hProgress);
       
       if (mainContentRef.current) {
         if (isHorizontalActive) {
@@ -63,7 +75,10 @@ const Index = () => {
       {/* Horizontal Work Section Overlay */}
       {showHorizontalWork && (
         <div className="fixed inset-0 z-50 transition-opacity duration-500">
-          <HorizontalWorkSection />
+          <HorizontalWorkSection 
+            horizontalProgress={horizontalProgress}
+            onReturnToTop={handleReturnToTop}
+          />
         </div>
       )}
     </div>

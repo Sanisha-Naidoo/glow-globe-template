@@ -1,10 +1,14 @@
+
 import { useRef, useEffect } from 'react';
 import { ArrowUp, ArrowLeft, ArrowRight } from 'lucide-react';
-import { useHorizontalPageScroll } from '../hooks/useHorizontalPageScroll';
 
-const HorizontalWorkSection = () => {
+interface HorizontalWorkSectionProps {
+  horizontalProgress: number;
+  onReturnToTop: () => void;
+}
+
+const HorizontalWorkSection = ({ horizontalProgress, onReturnToTop }: HorizontalWorkSectionProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { subscribeToScroll } = useHorizontalPageScroll();
   const currentScreenRef = useRef(0);
 
   const workScreens = [
@@ -34,24 +38,16 @@ const HorizontalWorkSection = () => {
     }
   ];
 
-  const returnToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   useEffect(() => {
-    const unsubscribe = subscribeToScroll((progress, velocity, horizontalProgress, isHorizontalActive) => {
-      if (containerRef.current && isHorizontalActive) {
-        // Transform the container horizontally with smooth animation
-        const translateX = -horizontalProgress * 100;
-        containerRef.current.style.transform = `translate3d(${translateX}%, 0, 0)`;
-        
-        // Update current screen based on progress
-        currentScreenRef.current = Math.floor(horizontalProgress * workScreens.length);
-      }
-    });
-
-    return unsubscribe;
-  }, [subscribeToScroll, workScreens.length]);
+    if (containerRef.current) {
+      // Transform the container horizontally with smooth animation
+      const translateX = -horizontalProgress * 100;
+      containerRef.current.style.transform = `translate3d(${translateX}%, 0, 0)`;
+      
+      // Update current screen based on progress
+      currentScreenRef.current = Math.floor(horizontalProgress * workScreens.length);
+    }
+  }, [horizontalProgress, workScreens.length]);
 
   return (
     <section 
@@ -60,7 +56,7 @@ const HorizontalWorkSection = () => {
     >
       {/* Return to Top Button */}
       <button
-        onClick={returnToTop}
+        onClick={onReturnToTop}
         className="fixed top-8 left-8 z-30 p-3 backdrop-blur-2xl bg-slate-800/20 border border-slate-600/30 rounded-full text-slate-300 hover:text-white hover:border-slate-500/50 transition-all duration-300 group"
         title="Return to top (or press ESC)"
       >

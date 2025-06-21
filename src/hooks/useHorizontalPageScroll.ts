@@ -23,8 +23,11 @@ export const useHorizontalPageScroll = () => {
   const [horizontalThreshold, setHorizontalThreshold] = useState(0.7);
   const debugLogging = useRef(false);
   const scrollDirection = useRef<'up' | 'down'>('down');
+  const isCleanedUpRef = useRef(false);
 
   const smoothScroll = useCallback(() => {
+    if (isCleanedUpRef.current) return;
+    
     const scrollData = scrollDataRef.current;
     const horizontalData = horizontalDataRef.current;
     const ease = 0.08;
@@ -43,6 +46,9 @@ export const useHorizontalPageScroll = () => {
     scrollData.current = Math.max(0, Math.min(maxScroll, scrollData.current));
     scrollData.target = Math.max(0, Math.min(maxScroll, scrollData.target));
 
+    // Apply actual scroll position
+    window.scrollTo(0, scrollData.current);
+
     // Calculate scroll progress
     const progress = maxScroll > 0 ? Math.min(scrollData.current / maxScroll, 1) : 0;
     
@@ -52,7 +58,7 @@ export const useHorizontalPageScroll = () => {
     
     // Improved threshold management with easier exit
     const thresholdReached = progress >= horizontalThreshold;
-    const exitThreshold = horizontalThreshold - 0.02; // Reduced hysteresis for easier exit
+    const exitThreshold = horizontalThreshold - 0.05; // Easier exit
     
     // Allow exit when scrolling up OR when below exit threshold
     if (thresholdReached && !horizontalData.isActive && scrollDirection.current === 'down') {
@@ -72,24 +78,28 @@ export const useHorizontalPageScroll = () => {
       horizontalData.current += horizontalData.velocity;
       
       // Reduced maximum horizontal distance for better control
-      const maxHorizontal = window.innerWidth * 2.5;
+      const maxHorizontal = window.innerWidth * 2;
       horizontalData.current = Math.max(0, Math.min(maxHorizontal, horizontalData.current));
       horizontalData.target = Math.max(0, Math.min(maxHorizontal, horizontalData.target));
     }
 
     // Normalize horizontal progress
-    const horizontalProgress = horizontalData.current / (window.innerWidth * 2.5);
+    const horizontalProgress = horizontalData.current / (window.innerWidth * 2);
 
     // Trigger callbacks
     callbacksRef.current.forEach(callback => {
-      callback(progress, scrollData.momentum, horizontalProgress, horizontalData.isActive);
+      try {
+        callback(progress, scrollData.momentum, horizontalProgress, horizontalData.isActive);
+      } catch (error) {
+        console.error('Scroll callback error:', error);
+      }
     });
 
     // Continue animation only if there's significant movement
     const shouldContinue = Math.abs(scrollData.velocity) > minVelocity || 
                           Math.abs(horizontalData.velocity) > minVelocity;
                           
-    if (shouldContinue) {
+    if (shouldContinue && !isCleanedUpRef.current) {
       animationRef.current = requestAnimationFrame(smoothScroll);
     } else {
       animationRef.current = undefined;
@@ -97,12 +107,14 @@ export const useHorizontalPageScroll = () => {
   }, [horizontalThreshold]);
 
   const handleWheel = useCallback((e: WheelEvent) => {
+    if (isCleanedUpRef.current) return;
+    
     e.preventDefault();
     const scrollData = scrollDataRef.current;
     const horizontalData = horizontalDataRef.current;
     
     // Reduced delta multiplier for slower, more controlled movement
-    const delta = e.deltaY * 0.4; // Reduced from 1.2 to 0.4
+    const delta = e.deltaY * 0.3; // Further reduced for smoother experience
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
 
     // Track scroll direction
@@ -110,7 +122,7 @@ export const useHorizontalPageScroll = () => {
 
     if (horizontalData.isActive && scrollDirection.current === 'down') {
       // Horizontal scrolling mode - only when scrolling down
-      const maxHorizontal = window.innerWidth * 2.5;
+      const maxHorizontal = window.innerWidth * 2;
       horizontalData.target = Math.max(0, Math.min(maxHorizontal, horizontalData.target + delta));
     } else {
       // Vertical scrolling mode - always allow upward scrolling
@@ -118,23 +130,28 @@ export const useHorizontalPageScroll = () => {
     }
 
     // Start smooth scroll animation if not already running
-    if (!animationRef.current) {
+    if (!animationRef.current && !isCleanedUpRef.current) {
       animationRef.current = requestAnimationFrame(smoothScroll);
     }
   }, [smoothScroll]);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (isCleanedUpRef.current) return;
+    
+    const scrollData = scrollDataRef.current;
     const horizontalData = horizontalDataRef.current;
     
-    // ESC key exits horizontal mode
+    // ESC key exits horizontal mode and returns to top
     if (e.key === 'Escape' && horizontalData.isActive) {
       horizontalData.isActive = false;
       horizontalData.current = 0;
       horizontalData.target = 0;
+      scrollData.current = 0;
+      scrollData.target = 0;
       scrollDirection.current = 'up';
       
       // Start animation to update UI
-      if (!animationRef.current) {
+      if (!animationRef.current && !isCleanedUpRef.current) {
         animationRef.current = requestAnimationFrame(smoothScroll);
       }
     }
@@ -160,6 +177,8 @@ export const useHorizontalPageScroll = () => {
   }, []);
 
   useEffect(() => {
+    isCleanedUpRef.current = false;
+    
     // Initialize scroll positions from current page position
     const currentScroll = window.scrollY;
     scrollDataRef.current.current = currentScroll;
@@ -170,12 +189,15 @@ export const useHorizontalPageScroll = () => {
     document.addEventListener('keydown', handleKeyDown);
 
     return () => {
+      isCleanedUpRef.current = true;
       document.removeEventListener('wheel', handleWheel);
       document.removeEventListener('keydown', handleKeyDown);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
         animationRef.current = undefined;
       }
+      // Clear callbacks to prevent memory leaks
+      callbacksRef.current = [];
     };
   }, [handleWheel, handleKeyDown]);
 
