@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
@@ -48,8 +47,8 @@ const ParticleAnimation = () => {
 
       console.log('✅ WebGL renderer initialized successfully');
 
-      // Ultra-high resolution particle system
-      const particleCount = 8000; // Increased for ultra-high resolution
+      // Optimized particle count for better definition
+      const particleCount = 4000; // Reduced from 8000 for better clarity
       console.log(`🔵 Creating ${particleCount} particles...`);
       
       const particles = new THREE.BufferGeometry();
@@ -74,7 +73,7 @@ const ParticleAnimation = () => {
         };
       };
 
-      // Perfect Fibonacci sphere distribution for ultra-clean globe
+      // Perfect Fibonacci sphere distribution with better spacing
       const createGlobeShape = (index: number) => {
         // Golden angle in radians
         const goldenAngle = Math.PI * (3 - Math.sqrt(5));
@@ -93,8 +92,8 @@ const ParticleAnimation = () => {
         
         const sphereRadius = 1.5;
         
-        // Minimal scatter for ultra-clean definition
-        const scatter = 0.05;
+        // Increased scatter for more organic appearance
+        const scatter = 0.12;
         
         return {
           x: (x * sphereRadius) + (Math.random() - 0.5) * scatter,
@@ -122,14 +121,14 @@ const ParticleAnimation = () => {
         positions[i3 + 1] = heartPos.y;
         positions[i3 + 2] = heartPos.z;
 
-        // Enhanced color palette with better visibility
+        // Improved color palette with better variation
         const t = i / particleCount;
-        colors[i3] = 0.9 + t * 0.1;     // More red
-        colors[i3 + 1] = 0.4 + t * 0.3; // Balanced green
-        colors[i3 + 2] = 0.5 + t * 0.5; // More blue
+        colors[i3] = 0.7 + t * 0.2;     // Reduced red intensity
+        colors[i3 + 1] = 0.3 + t * 0.3; // Balanced green
+        colors[i3 + 2] = 0.4 + t * 0.4; // Balanced blue
 
-        // Ultra-consistent particle sizes for perfect sphere definition
-        sizes[i] = 1.0 + Math.random() * 0.5; // Very consistent sizing
+        // Smaller, more consistent particle sizes
+        sizes[i] = 0.6 + Math.random() * 0.3; // Much smaller particles
       }
 
       particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -138,7 +137,7 @@ const ParticleAnimation = () => {
 
       console.log('🎨 Particle attributes set successfully');
 
-      // Enhanced shader material with HDR-like rendering
+      // Improved shader material with better alpha blending
       const material = new THREE.ShaderMaterial({
         uniforms: {
           time: { value: 0 },
@@ -149,6 +148,7 @@ const ParticleAnimation = () => {
           attribute float size;
           varying vec3 vColor;
           varying float vAlpha;
+          varying float vDepth;
           uniform float time;
           uniform float morphProgress;
           uniform float visibility;
@@ -161,35 +161,42 @@ const ParticleAnimation = () => {
             mvPosition.x += sin(time * 0.2 + position.y * 0.2) * 0.02;
             mvPosition.y += cos(time * 0.15 + position.x * 0.2) * 0.02;
             
-            // Enhanced distance-based alpha with visibility control
+            // Depth for better 3D effect
+            vDepth = -mvPosition.z;
+            
+            // Distance-based alpha with visibility control
             float distance = length(position.xy);
-            vAlpha = (1.2 - distance * 0.05) * visibility;
+            vAlpha = (1.0 - distance * 0.08) * visibility;
             vAlpha = clamp(vAlpha, 0.0, 1.0);
             
-            // Better particle sizing with depth
-            gl_PointSize = size * (150.0 / -mvPosition.z) * (1.0 + morphProgress * 0.3);
+            // Smaller particle sizing without morph multiplier
+            gl_PointSize = size * (80.0 / -mvPosition.z);
             gl_Position = projectionMatrix * mvPosition;
           }
         `,
         fragmentShader: `
           varying vec3 vColor;
           varying float vAlpha;
+          varying float vDepth;
           
           void main() {
             float r = distance(gl_PointCoord, vec2(0.5, 0.5));
             if (r > 0.5) discard;
             
-            // Enhanced alpha falloff for better definition
+            // Improved alpha falloff for better particle definition
             float alpha = (1.0 - r * 2.0) * vAlpha;
-            alpha = pow(alpha, 1.2);
+            alpha = pow(alpha, 2.0); // More aggressive falloff
             
-            // HDR-like color enhancement
-            vec3 finalColor = vColor + vec3(0.3, 0.2, 0.4) * (1.0 - alpha * 0.5);
-            gl_FragColor = vec4(finalColor, alpha * 0.95);
+            // Depth-based color variation for better 3D effect
+            float depthFactor = clamp(vDepth * 0.1, 0.0, 1.0);
+            vec3 finalColor = vColor * (0.8 + depthFactor * 0.2);
+            
+            // Reduced alpha to prevent over-brightening
+            gl_FragColor = vec4(finalColor, alpha * 0.6);
           }
         `,
-        blending: THREE.AdditiveBlending,
-        depthTest: false,
+        blending: THREE.NormalBlending, // Changed from AdditiveBlending
+        depthTest: true, // Enable depth testing
         transparent: true,
         vertexColors: true
       });
