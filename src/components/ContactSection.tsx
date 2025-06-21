@@ -15,11 +15,11 @@ const ContactSection = () => {
           {/* Contact Info */}
           <div className="space-y-16">
             <div>
-              <h2 className="text-7xl md:text-8xl font-light text-white mb-12 tracking-wide leading-tight">
+              <h2 className="text-7xl md:text-8xl font-normal text-white mb-12 tracking-wide leading-tight">
                 Connect
               </h2>
               <div className="w-20 h-px bg-gradient-to-r from-white to-transparent mb-16"></div>
-              <p className="text-xl text-white/90 font-light leading-relaxed tracking-wide">
+              <p className="text-xl text-gray-100 font-normal leading-relaxed tracking-wide">
                 Let's explore the possibilities of creating something extraordinary together.
               </p>
             </div>
@@ -36,7 +36,7 @@ const ContactSection = () => {
                   </p>
                   <a 
                     href={contact.link}
-                    className="text-white/90 hover:text-white transition-colors duration-500 font-light text-base tracking-wide"
+                    className="text-gray-100 hover:text-white transition-colors duration-500 font-normal text-base tracking-wide"
                   >
                     {contact.value}
                   </a>
@@ -51,42 +51,42 @@ const ContactSection = () => {
               <form className="space-y-12">
                 <div className="grid grid-cols-2 gap-8">
                   <div>
-                    <label className="block text-white mb-4 text-base font-normal tracking-wider uppercase">
+                    <label className="block text-white mb-4 text-base font-medium tracking-wider uppercase">
                       Name
                     </label>
                     <input
                       type="text"
-                      className="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-slate-400/70 text-white placeholder-white/60 focus:outline-none focus:border-blue-300 transition-colors duration-700 font-light tracking-wide text-base"
+                      className="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-slate-400/70 text-gray-100 placeholder-gray-300 focus:outline-none focus:border-blue-300 transition-colors duration-700 font-normal tracking-wide text-base"
                       placeholder="Your name"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-white mb-4 text-base font-normal tracking-wider uppercase">
+                    <label className="block text-white mb-4 text-base font-medium tracking-wider uppercase">
                       Email
                     </label>
                     <input
                       type="email"
-                      className="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-slate-400/70 text-white placeholder-white/60 focus:outline-none focus:border-blue-300 transition-colors duration-700 font-light tracking-wide text-base"
+                      className="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-slate-400/70 text-gray-100 placeholder-gray-300 focus:outline-none focus:border-blue-300 transition-colors duration-700 font-normal tracking-wide text-base"
                       placeholder="your@email.com"
                     />
                   </div>
                 </div>
                 
                 <div>
-                  <label className="block text-white mb-4 text-base font-normal tracking-wider uppercase">
+                  <label className="block text-white mb-4 text-base font-medium tracking-wider uppercase">
                     Vision
                   </label>
                   <textarea
                     rows={4}
-                    className="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-slate-400/70 text-white placeholder-white/60 focus:outline-none focus:border-blue-300 transition-colors duration-700 resize-none font-light tracking-wide leading-relaxed text-base"
+                    className="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-slate-400/70 text-gray-100 placeholder-gray-300 focus:outline-none focus:border-blue-300 transition-colors duration-700 resize-none font-normal tracking-wide leading-relaxed text-base"
                     placeholder="Tell me about your vision..."
                   />
                 </div>
                 
                 <button
                   type="submit"
-                  className="group relative px-12 py-6 bg-gradient-to-r from-blue-600/40 to-blue-500/40 border-2 border-blue-400/60 hover:border-blue-300/80 text-white hover:text-white/90 transition-all duration-700 font-normal tracking-wider text-base uppercase backdrop-blur-sm"
+                  className="group relative px-12 py-6 bg-gradient-to-r from-blue-600/40 to-blue-500/40 border-2 border-blue-400/60 hover:border-blue-300/80 text-white hover:text-gray-100 transition-all duration-700 font-medium tracking-wider text-base uppercase backdrop-blur-sm"
                 >
                   Send Message
                   <div className="absolute inset-0 bg-blue-300/15 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -99,7 +99,7 @@ const ContactSection = () => {
 
         {/* Footer */}
         <div className="text-center mt-48 pt-16 border-t border-slate-400/40">
-          <p className="text-white/80 font-light text-sm tracking-widest uppercase">
+          <p className="text-gray-100 font-normal text-sm tracking-widest uppercase">
             © 2024 — Crafted with intention and care
           </p>
         </div>

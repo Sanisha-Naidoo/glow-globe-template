@@ -1,4 +1,3 @@
-
 import { useRef, useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, X, ArrowUp } from 'lucide-react';
 import { Button } from './ui/button';
@@ -87,12 +86,12 @@ const WorkGallery = ({ onClose }: WorkGalleryProps) => {
             variant="ghost"
             size="icon"
             onClick={onClose}
-            className="text-slate-300 hover:text-white hover:bg-slate-800/50"
+            className="text-gray-100 hover:text-white hover:bg-slate-800/50"
             aria-label="Close gallery"
           >
             <ArrowUp size={20} />
           </Button>
-          <span className="text-slate-400 text-sm font-light">Press ESC or click to exit</span>
+          <span className="text-gray-200 text-sm font-normal">Press ESC or click to exit</span>
         </div>
 
         {/* Navigation Controls */}
@@ -100,9 +99,9 @@ const WorkGallery = ({ onClose }: WorkGalleryProps) => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={goToPrevious}
+            onClick={() => currentIndex > 0 && setCurrentIndex(currentIndex - 1)}
             disabled={currentIndex === 0}
-            className="text-slate-300 hover:text-white hover:bg-slate-800/50 disabled:opacity-30"
+            className="text-gray-100 hover:text-white hover:bg-slate-800/50 disabled:opacity-30"
             aria-label="Previous section"
           >
             <ArrowLeft size={20} />
@@ -110,9 +109,9 @@ const WorkGallery = ({ onClose }: WorkGalleryProps) => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={goToNext}
+            onClick={() => currentIndex < workScreens.length - 1 && setCurrentIndex(currentIndex + 1)}
             disabled={currentIndex === workScreens.length - 1}
-            className="text-slate-300 hover:text-white hover:bg-slate-800/50 disabled:opacity-30"
+            className="text-gray-100 hover:text-white hover:bg-slate-800/50 disabled:opacity-30"
             aria-label="Next section"
           >
             <ArrowRight size={20} />
@@ -133,16 +132,16 @@ const WorkGallery = ({ onClose }: WorkGalleryProps) => {
           >
             <div className="max-w-4xl mx-auto text-center">
               <div className="mb-8">
-                <span className="text-xs font-light tracking-widest text-slate-400 uppercase block mb-4">
+                <span className="text-xs font-normal tracking-widest text-gray-200 uppercase block mb-4">
                   {screen.subtitle}
                 </span>
-                <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-white mb-8 tracking-wide leading-tight">
+                <h2 className="text-4xl md:text-6xl lg:text-7xl font-normal text-white mb-8 tracking-wide leading-tight">
                   {screen.title}
                 </h2>
                 <div className="w-16 h-px bg-gradient-to-r from-slate-300 to-transparent mx-auto mb-8"></div>
               </div>
 
-              <p className="text-lg md:text-xl text-slate-200 mb-12 font-light leading-relaxed tracking-wide max-w-3xl mx-auto">
+              <p className="text-lg md:text-xl text-gray-100 mb-12 font-normal leading-relaxed tracking-wide max-w-3xl mx-auto">
                 {screen.content}
               </p>
 
@@ -155,13 +154,13 @@ const WorkGallery = ({ onClose }: WorkGalleryProps) => {
                     role="button"
                     aria-label={`Explore ${project}`}
                   >
-                    <h3 className="text-base md:text-lg font-light text-white group-hover:text-slate-100 transition-colors duration-500 tracking-wide mb-4">
+                    <h3 className="text-base md:text-lg font-normal text-white group-hover:text-gray-100 transition-colors duration-500 tracking-wide mb-4">
                       {project}
                     </h3>
                     
-                    <div className="flex items-center space-x-3 text-slate-400 group-hover:text-slate-200 transition-colors duration-500">
-                      <span className="text-xs font-light tracking-wider uppercase">Explore</span>
-                      <div className="w-6 h-px bg-gradient-to-r from-slate-400 to-transparent group-hover:w-12 transition-all duration-500"></div>
+                    <div className="flex items-center space-x-3 text-gray-200 group-hover:text-gray-100 transition-colors duration-500">
+                      <span className="text-xs font-normal tracking-wider uppercase">Explore</span>
+                      <div className="w-6 h-px bg-gradient-to-r from-gray-200 to-transparent group-hover:w-12 transition-all duration-500"></div>
                     </div>
 
                     <div className="absolute top-4 right-4 w-1 h-1 bg-slate-300 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -180,7 +179,7 @@ const WorkGallery = ({ onClose }: WorkGalleryProps) => {
           {workScreens.map((_, index) => (
             <button
               key={index}
-              onClick={() => goToIndex(index)}
+              onClick={() => setCurrentIndex(index)}
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
                 index === currentIndex 
                   ? 'bg-white w-8' 
@@ -189,7 +188,7 @@ const WorkGallery = ({ onClose }: WorkGalleryProps) => {
               aria-label={`Go to section ${index + 1}`}
             />
           ))}
-          <span className="text-xs text-slate-400 ml-2 font-light">
+          <span className="text-xs text-gray-200 ml-2 font-normal">
             {currentIndex + 1} / {workScreens.length}
           </span>
         </div>
@@ -197,11 +196,11 @@ const WorkGallery = ({ onClose }: WorkGalleryProps) => {
 
       {/* Swipe Instructions for Mobile */}
       <div className="fixed bottom-20 right-8 z-20 md:hidden">
-        <div className="bg-slate-800/20 backdrop-blur-sm border border-slate-600/20 rounded-lg p-3 text-slate-400 text-xs">
+        <div className="bg-slate-800/20 backdrop-blur-sm border border-slate-600/20 rounded-lg p-3 text-gray-200 text-xs">
           <div className="flex items-center gap-2">
             <ArrowLeft size={12} />
             <ArrowRight size={12} />
-            <span className="font-light">Swipe to navigate</span>
+            <span className="font-normal">Swipe to navigate</span>
           </div>
         </div>
       </div>

@@ -96,11 +96,11 @@ const ServicesSection = () => {
           className="mb-16"
           style={{ willChange: 'transform, opacity' }}
         >
-          <h2 className="text-7xl md:text-8xl font-light text-white mb-12 tracking-wide leading-tight">
+          <h2 className="text-7xl md:text-8xl font-normal text-white mb-12 tracking-wide leading-tight">
             Services
           </h2>
           <div className="w-20 h-px bg-gradient-to-r from-white to-transparent mb-8"></div>
-          <p className="text-xl text-white/90 max-w-3xl font-light leading-relaxed tracking-wide">
+          <p className="text-xl text-gray-100 max-w-3xl font-normal leading-relaxed tracking-wide">
             Comprehensive digital solutions that blend technical expertise 
             with creative vision to deliver exceptional user experiences.
           </p>
@@ -128,17 +128,17 @@ const ServicesSection = () => {
                   <div className="relative p-8 h-96 backdrop-blur-2xl bg-gradient-to-br from-slate-700/40 to-slate-600/30 border-2 border-slate-400/50 rounded-sm hover:border-blue-400/70 transition-all duration-700 ease-out">
                     
                     <div className="mb-6">
-                      <span className="text-sm font-light tracking-widest text-blue-200 uppercase">
+                      <span className="text-sm font-normal tracking-widest text-blue-200 uppercase">
                         {service.focus}
                       </span>
                     </div>
                     
                     <div className="space-y-6 mb-8">
-                      <h3 className="text-2xl font-normal text-white group-hover:text-white/90 transition-colors duration-500 tracking-wide">
+                      <h3 className="text-2xl font-medium text-white group-hover:text-white transition-colors duration-500 tracking-wide">
                         {service.title}
                       </h3>
                       
-                      <p className="text-white/80 leading-relaxed font-light text-base tracking-wide">
+                      <p className="text-gray-100 leading-relaxed font-normal text-base tracking-wide">
                         {service.description}
                       </p>
                     </div>
@@ -147,14 +147,14 @@ const ServicesSection = () => {
                       {service.capabilities.map((capability, capIndex) => (
                         <div key={capIndex} className="flex items-center space-x-3">
                           <div className="w-2 h-2 bg-blue-300 rounded-full"></div>
-                          <span className="text-sm text-white/80 font-light tracking-wide">
+                          <span className="text-sm text-gray-100 font-normal tracking-wide">
                             {capability}
                           </span>
                         </div>
                       ))}
                     </div>
                     
-                    <div className="absolute bottom-6 left-8 flex items-center space-x-2 text-white group-hover:text-white/80 transition-colors duration-500">
+                    <div className="absolute bottom-6 left-8 flex items-center space-x-2 text-white group-hover:text-gray-100 transition-colors duration-500">
                       <div className="w-6 h-px bg-gradient-to-r from-blue-300 to-transparent group-hover:w-12 transition-all duration-500"></div>
                     </div>
                     

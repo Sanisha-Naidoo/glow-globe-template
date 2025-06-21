@@ -86,18 +86,18 @@ const WorkSection = ({ onEnterGallery }: WorkSectionProps) => {
     >
       <div className="max-w-7xl mx-auto px-8">
         <div className="mb-16">
-          <h2 className="text-7xl md:text-8xl font-light text-white mb-12 tracking-wide leading-tight">
+          <h2 className="text-7xl md:text-8xl font-normal text-white mb-12 tracking-wide leading-tight">
             Projects
           </h2>
           <div className="w-20 h-px bg-gradient-to-r from-white to-transparent mb-8"></div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
-            <p className="text-xl text-white/90 max-w-3xl font-light leading-relaxed tracking-wide">
+            <p className="text-xl text-gray-100 max-w-3xl font-normal leading-relaxed tracking-wide">
               Selected works that push the boundaries of digital interaction, 
               each crafted with cinematic precision and innovative technology.
             </p>
             <Button
               onClick={onEnterGallery}
-              className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white border-2 border-blue-400/70 backdrop-blur-sm transition-all duration-500 group flex-shrink-0 text-base font-normal px-8 py-4"
+              className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white border-2 border-blue-400/70 backdrop-blur-sm transition-all duration-500 group flex-shrink-0 text-base font-medium px-8 py-4"
               size="lg"
             >
               <span className="font-normal tracking-wide">Explore Gallery</span>
@@ -131,26 +131,26 @@ const WorkSection = ({ onEnterGallery }: WorkSectionProps) => {
                   <div className="relative p-8 h-80 backdrop-blur-3xl bg-gradient-to-br from-slate-700/40 to-slate-600/30 border-2 border-slate-400/50 rounded-sm hover:border-blue-400/70 transition-all duration-1000 ease-out transform hover:scale-[1.02] hover:-translate-y-2 cursor-pointer">
                     
                     <div className="flex justify-between items-start mb-6">
-                      <span className="text-sm font-light tracking-widest text-blue-200 uppercase">
+                      <span className="text-sm font-normal tracking-widest text-blue-200 uppercase">
                         {project.approach}
                       </span>
-                      <span className="text-sm font-light tracking-wider text-white/80">
+                      <span className="text-sm font-normal tracking-wider text-gray-100">
                         {project.year}
                       </span>
                     </div>
                     
                     <div className="space-y-4 mb-8">
-                      <h3 className="text-xl font-normal text-white group-hover:text-white/90 transition-colors duration-700 tracking-wide">
+                      <h3 className="text-xl font-medium text-white group-hover:text-white transition-colors duration-700 tracking-wide">
                         {project.title}
                       </h3>
                       
-                      <p className="text-white/80 leading-relaxed font-light text-base tracking-wide">
+                      <p className="text-gray-100 leading-relaxed font-normal text-base tracking-wide">
                         {project.description}
                       </p>
                     </div>
                     
-                    <div className="absolute bottom-6 left-8 flex items-center space-x-3 text-white group-hover:text-white/80 transition-colors duration-700">
-                      <span className="text-sm font-light tracking-wider uppercase">Explore</span>
+                    <div className="absolute bottom-6 left-8 flex items-center space-x-3 text-white group-hover:text-gray-100 transition-colors duration-700">
+                      <span className="text-sm font-normal tracking-wider uppercase">Explore</span>
                       <div className="w-8 h-px bg-gradient-to-r from-blue-300 to-transparent group-hover:w-16 transition-all duration-700"></div>
                     </div>
 
