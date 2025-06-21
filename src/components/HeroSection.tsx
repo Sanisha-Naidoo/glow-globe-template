@@ -17,10 +17,12 @@ const HeroSection = () => {
   useEffect(() => {
     const unsubscribe = subscribeToScroll((progress) => {
       if (heroRef.current) {
-        // Shrink and move hero content to the left as user scrolls
-        const scale = 1 - progress * 0.3;
-        const translateX = -progress * 30;
-        const opacity = 1 - progress * 0.8;
+        // Only apply transform effects for the first 30% of scroll (matching particle animation)
+        const heroProgress = Math.min(progress * 3.33, 1); // Maps 0-0.3 to 0-1
+        
+        const scale = 1 - heroProgress * 0.3;
+        const translateX = -heroProgress * 30;
+        const opacity = 1 - heroProgress * 0.8;
         
         heroRef.current.style.transform = `translate3d(${translateX}%, 0, 0) scale(${scale})`;
         heroRef.current.style.opacity = opacity.toString();

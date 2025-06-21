@@ -22,20 +22,17 @@ export const useCinematicScroll = () => {
     scrollData.current += scrollData.velocity;
     scrollData.momentum = Math.abs(scrollData.velocity);
 
-    // Normalize scroll progress (0-1)
+    // Normalize scroll progress (0-1) - removed the 70% cap
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const progress = Math.min(scrollData.current / maxScroll, 1);
 
-    // Stop at 70% for horizontal transition
-    const clampedProgress = Math.min(progress, 0.7);
-
-    // Trigger callbacks with clamped progress and momentum
+    // Trigger callbacks with full progress range
     callbacksRef.current.forEach(callback => {
-      callback(clampedProgress, scrollData.momentum);
+      callback(progress, scrollData.momentum);
     });
 
-    // Continue animation if there's significant movement and we haven't reached the threshold
-    if (Math.abs(scrollData.velocity) > 0.1 && progress < 0.7) {
+    // Continue animation if there's significant movement
+    if (Math.abs(scrollData.velocity) > 0.1) {
       animationRef.current = requestAnimationFrame(smoothScroll);
     }
   }, []);
@@ -43,21 +40,14 @@ export const useCinematicScroll = () => {
   const handleWheel = useCallback((e: WheelEvent) => {
     const scrollData = scrollDataRef.current;
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    const currentProgress = scrollData.current / maxScroll;
     
-    // Only handle vertical scrolling if we haven't reached the horizontal threshold
-    if (currentProgress < 0.7) {
-      e.preventDefault();
-      const delta = e.deltaY * 1.2;
-      scrollData.target = Math.max(0, Math.min(
-        maxScroll * 0.7, // Cap at 70% of total scroll
-        scrollData.target + delta
-      ));
+    // Allow normal scrolling behavior - removed the 70% restriction
+    const delta = e.deltaY * 1.2;
+    scrollData.target = Math.max(0, Math.min(maxScroll, scrollData.target + delta));
 
-      // Start smooth scroll animation
-      if (!animationRef.current) {
-        animationRef.current = requestAnimationFrame(smoothScroll);
-      }
+    // Start smooth scroll animation
+    if (!animationRef.current) {
+      animationRef.current = requestAnimationFrame(smoothScroll);
     }
   }, [smoothScroll]);
 
@@ -76,16 +66,28 @@ export const useCinematicScroll = () => {
     scrollDataRef.current.current = window.scrollY;
     scrollDataRef.current.target = window.scrollY;
 
-    // Add wheel event listener with passive: false for preventDefault
-    document.addEventListener('wheel', handleWheel, { passive: false });
+    // Use regular scroll listener instead of preventing default
+    const handleScroll = () => {
+      scrollDataRef.current.current = window.scrollY;
+      scrollDataRef.current.target = window.scrollY;
+      
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = Math.min(window.scrollY / maxScroll, 1);
+      
+      callbacksRef.current.forEach(callback => {
+        callback(progress, 0);
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      document.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('scroll', handleScroll);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [handleWheel]);
+  }, []);
 
   return { subscribeToScroll };
 };
