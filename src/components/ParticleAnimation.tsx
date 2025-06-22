@@ -155,7 +155,7 @@ const ParticleAnimation = () => {
 
       console.log('🎨 Dynamic particle attributes set successfully');
 
-      // Enhanced shader material with dynamic motion and glow
+      // Enhanced shader material with much more visible motion
       const material = new THREE.ShaderMaterial({
         uniforms: {
           time: { value: 0 },
@@ -176,31 +176,31 @@ const ParticleAnimation = () => {
             vColor = color;
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
             
-            // Enhanced floating motion for dynamic movement
-            mvPosition.x += sin(time * 0.8 + position.y * 2.0) * 0.02;
-            mvPosition.y += cos(time * 0.6 + position.x * 2.0) * 0.02;
-            mvPosition.z += sin(time * 0.4 + position.z * 1.5) * 0.015;
+            // Dramatically increased floating motion for visible movement
+            mvPosition.x += sin(time * 1.5 + position.y * 3.0) * 0.08;
+            mvPosition.y += cos(time * 1.2 + position.x * 3.0) * 0.08;
+            mvPosition.z += sin(time * 0.8 + position.z * 2.5) * 0.06;
             
-            // Add wave-like motion across the globe surface
-            float wave1 = sin(time * 1.2 + position.x * 3.0 + position.y * 2.0) * 0.01;
-            float wave2 = cos(time * 0.9 + position.z * 2.5 + position.y * 1.8) * 0.01;
+            // Enhanced wave motion across the globe surface
+            float wave1 = sin(time * 2.0 + position.x * 4.0 + position.y * 3.0) * 0.04;
+            float wave2 = cos(time * 1.5 + position.z * 3.5 + position.y * 2.8) * 0.04;
             mvPosition.xyz += normalize(position) * (wave1 + wave2);
             
             vDepth = -mvPosition.z;
             
-            // Enhanced glow with breathing effect
-            float breathe = sin(time * 0.7) * 0.2 + 1.0;
-            float colorGlow = dot(color, vec3(0.299, 0.587, 0.114)); // Luminance
-            vGlow = (1.0 + sin(time * 1.8 + position.x * 4.0) * 0.4) * breathe * (0.8 + colorGlow * 0.4);
+            // Much more pronounced glow with faster breathing effect
+            float breathe = sin(time * 1.8) * 0.5 + 1.2;
+            float colorGlow = dot(color, vec3(0.299, 0.587, 0.114));
+            vGlow = (1.2 + sin(time * 3.0 + position.x * 6.0) * 0.6) * breathe * (0.8 + colorGlow * 0.6);
             
-            // Sharp alpha calculation with dynamic variation
+            // Enhanced alpha with more dynamic pulsing
             float distance = length(position.xy);
-            float pulseAlpha = 0.9 + sin(time * 2.0 + distance * 5.0) * 0.1;
+            float pulseAlpha = 0.9 + sin(time * 3.5 + distance * 8.0) * 0.3;
             vAlpha = (1.0 - distance * 0.03) * visibility * pulseAlpha;
             vAlpha = clamp(vAlpha, 0.0, 1.0);
             
-            // Dynamic particle sizing with subtle pulsing
-            float sizePulse = 1.0 + sin(time * 1.5 + position.y * 3.0) * 0.15;
+            // More pronounced particle size pulsing
+            float sizePulse = 1.0 + sin(time * 2.5 + position.y * 5.0) * 0.4;
             gl_PointSize = size * (60.0 / -mvPosition.z) * vGlow * sizePulse;
             gl_Position = projectionMatrix * mvPosition;
           }
@@ -215,27 +215,21 @@ const ParticleAnimation = () => {
             float r = distance(gl_PointCoord, vec2(0.5, 0.5));
             if (r > 0.5) discard;
             
-            // Sharp core with enhanced glow edge
             float coreSize = 0.25;
             float alpha;
             
             if (r < coreSize) {
-              // Bright inner core
               alpha = vAlpha * 1.2;
             } else {
-              // Glowing outer edge
               float edgeAlpha = (0.5 - r) / (0.5 - coreSize);
               alpha = pow(edgeAlpha, 0.6) * vAlpha * 1.1;
             }
             
-            // Enhanced depth-based brightness for 3D clarity
             float depthFactor = clamp(vDepth * 0.12, 0.0, 1.0);
             float brightness = 1.3 + depthFactor * 0.4;
             
-            // Dynamic color shifting with enhanced glow
             vec3 glowColor = vColor * brightness * vGlow;
             
-            // Add subtle color temperature variation
             float warmth = sin(vDepth * 0.1) * 0.1 + 1.0;
             glowColor.r *= warmth;
             glowColor.b *= (2.0 - warmth);
@@ -243,7 +237,7 @@ const ParticleAnimation = () => {
             gl_FragColor = vec4(glowColor, alpha);
           }
         `,
-        blending: THREE.AdditiveBlending, // Changed back to additive for better glow
+        blending: THREE.AdditiveBlending,
         depthTest: true,
         transparent: true,
         vertexColors: true
@@ -281,7 +275,7 @@ const ParticleAnimation = () => {
         }
       };
 
-      // Enhanced animation loop with dynamic motion
+      // Enhanced animation loop with much faster motion
       let time = 0;
       let frameCount = 0;
       let lastFpsTime = performance.now();
@@ -290,10 +284,10 @@ const ParticleAnimation = () => {
       const animate = () => {
         if (!sceneRef.current || !isAnimating) return;
         
-        time += 0.008; // Increased from 0.002 for faster animations
+        // Increased time increment for much faster animations
+        time += 0.015;
         frameCount++;
         
-        // Performance monitoring every 120 frames
         if (frameCount % 120 === 0) {
           const now = performance.now();
           const fps = 120000 / (now - lastFpsTime);
@@ -303,11 +297,9 @@ const ParticleAnimation = () => {
           lastFpsTime = now;
         }
         
-        // Update material uniforms
         sceneRef.current.material.uniforms.time.value = time;
         sceneRef.current.material.uniforms.morphProgress.value = sceneRef.current.morphProgress;
 
-        // Optimized morphing animation - only update when morphing
         if (sceneRef.current.morphProgress > 0 && sceneRef.current.morphProgress < 1) {
           const positionAttribute = sceneRef.current.particles.geometry.getAttribute('position') as THREE.BufferAttribute;
           const positions = positionAttribute.array as Float32Array;
@@ -323,18 +315,17 @@ const ParticleAnimation = () => {
           positionAttribute.needsUpdate = true;
         }
 
-        // Enhanced globe rotation when fully morphed
-        if (sceneRef.current.morphProgress >= 1.0) {
-          // Increased rotation speed for noticeable spinning
-          sceneRef.current.particles.rotation.y += 0.003;
-          sceneRef.current.particles.rotation.x += 0.001;
-          
-          // Add subtle wobble for more dynamic movement
-          const wobbleX = Math.sin(time * 0.3) * 0.0005;
-          const wobbleY = Math.cos(time * 0.25) * 0.0003;
-          sceneRef.current.particles.rotation.x += wobbleX;
-          sceneRef.current.particles.rotation.z += wobbleY;
-        }
+        // Always-active rotation with much faster speed and visible wobble
+        sceneRef.current.particles.rotation.y += 0.008; // Increased from 0.003
+        sceneRef.current.particles.rotation.x += 0.003; // Increased from 0.001
+        
+        // Much more pronounced wobble for breathing effect
+        const wobbleX = Math.sin(time * 0.6) * 0.002; // Increased from 0.0005
+        const wobbleY = Math.cos(time * 0.45) * 0.0015; // Increased from 0.0003
+        const wobbleZ = Math.sin(time * 0.35) * 0.001; // Added Z wobble
+        sceneRef.current.particles.rotation.x += wobbleX;
+        sceneRef.current.particles.rotation.z += wobbleY;
+        sceneRef.current.particles.rotation.y += wobbleZ;
 
         sceneRef.current.renderer.render(sceneRef.current.scene, sceneRef.current.camera);
         sceneRef.current.animationId = requestAnimationFrame(animate);
@@ -378,19 +369,16 @@ const ParticleAnimation = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       
-      // Smooth morphing over first 25% of scroll
       const rawProgress = Math.min(scrollY / (windowHeight * 0.25), 1);
       const easedProgress = rawProgress < 0.5 
         ? 2 * rawProgress * rawProgress 
         : 1 - Math.pow(-2 * rawProgress + 2, 3) / 2;
       
-      // Only update if progress changed significantly (performance optimization)
       if (Math.abs(easedProgress - lastMorphProgress) > 0.01) {
         sceneRef.current.morphProgress = easedProgress;
         lastMorphProgress = easedProgress;
       }
       
-      // Visibility control
       const heroBottom = windowHeight;
       const isVisible = scrollY < heroBottom;
       const targetVisibility = isVisible ? 1.0 : 0.0;
