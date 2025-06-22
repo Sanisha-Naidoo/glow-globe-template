@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
@@ -11,10 +10,6 @@ const Index = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [showWorkGallery, setShowWorkGallery] = useState(false);
 
-  const handleEnterGallery = () => {
-    setShowWorkGallery(true);
-  };
-
   const handleExitGallery = () => {
     setShowWorkGallery(false);
   };
@@ -25,7 +20,7 @@ const Index = () => {
         <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
         <HeroSection />
         <AboutSection />
-        <WorkSection onEnterGallery={handleEnterGallery} />
+        <WorkSection />
         <ContactSection />
       </div>
       
