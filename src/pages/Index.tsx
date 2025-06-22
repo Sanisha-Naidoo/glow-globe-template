@@ -1,18 +1,12 @@
+
 import { useState } from 'react';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
-import WorkSection from '../components/WorkSection';
 import ContactSection from '../components/ContactSection';
-import WorkGallery from '../components/WorkGallery';
 
 const Index = () => {
   const [darkMode, setDarkMode] = useState(true);
-  const [showWorkGallery, setShowWorkGallery] = useState(false);
-
-  const handleExitGallery = () => {
-    setShowWorkGallery(false);
-  };
 
   return (
     <div className={`${darkMode ? 'dark' : ''} transition-all duration-500`}>
@@ -20,14 +14,8 @@ const Index = () => {
         <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
         <HeroSection />
         <AboutSection />
-        <WorkSection />
         <ContactSection />
       </div>
-      
-      {/* Work Gallery Modal */}
-      {showWorkGallery && (
-        <WorkGallery onClose={handleExitGallery} />
-      )}
     </div>
   );
 };
