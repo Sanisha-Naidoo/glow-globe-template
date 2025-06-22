@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
@@ -17,14 +18,14 @@ const ParticleAnimation = () => {
   useEffect(() => {
     if (!mountRef.current) return;
 
-    console.log('🚀 Initializing Enhanced ParticleAnimation...');
+    console.log('🚀 Initializing Sharp ParticleAnimation...');
 
     try {
       // Scene setup with enhanced error handling
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
       
-      // Enhanced renderer setup with better fallbacks
+      // Enhanced renderer setup with better performance
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('webgl2') || canvas.getContext('webgl');
       
@@ -42,14 +43,15 @@ const ParticleAnimation = () => {
       
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setClearColor(0x000000, 0);
+      // Cap pixel ratio for better performance on high-DPI displays
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       mountRef.current.appendChild(renderer.domElement);
 
       console.log('✅ WebGL renderer initialized successfully');
 
-      // Optimized particle count for better definition
-      const particleCount = 4000; // Reduced from 8000 for better clarity
-      console.log(`🔵 Creating ${particleCount} particles...`);
+      // Increased particle count for better definition
+      const particleCount = 6000;
+      console.log(`🔵 Creating ${particleCount} particles for sharper globe...`);
       
       const particles = new THREE.BufferGeometry();
       const positions = new Float32Array(particleCount * 3);
@@ -58,14 +60,15 @@ const ParticleAnimation = () => {
       const heartPositions = new Float32Array(particleCount * 3);
       const globePositions = new Float32Array(particleCount * 3);
 
-      // Enhanced heart shape
+      // Enhanced heart shape with tighter clustering
       const createHeartShape = (index: number) => {
         const t = (index / particleCount) * Math.PI * 4;
         const x = 16 * Math.pow(Math.sin(t), 3);
         const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
         const z = Math.sin(t * 1.5) * 3;
         
-        const noise = (Math.random() - 0.5) * 0.3;
+        // Reduced noise for sharper edges
+        const noise = (Math.random() - 0.5) * 0.1;
         return { 
           x: (x + noise) * 0.04, 
           y: (y + noise) * 0.04, 
@@ -73,18 +76,11 @@ const ParticleAnimation = () => {
         };
       };
 
-      // Perfect Fibonacci sphere distribution with better spacing
+      // Perfect Fibonacci sphere with minimal scatter for sharp definition
       const createGlobeShape = (index: number) => {
-        // Golden angle in radians
         const goldenAngle = Math.PI * (3 - Math.sqrt(5));
-        
-        // y goes from 1 to -1
         const y = 1 - (index / (particleCount - 1)) * 2;
-        
-        // radius at y
         const radius = Math.sqrt(1 - y * y);
-        
-        // golden angle increment
         const theta = goldenAngle * index;
         
         const x = Math.cos(theta) * radius;
@@ -92,8 +88,8 @@ const ParticleAnimation = () => {
         
         const sphereRadius = 1.5;
         
-        // Increased scatter for more organic appearance
-        const scatter = 0.12;
+        // Drastically reduced scatter for sharp, precise sphere
+        const scatter = 0.02;
         
         return {
           x: (x * sphereRadius) + (Math.random() - 0.5) * scatter,
@@ -102,7 +98,7 @@ const ParticleAnimation = () => {
         };
       };
 
-      // Initialize particle data with neon colors
+      // Initialize particle data with enhanced clarity
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
         
@@ -121,44 +117,46 @@ const ParticleAnimation = () => {
         positions[i3 + 1] = heartPos.y;
         positions[i3 + 2] = heartPos.z;
 
-        // Bright neon color palette
+        // Sharp, vibrant color palette
         const t = i / particleCount;
-        const colorVariant = Math.floor(t * 4); // 4 color variants
+        const colorVariant = Math.floor(t * 4);
         
         switch (colorVariant) {
           case 0: // Electric blue/cyan
-            colors[i3] = 0.2 + t * 0.3;     // Low red
-            colors[i3 + 1] = 0.8 + t * 0.2; // High green
-            colors[i3 + 2] = 1.0;           // Max blue
+            colors[i3] = 0.1 + t * 0.2;
+            colors[i3 + 1] = 0.9 + t * 0.1;
+            colors[i3 + 2] = 1.0;
             break;
           case 1: // Hot pink/magenta
-            colors[i3] = 1.0;               // Max red
-            colors[i3 + 1] = 0.2 + t * 0.3; // Low green
-            colors[i3 + 2] = 0.8 + t * 0.2; // High blue
+            colors[i3] = 1.0;
+            colors[i3 + 1] = 0.1 + t * 0.2;
+            colors[i3 + 2] = 0.9 + t * 0.1;
             break;
           case 2: // Bright green/lime
-            colors[i3] = 0.3 + t * 0.4;     // Medium red
-            colors[i3 + 1] = 1.0;           // Max green
-            colors[i3 + 2] = 0.2 + t * 0.3; // Low blue
+            colors[i3] = 0.2 + t * 0.3;
+            colors[i3 + 1] = 1.0;
+            colors[i3 + 2] = 0.1 + t * 0.2;
             break;
           default: // Purple/violet
-            colors[i3] = 0.8 + t * 0.2;     // High red
-            colors[i3 + 1] = 0.2 + t * 0.2; // Low green
-            colors[i3 + 2] = 1.0;           // Max blue
+            colors[i3] = 0.9 + t * 0.1;
+            colors[i3 + 1] = 0.1 + t * 0.2;
+            colors[i3 + 2] = 1.0;
             break;
         }
 
-        // Larger particles for better neon visibility
-        sizes[i] = 0.8 + Math.random() * 0.4;
+        // Size variation based on latitude for realistic globe appearance
+        const latitude = Math.abs(globePos.y / 1.5);
+        const baseSize = 0.6 + Math.random() * 0.2;
+        sizes[i] = baseSize * (1 + latitude * 0.3); // Slightly larger at poles
       }
 
       particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
       particles.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-      console.log('🎨 Particle attributes set successfully');
+      console.log('🎨 Sharp particle attributes set successfully');
 
-      // Enhanced neon shader material with additive blending
+      // High-definition shader material with sharp edges
       const material = new THREE.ShaderMaterial({
         uniforms: {
           time: { value: 0 },
@@ -179,21 +177,20 @@ const ParticleAnimation = () => {
             vColor = color;
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
             
-            // Subtle floating motion with neon flickering
-            mvPosition.x += sin(time * 0.2 + position.y * 0.2) * 0.02;
-            mvPosition.y += cos(time * 0.15 + position.x * 0.2) * 0.02;
+            // Minimal floating motion to reduce blur
+            mvPosition.x += sin(time * 0.1 + position.y * 0.1) * 0.005;
+            mvPosition.y += cos(time * 0.08 + position.x * 0.1) * 0.005;
             
-            // Depth for 3D effect and glow calculation
             vDepth = -mvPosition.z;
-            vGlow = 1.0 + sin(time * 2.0 + position.x * 5.0) * 0.2; // Pulsing glow
+            vGlow = 1.0 + sin(time * 1.5 + position.x * 3.0) * 0.1; // Subtle glow
             
-            // Enhanced alpha with brightness boost
+            // Sharp alpha calculation
             float distance = length(position.xy);
-            vAlpha = (1.2 - distance * 0.05) * visibility; // Brighter base
+            vAlpha = (1.0 - distance * 0.03) * visibility;
             vAlpha = clamp(vAlpha, 0.0, 1.0);
             
-            // Larger particle sizing for neon effect
-            gl_PointSize = size * (100.0 / -mvPosition.z) * vGlow;
+            // Optimized particle sizing for consistent sharpness
+            gl_PointSize = size * (60.0 / -mvPosition.z) * vGlow;
             gl_Position = projectionMatrix * mvPosition;
           }
         `,
@@ -207,45 +204,47 @@ const ParticleAnimation = () => {
             float r = distance(gl_PointCoord, vec2(0.5, 0.5));
             if (r > 0.5) discard;
             
-            // Neon glow effect with soft falloff
-            float alpha = (1.0 - r * 1.5) * vAlpha;
-            alpha = pow(alpha, 1.5); // Softer falloff for glow
+            // Sharp core with soft edge for definition
+            float coreSize = 0.3;
+            float alpha;
             
-            // Depth-based brightness for 3D pop
+            if (r < coreSize) {
+              // Sharp inner core
+              alpha = vAlpha;
+            } else {
+              // Soft outer edge
+              float edgeAlpha = (0.5 - r) / (0.5 - coreSize);
+              alpha = pow(edgeAlpha, 0.8) * vAlpha; // Sharper falloff
+            }
+            
+            // Depth-based brightness for 3D clarity
             float depthFactor = clamp(vDepth * 0.1, 0.0, 1.0);
-            float brightness = 1.5 + depthFactor * 0.5; // Overall brightness boost
+            float brightness = 1.2 + depthFactor * 0.3;
             
-            // Enhanced neon colors with glow multiplier
+            // Clean, bright colors
             vec3 finalColor = vColor * brightness * vGlow;
             
-            // Bright alpha for neon visibility
             gl_FragColor = vec4(finalColor, alpha);
           }
         `,
-        blending: THREE.AdditiveBlending, // Additive blending for neon glow
-        depthTest: false, // Disable depth test for better glow
+        blending: THREE.NormalBlending, // Normal blending for cleaner edges
+        depthTest: true, // Enable depth test for proper 3D rendering
         transparent: true,
         vertexColors: true
       });
 
-      // Check for shader compilation errors
       const gl = renderer.getContext();
       if (gl.getError() !== gl.NO_ERROR) {
         console.warn('⚠️ WebGL error during shader compilation');
       } else {
-        console.log('✅ Shaders compiled successfully');
+        console.log('✅ Sharp shaders compiled successfully');
       }
 
       const particleSystem = new THREE.Points(particles, material);
       scene.add(particleSystem);
       camera.position.z = 5;
 
-      console.log(`🎯 Particle system created successfully with ${particleCount} particles`);
-      console.log('📊 Performance metrics:', {
-        particleCount,
-        memoryUsage: `${(particleCount * 32 / 1024).toFixed(2)}KB`,
-        devicePixelRatio: window.devicePixelRatio
-      });
+      console.log(`🎯 Sharp particle system created with ${particleCount} particles`);
 
       // Store scene reference
       sceneRef.current = {
@@ -266,22 +265,23 @@ const ParticleAnimation = () => {
         }
       };
 
-      // Ultra-smooth animation loop with frame rate monitoring
+      // Optimized animation loop with performance monitoring
       let time = 0;
       let frameCount = 0;
       let lastFpsTime = performance.now();
+      let isAnimating = true;
       
       const animate = () => {
-        if (!sceneRef.current) return;
+        if (!sceneRef.current || !isAnimating) return;
         
-        time += 0.003; // Slightly slower time progression
+        time += 0.002; // Slower time for stability
         frameCount++;
         
-        // FPS monitoring every 60 frames
-        if (frameCount % 60 === 0) {
+        // Performance monitoring every 120 frames (reduced frequency)
+        if (frameCount % 120 === 0) {
           const now = performance.now();
-          const fps = 60000 / (now - lastFpsTime);
-          if (fps < 30) {
+          const fps = 120000 / (now - lastFpsTime);
+          if (fps < 45) {
             console.warn(`⚡ Performance warning: ${fps.toFixed(1)} FPS`);
           }
           lastFpsTime = now;
@@ -291,25 +291,26 @@ const ParticleAnimation = () => {
         sceneRef.current.material.uniforms.time.value = time;
         sceneRef.current.material.uniforms.morphProgress.value = sceneRef.current.morphProgress;
 
-        // Enhanced morphing animation
-        const positionAttribute = sceneRef.current.particles.geometry.getAttribute('position') as THREE.BufferAttribute;
-        const positions = positionAttribute.array as Float32Array;
+        // Optimized morphing animation - only update when morphing
+        if (sceneRef.current.morphProgress > 0 && sceneRef.current.morphProgress < 1) {
+          const positionAttribute = sceneRef.current.particles.geometry.getAttribute('position') as THREE.BufferAttribute;
+          const positions = positionAttribute.array as Float32Array;
 
-        for (let i = 0; i < particleCount; i++) {
-          const i3 = i * 3;
-          const t = sceneRef.current.morphProgress;
-          
-          // Smooth interpolation between shapes
-          positions[i3] = THREE.MathUtils.lerp(heartPositions[i3], globePositions[i3], t);
-          positions[i3 + 1] = THREE.MathUtils.lerp(heartPositions[i3 + 1], globePositions[i3 + 1], t);
-          positions[i3 + 2] = THREE.MathUtils.lerp(heartPositions[i3 + 2], globePositions[i3 + 2], t);
+          for (let i = 0; i < particleCount; i++) {
+            const i3 = i * 3;
+            const t = sceneRef.current.morphProgress;
+            
+            positions[i3] = THREE.MathUtils.lerp(heartPositions[i3], globePositions[i3], t);
+            positions[i3 + 1] = THREE.MathUtils.lerp(heartPositions[i3 + 1], globePositions[i3 + 1], t);
+            positions[i3 + 2] = THREE.MathUtils.lerp(heartPositions[i3 + 2], globePositions[i3 + 2], t);
+          }
+          positionAttribute.needsUpdate = true;
         }
-        positionAttribute.needsUpdate = true;
 
-        // Ultra-cinematic slow globe rotation
+        // Smooth globe rotation when fully morphed
         if (sceneRef.current.morphProgress >= 1.0) {
-          sceneRef.current.particles.rotation.y += 0.001; // Ultra-slow Y rotation
-          sceneRef.current.particles.rotation.x += 0.0005; // Ultra-slow X rotation
+          sceneRef.current.particles.rotation.y += 0.0008;
+          sceneRef.current.particles.rotation.x += 0.0003;
         }
 
         sceneRef.current.renderer.render(sceneRef.current.scene, sceneRef.current.camera);
@@ -317,7 +318,7 @@ const ParticleAnimation = () => {
       };
       
       animate();
-      console.log('🎬 Ultra-smooth animation loop started');
+      console.log('🎬 Sharp animation loop started');
 
       // Handle resize with performance optimization
       const handleResize = () => {
@@ -330,7 +331,8 @@ const ParticleAnimation = () => {
       window.addEventListener('resize', handleResize);
 
       return () => {
-        console.log('🧹 Cleaning up ParticleAnimation...');
+        console.log('🧹 Cleaning up Sharp ParticleAnimation...');
+        isAnimating = false;
         window.removeEventListener('resize', handleResize);
         if (sceneRef.current?.animationId) {
           cancelAnimationFrame(sceneRef.current.animationId);
@@ -339,36 +341,39 @@ const ParticleAnimation = () => {
       };
 
     } catch (error) {
-      console.error('💥 Failed to initialize ParticleAnimation:', error);
-      console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace available');
+      console.error('💥 Failed to initialize Sharp ParticleAnimation:', error);
     }
   }, []);
 
-  // Enhanced scroll-based control with easing
+  // Enhanced scroll-based control with performance optimization
   useEffect(() => {
+    let lastMorphProgress = -1;
+    
     const handleScroll = () => {
       if (!sceneRef.current) return;
 
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       
-      // Heart morphs to globe over first 25% of scroll with easing
+      // Smooth morphing over first 25% of scroll
       const rawProgress = Math.min(scrollY / (windowHeight * 0.25), 1);
-      // Apply easing curve for smoother transition
       const easedProgress = rawProgress < 0.5 
         ? 2 * rawProgress * rawProgress 
         : 1 - Math.pow(-2 * rawProgress + 2, 3) / 2;
       
-      sceneRef.current.morphProgress = easedProgress;
+      // Only update if progress changed significantly (performance optimization)
+      if (Math.abs(easedProgress - lastMorphProgress) > 0.01) {
+        sceneRef.current.morphProgress = easedProgress;
+        lastMorphProgress = easedProgress;
+      }
       
-      // Enhanced visibility control
+      // Visibility control
       const heroBottom = windowHeight;
       const isVisible = scrollY < heroBottom;
       const targetVisibility = isVisible ? 1.0 : 0.0;
       
-      // Smooth visibility transition
       const currentVisibility = sceneRef.current.material.uniforms.visibility.value;
-      const newVisibility = THREE.MathUtils.lerp(currentVisibility, targetVisibility, 0.1);
+      const newVisibility = THREE.MathUtils.lerp(currentVisibility, targetVisibility, 0.08);
       sceneRef.current.material.uniforms.visibility.value = newVisibility;
     };
 
