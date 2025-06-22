@@ -87,10 +87,9 @@ const WorkSection = () => {
           const cardProgress = Math.max(0, Math.min(1, (progress - 0.3 - delay) * 2));
           
           const translateY = (1 - cardProgress) * 30;
-          const opacity = cardProgress;
+          const scale = 0.95 + (cardProgress * 0.05);
           
-          element.style.transform = `translate3d(0, ${translateY}px, 0)`;
-          element.style.opacity = opacity.toString();
+          element.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
         });
       }
     });
@@ -141,7 +140,7 @@ const WorkSection = () => {
                   onOpenChange={() => handleCardToggle(index)}
                 >
                   <div
-                    className="group relative opacity-0 flex-shrink-0 w-96"
+                    className="group relative flex-shrink-0 w-96"
                     style={{ 
                       willChange: 'transform, opacity',
                       transformStyle: 'preserve-3d'
