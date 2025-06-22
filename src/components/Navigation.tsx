@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useScrollNavigation } from '../hooks/useScrollAnimation';
@@ -21,7 +20,6 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
   const navItems = [
     { name: 'Home', id: 'home' },
     { name: 'About', id: 'about' },
-    { name: 'Services', id: 'services' },
     { name: 'Work', id: 'work' },
     { name: 'Contact', id: 'contact' }
   ];

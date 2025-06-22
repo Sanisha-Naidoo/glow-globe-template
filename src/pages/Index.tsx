@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
-import ServicesSection from '../components/ServicesSection';
 import WorkSection from '../components/WorkSection';
 import ContactSection from '../components/ContactSection';
 import WorkGallery from '../components/WorkGallery';
@@ -26,7 +25,6 @@ const Index = () => {
         <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
         <HeroSection />
         <AboutSection />
-        <ServicesSection />
         <WorkSection onEnterGallery={handleEnterGallery} />
         <ContactSection />
       </div>
