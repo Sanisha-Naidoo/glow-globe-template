@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
@@ -18,7 +17,7 @@ const ParticleAnimation = () => {
   useEffect(() => {
     if (!mountRef.current) return;
 
-    console.log('🚀 Initializing Sharp ParticleAnimation...');
+    console.log('🚀 Initializing Dynamic ParticleAnimation...');
 
     try {
       // Scene setup with enhanced error handling
@@ -51,7 +50,7 @@ const ParticleAnimation = () => {
 
       // Increased particle count for better definition
       const particleCount = 6000;
-      console.log(`🔵 Creating ${particleCount} particles for sharper globe...`);
+      console.log(`🔵 Creating ${particleCount} particles for dynamic globe...`);
       
       const particles = new THREE.BufferGeometry();
       const positions = new Float32Array(particleCount * 3);
@@ -88,7 +87,7 @@ const ParticleAnimation = () => {
         
         const sphereRadius = 1.5;
         
-        // Drastically reduced scatter for sharp, precise sphere
+        // Minimal scatter for sharp, precise sphere
         const scatter = 0.02;
         
         return {
@@ -154,9 +153,9 @@ const ParticleAnimation = () => {
       particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
       particles.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-      console.log('🎨 Sharp particle attributes set successfully');
+      console.log('🎨 Dynamic particle attributes set successfully');
 
-      // High-definition shader material with sharp edges
+      // Enhanced shader material with dynamic motion and glow
       const material = new THREE.ShaderMaterial({
         uniforms: {
           time: { value: 0 },
@@ -177,20 +176,32 @@ const ParticleAnimation = () => {
             vColor = color;
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
             
-            // Minimal floating motion to reduce blur
-            mvPosition.x += sin(time * 0.1 + position.y * 0.1) * 0.005;
-            mvPosition.y += cos(time * 0.08 + position.x * 0.1) * 0.005;
+            // Enhanced floating motion for dynamic movement
+            mvPosition.x += sin(time * 0.8 + position.y * 2.0) * 0.02;
+            mvPosition.y += cos(time * 0.6 + position.x * 2.0) * 0.02;
+            mvPosition.z += sin(time * 0.4 + position.z * 1.5) * 0.015;
+            
+            // Add wave-like motion across the globe surface
+            float wave1 = sin(time * 1.2 + position.x * 3.0 + position.y * 2.0) * 0.01;
+            float wave2 = cos(time * 0.9 + position.z * 2.5 + position.y * 1.8) * 0.01;
+            mvPosition.xyz += normalize(position) * (wave1 + wave2);
             
             vDepth = -mvPosition.z;
-            vGlow = 1.0 + sin(time * 1.5 + position.x * 3.0) * 0.1; // Subtle glow
             
-            // Sharp alpha calculation
+            // Enhanced glow with breathing effect
+            float breathe = sin(time * 0.7) * 0.2 + 1.0;
+            float colorGlow = dot(color, vec3(0.299, 0.587, 0.114)); // Luminance
+            vGlow = (1.0 + sin(time * 1.8 + position.x * 4.0) * 0.4) * breathe * (0.8 + colorGlow * 0.4);
+            
+            // Sharp alpha calculation with dynamic variation
             float distance = length(position.xy);
-            vAlpha = (1.0 - distance * 0.03) * visibility;
+            float pulseAlpha = 0.9 + sin(time * 2.0 + distance * 5.0) * 0.1;
+            vAlpha = (1.0 - distance * 0.03) * visibility * pulseAlpha;
             vAlpha = clamp(vAlpha, 0.0, 1.0);
             
-            // Optimized particle sizing for consistent sharpness
-            gl_PointSize = size * (60.0 / -mvPosition.z) * vGlow;
+            // Dynamic particle sizing with subtle pulsing
+            float sizePulse = 1.0 + sin(time * 1.5 + position.y * 3.0) * 0.15;
+            gl_PointSize = size * (60.0 / -mvPosition.z) * vGlow * sizePulse;
             gl_Position = projectionMatrix * mvPosition;
           }
         `,
@@ -204,31 +215,36 @@ const ParticleAnimation = () => {
             float r = distance(gl_PointCoord, vec2(0.5, 0.5));
             if (r > 0.5) discard;
             
-            // Sharp core with soft edge for definition
-            float coreSize = 0.3;
+            // Sharp core with enhanced glow edge
+            float coreSize = 0.25;
             float alpha;
             
             if (r < coreSize) {
-              // Sharp inner core
-              alpha = vAlpha;
+              // Bright inner core
+              alpha = vAlpha * 1.2;
             } else {
-              // Soft outer edge
+              // Glowing outer edge
               float edgeAlpha = (0.5 - r) / (0.5 - coreSize);
-              alpha = pow(edgeAlpha, 0.8) * vAlpha; // Sharper falloff
+              alpha = pow(edgeAlpha, 0.6) * vAlpha * 1.1;
             }
             
-            // Depth-based brightness for 3D clarity
-            float depthFactor = clamp(vDepth * 0.1, 0.0, 1.0);
-            float brightness = 1.2 + depthFactor * 0.3;
+            // Enhanced depth-based brightness for 3D clarity
+            float depthFactor = clamp(vDepth * 0.12, 0.0, 1.0);
+            float brightness = 1.3 + depthFactor * 0.4;
             
-            // Clean, bright colors
-            vec3 finalColor = vColor * brightness * vGlow;
+            // Dynamic color shifting with enhanced glow
+            vec3 glowColor = vColor * brightness * vGlow;
             
-            gl_FragColor = vec4(finalColor, alpha);
+            // Add subtle color temperature variation
+            float warmth = sin(vDepth * 0.1) * 0.1 + 1.0;
+            glowColor.r *= warmth;
+            glowColor.b *= (2.0 - warmth);
+            
+            gl_FragColor = vec4(glowColor, alpha);
           }
         `,
-        blending: THREE.NormalBlending, // Normal blending for cleaner edges
-        depthTest: true, // Enable depth test for proper 3D rendering
+        blending: THREE.AdditiveBlending, // Changed back to additive for better glow
+        depthTest: true,
         transparent: true,
         vertexColors: true
       });
@@ -237,14 +253,14 @@ const ParticleAnimation = () => {
       if (gl.getError() !== gl.NO_ERROR) {
         console.warn('⚠️ WebGL error during shader compilation');
       } else {
-        console.log('✅ Sharp shaders compiled successfully');
+        console.log('✅ Dynamic shaders compiled successfully');
       }
 
       const particleSystem = new THREE.Points(particles, material);
       scene.add(particleSystem);
       camera.position.z = 5;
 
-      console.log(`🎯 Sharp particle system created with ${particleCount} particles`);
+      console.log(`🎯 Dynamic particle system created with ${particleCount} particles`);
 
       // Store scene reference
       sceneRef.current = {
@@ -265,7 +281,7 @@ const ParticleAnimation = () => {
         }
       };
 
-      // Optimized animation loop with performance monitoring
+      // Enhanced animation loop with dynamic motion
       let time = 0;
       let frameCount = 0;
       let lastFpsTime = performance.now();
@@ -274,10 +290,10 @@ const ParticleAnimation = () => {
       const animate = () => {
         if (!sceneRef.current || !isAnimating) return;
         
-        time += 0.002; // Slower time for stability
+        time += 0.008; // Increased from 0.002 for faster animations
         frameCount++;
         
-        // Performance monitoring every 120 frames (reduced frequency)
+        // Performance monitoring every 120 frames
         if (frameCount % 120 === 0) {
           const now = performance.now();
           const fps = 120000 / (now - lastFpsTime);
@@ -307,10 +323,17 @@ const ParticleAnimation = () => {
           positionAttribute.needsUpdate = true;
         }
 
-        // Smooth globe rotation when fully morphed
+        // Enhanced globe rotation when fully morphed
         if (sceneRef.current.morphProgress >= 1.0) {
-          sceneRef.current.particles.rotation.y += 0.0008;
-          sceneRef.current.particles.rotation.x += 0.0003;
+          // Increased rotation speed for noticeable spinning
+          sceneRef.current.particles.rotation.y += 0.003;
+          sceneRef.current.particles.rotation.x += 0.001;
+          
+          // Add subtle wobble for more dynamic movement
+          const wobbleX = Math.sin(time * 0.3) * 0.0005;
+          const wobbleY = Math.cos(time * 0.25) * 0.0003;
+          sceneRef.current.particles.rotation.x += wobbleX;
+          sceneRef.current.particles.rotation.z += wobbleY;
         }
 
         sceneRef.current.renderer.render(sceneRef.current.scene, sceneRef.current.camera);
@@ -318,7 +341,7 @@ const ParticleAnimation = () => {
       };
       
       animate();
-      console.log('🎬 Sharp animation loop started');
+      console.log('🎬 Dynamic animation loop started');
 
       // Handle resize with performance optimization
       const handleResize = () => {
@@ -331,7 +354,7 @@ const ParticleAnimation = () => {
       window.addEventListener('resize', handleResize);
 
       return () => {
-        console.log('🧹 Cleaning up Sharp ParticleAnimation...');
+        console.log('🧹 Cleaning up Dynamic ParticleAnimation...');
         isAnimating = false;
         window.removeEventListener('resize', handleResize);
         if (sceneRef.current?.animationId) {
@@ -341,7 +364,7 @@ const ParticleAnimation = () => {
       };
 
     } catch (error) {
-      console.error('💥 Failed to initialize Sharp ParticleAnimation:', error);
+      console.error('💥 Failed to initialize Dynamic ParticleAnimation:', error);
     }
   }, []);
 
