@@ -45,7 +45,7 @@ const HeroSection = () => {
     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
       <ParticleAnimation />
       
-      <div ref={heroRef} className={`relative z-20 text-center max-w-5xl mx-auto px-8 transition-all duration-[2000ms] ease-out will-change-transform -mt-16 ${textVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`} style={{
+      <div ref={heroRef} className={`relative z-20 text-center max-w-5xl mx-auto px-8 transition-all duration-[2000ms] ease-out will-change-transform -mt-32 md:-mt-16 ${textVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`} style={{
       willChange: 'transform, opacity'
     }}>
         <h1 className="text-6xl md:text-7xl font-normal mb-12 text-white tracking-wide leading-tight">
