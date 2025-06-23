@@ -42,17 +42,17 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-dark-bg">
       <ParticleAnimation />
       
       <div ref={heroRef} className={`relative z-20 text-center max-w-5xl mx-auto px-8 transition-all duration-[2000ms] ease-out will-change-transform -mt-32 md:-mt-16 ${textVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`} style={{
       willChange: 'transform, opacity'
     }}>
-        <h1 className="text-6xl md:text-7xl font-normal mb-12 text-white tracking-wide leading-tight">
+        <h1 className="text-h1 mb-12 text-white tracking-wide">
           imagination lab
         </h1>
         <div className="mb-16"></div>
-        <p className="text-lg md:text-xl text-gray-100 max-w-2xl mx-auto leading-relaxed font-normal tracking-wide">
+        <p className="text-body text-text-light max-w-2xl mx-auto leading-relaxed font-normal tracking-wide">
           "Where there is love, 
           there is always time
           and nothing is too much trouble"
@@ -61,9 +61,9 @@ const HeroSection = () => {
       </div>
       
       <button onClick={scrollToNext} className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-20 group">
-        <div className="flex flex-col items-center space-y-3 text-white hover:text-gray-100 transition-all duration-700 ease-out">
-          <span className="text-sm font-normal tracking-widest uppercase">Explore</span>
-          <div className="w-px h-8 bg-gradient-to-b from-white to-transparent"></div>
+        <div className="flex flex-col items-center space-y-3 text-text-light hover:text-pink-accent transition-all duration-700 ease-out">
+          <span className="text-sm font-light tracking-widest uppercase">Explore</span>
+          <div className="w-px h-8 bg-gradient-to-b from-text-light to-transparent"></div>
           <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform duration-700 ease-out" />
         </div>
       </button>

@@ -22,6 +22,12 @@ export default {
 			fontFamily: {
 				sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
 			},
+			fontSize: {
+				'h1': ['3rem', { lineHeight: '1.1', fontWeight: '600' }],
+				'h2': ['2rem', { lineHeight: '1.2', fontWeight: '600' }],
+				'h3': ['1.5rem', { lineHeight: '1.3', fontWeight: '600' }],
+				'body': ['1rem', { lineHeight: '1.6', fontWeight: '400' }],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -56,16 +62,11 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				}
+				'dark-bg': '#0D0D0D',
+				'light-bg': '#FFFFFF',
+				'text-light': '#F5F5F5',
+				'text-dark': '#111111',
+				'pink-accent': '#FF7BAC',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

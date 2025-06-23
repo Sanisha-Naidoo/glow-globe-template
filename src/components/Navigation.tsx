@@ -28,10 +28,10 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
       ref={navRef}
       className="fixed top-0 w-full z-50 nav-hidden transition-all duration-700 ease-out"
     >
-      <div className="backdrop-blur-2xl bg-slate-950/10 border-b border-slate-700/20">
+      <div className="backdrop-blur-2xl bg-dark-bg/10 border-b border-text-light/20">
         <div className="max-w-7xl mx-auto px-8 py-6">
           <div className="flex justify-between items-center">
-            <div className="text-xl font-medium tracking-widest text-white">
+            <div className="text-body font-medium tracking-widest text-text-light">
               PORTFOLIO
             </div>
             
@@ -41,10 +41,10 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-gray-100 hover:text-white transition-all duration-500 text-sm font-normal tracking-wider relative group uppercase"
+                  className="text-text-light hover:text-pink-accent transition-all duration-500 text-sm font-medium tracking-wider relative group uppercase"
                 >
                   {item.name}
-                  <span className="absolute -bottom-2 left-1/2 w-0 h-px bg-gradient-to-r from-transparent via-white to-transparent group-hover:w-full group-hover:left-0 transition-all duration-700 ease-out"></span>
+                  <span className="absolute -bottom-2 left-1/2 w-0 h-px bg-gradient-to-r from-transparent via-pink-accent to-transparent group-hover:w-full group-hover:left-0 transition-all duration-700 ease-out"></span>
                 </button>
               ))}
             </div>
@@ -52,7 +52,7 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-gray-100 hover:text-white transition-colors duration-300"
+              className="md:hidden p-2 text-text-light hover:text-pink-accent transition-colors duration-300"
             >
               {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -61,13 +61,13 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
         
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden backdrop-blur-2xl bg-slate-950/20 border-t border-slate-700/20">
+          <div className="md:hidden backdrop-blur-2xl bg-dark-bg/20 border-t border-text-light/20">
             <div className="px-8 py-6 space-y-6">
               {navItems.map((item) => (
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.id)}
-                  className="block w-full text-left text-gray-100 hover:text-white transition-colors duration-300 text-sm font-normal tracking-wider py-2 uppercase"
+                  className="block w-full text-left text-text-light hover:text-pink-accent transition-colors duration-300 text-sm font-medium tracking-wider py-2 uppercase"
                 >
                   {item.name}
                 </button>
