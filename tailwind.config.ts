@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -20,13 +19,13 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+				sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
 			},
 			fontSize: {
 				'h1': ['3rem', { lineHeight: '1.1', fontWeight: '600' }],
 				'h2': ['2rem', { lineHeight: '1.2', fontWeight: '600' }],
 				'h3': ['1.5rem', { lineHeight: '1.3', fontWeight: '600' }],
-				'body': ['1rem', { lineHeight: '1.6', fontWeight: '400' }],
+				'body': ['1.125rem', { lineHeight: '1.6', fontWeight: '400' }],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

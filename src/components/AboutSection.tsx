@@ -45,7 +45,7 @@ const AboutSection = () => {
               <div className="w-20 h-px bg-gradient-to-r from-pink-accent to-transparent mb-16"></div>
             </div>
             
-            <div className="space-y-12 text-body text-text-light leading-relaxed font-normal">
+            <div className="space-y-12 text-body text-white leading-relaxed font-normal">
               <p>
                 I craft digital experiences that move beyond the ordinary — where every interaction 
                 feels cinematic, every transition tells a story, and every moment captivates.
@@ -81,10 +81,10 @@ const AboutSection = () => {
                   description: 'Pushing the boundaries of what\'s possible in the browser'
                 }
               ].map((skill, index) => (
-                <div key={index} className="space-y-4 border-l-2 border-pink-accent pl-8 transform hover:translate-x-2 transition-transform duration-500 bg-text-dark/40 backdrop-blur-sm p-6 rounded-sm">
+                <div key={index} className="space-y-4 border-l-2 border-pink-accent pl-8 transform hover:translate-x-2 transition-transform duration-500 bg-white/5 backdrop-blur-sm p-8 rounded-xl">
                   <h4 className="text-white font-semibold text-h3 tracking-wide uppercase">{skill.label}</h4>
                   <p className="text-pink-accent text-body font-medium tracking-wide">{skill.focus}</p>
-                  <p className="text-text-light text-sm font-light leading-relaxed">{skill.description}</p>
+                  <p className="text-white text-body font-normal leading-relaxed">{skill.description}</p>
                 </div>
               ))}
             </div>
@@ -95,12 +95,12 @@ const AboutSection = () => {
             className="relative lg:mt-32"
             style={{ willChange: 'transform, opacity' }}
           >
-            <div className="relative w-full h-[700px] rounded-sm overflow-hidden group">
-              <div className="absolute inset-0 backdrop-blur-3xl bg-gradient-to-br from-text-dark/40 to-text-dark/30 border-2 border-text-light/60 transition-all duration-700 group-hover:border-pink-accent/80"></div>
+            <div className="relative w-full h-[700px] rounded-xl overflow-hidden group">
+              <div className="absolute inset-0 backdrop-blur-3xl bg-gradient-to-br from-white/10 to-white/5 border-2 border-white/20 transition-all duration-700 group-hover:border-pink-accent/80 rounded-xl"></div>
               
               <div className="absolute inset-12 flex items-center justify-center">
                 <div className="relative w-full h-full">
-                  <div className="absolute top-1/3 left-1/3 w-24 h-24 border-2 border-white/70 rotate-45 rounded-sm transition-all duration-700 group-hover:rotate-[60deg] group-hover:scale-110"></div>
+                  <div className="absolute top-1/3 left-1/3 w-24 h-24 border-2 border-white/70 rotate-45 rounded-lg transition-all duration-700 group-hover:rotate-[60deg] group-hover:scale-110"></div>
                   <div className="absolute bottom-1/2 right-1/4 w-16 h-16 bg-gradient-to-br from-pink-accent/40 to-transparent rounded-full transition-all duration-700 group-hover:scale-125"></div>
                   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent"></div>
                   <div className="absolute bottom-1/3 left-1/2 transform -translate-x-1/2 w-px h-24 bg-gradient-to-b from-white/90 to-transparent"></div>
@@ -108,7 +108,7 @@ const AboutSection = () => {
               </div>
               
               <div className="absolute -top-12 -right-12 w-24 h-24 bg-pink-accent/30 rounded-full blur-3xl transition-all duration-700 group-hover:scale-150"></div>
-              <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-text-light/25 rounded-full blur-3xl transition-all duration-700 group-hover:scale-125"></div>
+              <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-white/25 rounded-full blur-3xl transition-all duration-700 group-hover:scale-125"></div>
             </div>
           </div>
         </div>
