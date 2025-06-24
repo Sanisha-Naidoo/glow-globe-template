@@ -39,31 +39,31 @@ const AboutSection = () => {
             style={{ willChange: 'transform, opacity' }}
           >
             <div>
-              <h2 className="text-h2 text-white mb-12 tracking-wide">
+              <h2 className="text-h2 text-bright font-semibold mb-12 tracking-tight text-heading-crisp">
                 Vision
               </h2>
               <div className="w-20 h-px bg-gradient-to-r from-pink-accent to-transparent mb-16"></div>
             </div>
             
-            <div className="space-y-12 text-body text-white leading-relaxed font-normal">
-              <p>
+            <div className="space-y-8 text-body-large text-crisp leading-relaxed font-medium">
+              <p className="text-body-crisp">
                 I craft digital experiences that move beyond the ordinary — where every interaction 
                 feels cinematic, every transition tells a story, and every moment captivates.
               </p>
               
-              <p>
+              <p className="text-body-crisp">
                 My work exists at the intersection of motion design and human psychology, 
                 creating interfaces that don't just function, but inspire and delight through 
                 carefully orchestrated movement and timing.
               </p>
               
-              <p>
+              <p className="text-body-crisp">
                 Collaborating with visionary brands and individuals who understand that 
                 exceptional digital experiences require both technical mastery and artistic vision.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-12 pt-12">
+            <div className="grid grid-cols-1 gap-8 pt-12">
               {[
                 { 
                   label: 'Motion Design', 
@@ -81,10 +81,10 @@ const AboutSection = () => {
                   description: 'Pushing the boundaries of what\'s possible in the browser'
                 }
               ].map((skill, index) => (
-                <div key={index} className="space-y-4 border-l-2 border-pink-accent pl-8 transform hover:translate-x-2 transition-transform duration-500 bg-white/5 backdrop-blur-sm p-8 rounded-xl">
-                  <h4 className="text-white font-semibold text-h3 tracking-wide uppercase">{skill.label}</h4>
-                  <p className="text-pink-accent text-body font-medium tracking-wide">{skill.focus}</p>
-                  <p className="text-white text-body font-normal leading-relaxed">{skill.description}</p>
+                <div key={index} className="space-y-4 border-l-2 border-pink-accent pl-8 transform hover:translate-x-2 transition-transform duration-500 bg-white/10 backdrop-blur-sm p-8 rounded-xl border border-white/20 hover:bg-white/15 hover:border-white/30">
+                  <h4 className="text-bright font-semibold text-h3 tracking-tight text-heading-crisp uppercase">{skill.label}</h4>
+                  <p className="text-pink-accent text-body font-semibold tracking-wide">{skill.focus}</p>
+                  <p className="text-crisp text-body font-medium leading-relaxed text-body-crisp">{skill.description}</p>
                 </div>
               ))}
             </div>

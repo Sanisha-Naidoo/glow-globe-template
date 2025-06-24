@@ -1,16 +1,15 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Enhanced typography with Helvetica-like appearance */
+/* Enhanced typography with optimized Helvetica-like rendering */
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 18px;
   line-height: 1.6;
-  color: #FFFFFF;
+  color: #FAFAFA;
   background-color: #0D0D0D;
   margin: 0;
   padding: 0;
@@ -19,6 +18,28 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+}
+
+/* Improved text contrast and readability */
+.text-crisp {
+  font-weight: 500;
+  text-shadow: 0 0 1px rgba(250, 250, 250, 0.1);
+  letter-spacing: -0.015em;
+}
+
+.text-body-crisp {
+  font-weight: 400;
+  color: #FAFAFA;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.01em;
+}
+
+.text-heading-crisp {
+  font-weight: 600;
+  color: #FFFFFF;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: -0.02em;
 }
 
 /* Cinematic scroll foundation */

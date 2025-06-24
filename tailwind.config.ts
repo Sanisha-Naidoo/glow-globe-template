@@ -19,13 +19,14 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
+				sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
 			},
 			fontSize: {
-				'h1': ['3rem', { lineHeight: '1.1', fontWeight: '600' }],
-				'h2': ['2rem', { lineHeight: '1.2', fontWeight: '600' }],
-				'h3': ['1.5rem', { lineHeight: '1.3', fontWeight: '600' }],
-				'body': ['1.125rem', { lineHeight: '1.6', fontWeight: '400' }],
+				'h1': ['3.5rem', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.02em' }],
+				'h2': ['2.25rem', { lineHeight: '1.2', fontWeight: '600', letterSpacing: '-0.015em' }],
+				'h3': ['1.75rem', { lineHeight: '1.3', fontWeight: '600', letterSpacing: '-0.01em' }],
+				'body': ['1.125rem', { lineHeight: '1.7', fontWeight: '400', letterSpacing: '0.01em' }],
+				'body-large': ['1.25rem', { lineHeight: '1.6', fontWeight: '400', letterSpacing: '0.005em' }],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -66,6 +67,9 @@ export default {
 				'text-light': '#F5F5F5',
 				'text-dark': '#111111',
 				'pink-accent': '#FF7BAC',
+				'text-crisp': '#FAFAFA',
+				'text-bright': '#FFFFFF',
+				'text-contrast': '#F8F9FA',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
