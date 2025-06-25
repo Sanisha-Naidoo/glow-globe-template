@@ -19,9 +19,7 @@ const HeroSection = () => {
   useEffect(() => {
     const unsubscribe = subscribeToScroll(progress => {
       if (heroRef.current) {
-        // Enhanced parallax effect for hero section
-        // Apply effects over first 40% of scroll for smoother transition
-        const heroProgress = Math.min(progress * 2.5, 1); // Maps 0-0.4 to 0-1
+        const heroProgress = Math.min(progress * 2.5, 1);
 
         const scale = 1 - heroProgress * 0.2;
         const translateY = heroProgress * 20;
@@ -42,10 +40,10 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-dark-bg">
+    <section id="home" className="relative h-[80vh] flex items-center justify-center overflow-hidden bg-dark-bg">
       <ParticleAnimation />
       
-      <button onClick={scrollToNext} className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-20 group">
+      <button onClick={scrollToNext} className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 group">
         <div className="flex flex-col items-center space-y-3 text-text-light hover:text-pink-accent transition-all duration-700 ease-out">
           <span className="text-sm font-light tracking-widest uppercase">Explore</span>
           <div className="w-px h-8 bg-gradient-to-b from-text-light to-transparent"></div>

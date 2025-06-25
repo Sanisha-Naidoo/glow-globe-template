@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
@@ -7,9 +8,9 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.6;
-  color: #FAFAFA;
+  color: #FFFFFF;
   background-color: #0D0D0D;
   margin: 0;
   padding: 0;
@@ -21,6 +22,19 @@ body {
   font-optical-sizing: auto;
 }
 
+/* Enhanced text shadow utilities for better contrast */
+.text-shadow-sm {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.text-shadow-md {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+}
+
 /* Improved text contrast and readability */
 .text-crisp {
   font-weight: 500;
@@ -30,15 +44,15 @@ body {
 
 .text-body-crisp {
   font-weight: 400;
-  color: #FAFAFA;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  color: #FFFFFF;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
   letter-spacing: 0.01em;
 }
 
 .text-heading-crisp {
   font-weight: 600;
   color: #FFFFFF;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
   letter-spacing: -0.02em;
 }
 
