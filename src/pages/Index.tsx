@@ -10,7 +10,7 @@ const Index = () => {
 
   return (
     <div className={`${darkMode ? 'dark' : ''} transition-all duration-500`}>
-      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white min-h-screen relative overflow-x-hidden">
+      <div className="bg-dark-bg text-white min-h-screen relative overflow-x-hidden">
         <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
         <HeroSection />
         <AboutSection />

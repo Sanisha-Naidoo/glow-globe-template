@@ -40,7 +40,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="home" className="relative h-[80vh] flex items-center justify-center overflow-hidden bg-dark-bg">
+    <section id="home" className="relative h-[55vh] flex items-center justify-center overflow-hidden bg-dark-bg">
       <ParticleAnimation />
       
       <button onClick={scrollToNext} className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 group">

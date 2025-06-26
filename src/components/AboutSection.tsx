@@ -30,7 +30,7 @@ const AboutSection = () => {
     <section 
       id="about" 
       ref={parallaxRef}
-      className="min-h-screen py-20 relative bg-dark-bg"
+      className="min-h-screen py-8 relative bg-dark-bg"
       style={{ willChange: 'transform' }}
     >
       <div className="max-w-7xl mx-auto px-8">
