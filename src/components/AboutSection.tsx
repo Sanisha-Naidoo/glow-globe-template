@@ -30,24 +30,24 @@ const AboutSection = () => {
     <section 
       id="about" 
       ref={parallaxRef}
-      className="min-h-screen py-8 relative bg-dark-bg"
+      className="min-h-screen py-8 md:py-12 lg:py-16 relative bg-dark-bg"
       style={{ willChange: 'transform' }}
     >
       <div className="max-w-7xl mx-auto px-8">
         <div className="max-w-4xl mx-auto">
           <div 
             ref={sectionRef}
-            className="space-y-16 mb-24"
+            className="space-y-8 md:space-y-12 lg:space-y-16 mb-12 md:mb-16 lg:mb-20"
             style={{ willChange: 'transform, opacity' }}
           >
             <div>
-              <h2 className="text-5xl text-white font-bold mb-12 tracking-tight text-shadow-lg">
+              <h2 className="text-5xl text-white font-bold mb-8 md:mb-12 tracking-tight text-shadow-lg">
                 Vision
               </h2>
-              <div className="w-20 h-px bg-gradient-to-r from-pink-accent to-transparent mb-16"></div>
+              <div className="w-20 h-px bg-gradient-to-r from-pink-accent to-transparent mb-8 md:mb-12 lg:mb-16"></div>
             </div>
             
-            <div className="space-y-8 text-xl text-white leading-relaxed font-medium">
+            <div className="space-y-6 md:space-y-8 text-xl text-white leading-relaxed font-medium">
               <p className="text-shadow-md">
                 I craft digital experiences that move beyond the ordinary — where every interaction 
                 feels cinematic, every transition tells a story, and every moment captivates.
@@ -67,7 +67,7 @@ const AboutSection = () => {
           </div>
 
           {/* Project Previews */}
-          <div className="grid lg:grid-cols-2 gap-16 mb-24">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 mb-12 md:mb-16 lg:mb-20">
             <div ref={projectAlphaRef} className="group opacity-0">
               <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-accent/50 transition-all duration-500 shadow-2xl">
                 <div className="absolute top-6 left-6 flex space-x-3">
