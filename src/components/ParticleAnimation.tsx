@@ -22,7 +22,7 @@ const ParticleAnimation = () => {
     try {
       // Scene setup with enhanced error handling
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const camera = new THREE.PerspectiveCamera(75, mountRef.current.clientWidth / mountRef.current.clientHeight, 0.1, 1000);
       
       // Enhanced renderer setup with better performance
       const canvas = document.createElement('canvas');
@@ -40,7 +40,7 @@ const ParticleAnimation = () => {
         powerPreference: "high-performance"
       });
       
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
       renderer.setClearColor(0x000000, 0);
       // Cap pixel ratio for better performance on high-DPI displays
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -252,7 +252,7 @@ const ParticleAnimation = () => {
 
       const particleSystem = new THREE.Points(particles, material);
       scene.add(particleSystem);
-      camera.position.z = 5;
+      camera.position.z = 4;
 
       console.log(`🎯 Dynamic particle system created with ${particleCount} particles`);
 
@@ -336,10 +336,12 @@ const ParticleAnimation = () => {
 
       // Handle resize with performance optimization
       const handleResize = () => {
-        if (!sceneRef.current) return;
-        sceneRef.current.camera.aspect = window.innerWidth / window.innerHeight;
+        if (!sceneRef.current || !mountRef.current) return;
+        const width = mountRef.current.clientWidth;
+        const height = mountRef.current.clientHeight;
+        sceneRef.current.camera.aspect = width / height;
         sceneRef.current.camera.updateProjectionMatrix();
-        sceneRef.current.renderer.setSize(window.innerWidth, window.innerHeight);
+        sceneRef.current.renderer.setSize(width, height);
         console.log('📱 Viewport resized and updated');
       };
       window.addEventListener('resize', handleResize);
@@ -395,7 +397,7 @@ const ParticleAnimation = () => {
   return (
     <div 
       ref={mountRef} 
-      className="fixed inset-0 z-10"
+      className="absolute inset-0 z-10"
       style={{
         background: 'radial-gradient(ellipse at center, rgba(30, 41, 59, 0.1) 0%, rgba(15, 23, 42, 0.3) 70%, rgba(2, 6, 23, 0.8) 100%)'
       }}
