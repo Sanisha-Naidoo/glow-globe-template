@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
+import SpacerSection from '../components/SpacerSection';
 import AboutSection from '../components/AboutSection';
 import ContactSection from '../components/ContactSection';
 
@@ -13,6 +14,7 @@ const Index = () => {
       <div className="bg-dark-bg text-white min-h-screen relative overflow-x-hidden">
         <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
         <HeroSection />
+        <SpacerSection />
         <AboutSection />
         <ContactSection />
       </div>

@@ -371,7 +371,8 @@ const ParticleAnimation = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       
-      const rawProgress = Math.min(scrollY / (windowHeight * 0.25), 1);
+      // Smoother, more gradual morph transition
+      const rawProgress = Math.min(scrollY / (windowHeight * 0.4), 1);
       const easedProgress = rawProgress < 0.5 
         ? 2 * rawProgress * rawProgress 
         : 1 - Math.pow(-2 * rawProgress + 2, 3) / 2;
@@ -381,12 +382,13 @@ const ParticleAnimation = () => {
         lastMorphProgress = easedProgress;
       }
       
-      const heroBottom = windowHeight;
+      // Extended visibility range for smoother fade out
+      const heroBottom = windowHeight * 1.2;
       const isVisible = scrollY < heroBottom;
       const targetVisibility = isVisible ? 1.0 : 0.0;
       
       const currentVisibility = sceneRef.current.material.uniforms.visibility.value;
-      const newVisibility = THREE.MathUtils.lerp(currentVisibility, targetVisibility, 0.08);
+      const newVisibility = THREE.MathUtils.lerp(currentVisibility, targetVisibility, 0.05);
       sceneRef.current.material.uniforms.visibility.value = newVisibility;
     };
 

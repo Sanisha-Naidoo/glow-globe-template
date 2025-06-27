@@ -5,19 +5,20 @@ import { useProjectAnimation } from '../hooks/useProjectAnimations';
 import { useCinematicScroll } from '../hooks/useCinematicScroll';
 
 const AboutSection = () => {
-  const sectionRef = useSplitTransition({ direction: 'right', triggerPoint: 0.2 });
+  const sectionRef = useSplitTransition({ direction: 'right', triggerPoint: 0.1 });
   const parallaxRef = useRef<HTMLDivElement>(null);
   const { subscribeToScroll } = useCinematicScroll();
   
-  const projectAlphaRef = useProjectAnimation({ direction: 'diagonal-left', triggerPoint: 0.4 });
-  const projectBetaRef = useProjectAnimation({ direction: 'right', triggerPoint: 0.5 });
+  const projectAlphaRef = useProjectAnimation({ direction: 'diagonal-left', triggerPoint: 0.6 });
+  const projectBetaRef = useProjectAnimation({ direction: 'right', triggerPoint: 0.7 });
 
   useEffect(() => {
     const unsubscribe = subscribeToScroll((progress) => {
       if (parallaxRef.current) {
-        const aboutProgress = Math.max(0, Math.min(1, (progress - 0.15) * 3));
-        const translateY = -aboutProgress * 15;
-        const scale = 1 - aboutProgress * 0.05;
+        // Gentler parallax that works with the heart animation
+        const aboutProgress = Math.max(0, Math.min(1, (progress - 0.3) * 2));
+        const translateY = -aboutProgress * 8;
+        const scale = 1 - aboutProgress * 0.02;
         
         parallaxRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
       }
@@ -30,44 +31,34 @@ const AboutSection = () => {
     <section 
       id="about" 
       ref={parallaxRef}
-      className="min-h-screen py-8 md:py-12 lg:py-16 relative bg-dark-bg"
+      className="min-h-screen py-16 md:py-20 lg:py-24 relative bg-dark-bg"
       style={{ willChange: 'transform' }}
     >
       <div className="max-w-7xl mx-auto px-8">
         <div className="max-w-4xl mx-auto">
           <div 
             ref={sectionRef}
-            className="space-y-8 md:space-y-12 lg:space-y-16 mb-12 md:mb-16 lg:mb-20"
+            className="space-y-12 md:space-y-16 lg:space-y-20 mb-20 md:mb-24 lg:mb-28"
             style={{ willChange: 'transform, opacity' }}
           >
             <div>
-              <h2 className="text-5xl text-white font-bold mb-8 md:mb-12 tracking-tight text-shadow-lg">
+              <h2 className="text-5xl md:text-6xl lg:text-7xl text-white font-bold mb-12 md:mb-16 tracking-tight text-shadow-lg">
                 Vision
               </h2>
-              <div className="w-20 h-px bg-gradient-to-r from-pink-accent to-transparent mb-8 md:mb-12 lg:mb-16"></div>
+              <div className="w-24 h-px bg-gradient-to-r from-pink-accent to-transparent mb-16 md:mb-20 lg:mb-24"></div>
             </div>
             
-            <div className="space-y-6 md:space-y-8 text-xl text-white leading-relaxed font-medium">
-              <p className="text-shadow-md">
-                I craft digital experiences that move beyond the ordinary — where every interaction 
-                feels cinematic, every transition tells a story, and every moment captivates.
-              </p>
-              
-              <p className="text-shadow-md">
-                My work exists at the intersection of motion design and human psychology, 
-                creating interfaces that don't just function, but inspire and delight through 
-                carefully orchestrated movement and timing.
-              </p>
-              
-              <p className="text-shadow-md">
-                Collaborating with visionary brands and individuals who understand that 
-                exceptional digital experiences require both technical mastery and artistic vision.
+            <div className="max-w-3xl">
+              <p className="text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed font-light text-shadow-md">
+                I craft digital experiences that transcend the ordinary — where every interaction 
+                feels cinematic, every transition tells a story, and every moment captivates through 
+                the seamless fusion of motion design and human psychology.
               </p>
             </div>
           </div>
 
           {/* Project Previews */}
-          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 mb-12 md:mb-16 lg:mb-20">
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20">
             <div ref={projectAlphaRef} className="group opacity-0">
               <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-accent/50 transition-all duration-500 shadow-2xl">
                 <div className="absolute top-6 left-6 flex space-x-3">
