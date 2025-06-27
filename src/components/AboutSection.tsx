@@ -1,7 +1,7 @@
 
 import { useRef, useEffect } from 'react';
 import { useSplitTransition } from '../hooks/useSplitTransition';
-import { useProjectAnimation } from '../hooks/useProjectAnimations';
+import { useProjectScaleAnimation } from '../hooks/useProjectScaleAnimation';
 import { useCinematicScroll } from '../hooks/useCinematicScroll';
 
 const AboutSection = () => {
@@ -9,13 +9,17 @@ const AboutSection = () => {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const { subscribeToScroll } = useCinematicScroll();
   
-  const projectAlphaRef = useProjectAnimation({ direction: 'diagonal-left', triggerPoint: 0.6 });
-  const projectBetaRef = useProjectAnimation({ direction: 'right', triggerPoint: 0.7 });
+  const { leftBoxRef, rightBoxRef } = useProjectScaleAnimation({
+    startTrigger: 0.5,
+    endTrigger: 0.9,
+    maxScale: 1.3,
+    horizontalSpread: 120
+  });
 
   useEffect(() => {
     const unsubscribe = subscribeToScroll((progress) => {
       if (parallaxRef.current) {
-        // Gentler parallax that works with the heart animation
+        // Gentler parallax that works with the scaling animation
         const aboutProgress = Math.max(0, Math.min(1, (progress - 0.3) * 2));
         const translateY = -aboutProgress * 8;
         const scale = 1 - aboutProgress * 0.02;
@@ -57,10 +61,14 @@ const AboutSection = () => {
             </div>
           </div>
 
-          {/* Project Previews */}
-          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20">
-            <div ref={projectAlphaRef} className="group opacity-0">
-              <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-accent/50 transition-all duration-500 shadow-2xl">
+          {/* Project Previews - Now with absolute positioning for flexible movement */}
+          <div className="relative h-[120vh] flex items-center justify-center">
+            <div 
+              ref={leftBoxRef}
+              className="absolute left-1/2 top-1/2 -translate-x-full -translate-y-1/2 mr-8 group"
+              style={{ willChange: 'transform' }}
+            >
+              <div className="relative h-80 w-80 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-accent/50 transition-all duration-500 shadow-2xl">
                 <div className="absolute top-6 left-6 flex space-x-3">
                   <div className="w-4 h-4 rounded-full bg-red-500"></div>
                   <div className="w-4 h-4 rounded-full bg-yellow-500"></div>
@@ -79,8 +87,12 @@ const AboutSection = () => {
               </div>
             </div>
 
-            <div ref={projectBetaRef} className="group opacity-0">
-              <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-accent/50 transition-all duration-500 shadow-2xl">
+            <div 
+              ref={rightBoxRef}
+              className="absolute left-1/2 top-1/2 translate-x-0 -translate-y-1/2 ml-8 group"
+              style={{ willChange: 'transform' }}
+            >
+              <div className="relative h-80 w-80 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-accent/50 transition-all duration-500 shadow-2xl">
                 <div className="absolute top-6 left-6 flex space-x-3">
                   <div className="w-4 h-4 rounded-full bg-red-500"></div>
                   <div className="w-4 h-4 rounded-full bg-yellow-500"></div>
