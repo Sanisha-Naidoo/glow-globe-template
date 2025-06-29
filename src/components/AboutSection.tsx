@@ -111,8 +111,8 @@ const AboutSection = () => {
                   )}
                 </div>
 
-                {/* Embedded PreLOVED App - Full container */}
-                <div className="absolute top-16 left-0 right-0 bottom-0 rounded-b-3xl overflow-hidden">
+                {/* Embedded PreLOVED App - Full container with no padding */}
+                <div className="absolute top-16 left-0 right-0 bottom-0 overflow-hidden rounded-b-3xl">
                   <iframe
                     src="https://preloved-shoes.lovable.app/"
                     className="w-full h-full border-0 bg-white"
