@@ -111,18 +111,19 @@ const AboutSection = () => {
                   )}
                 </div>
 
-                {/* Embedded PreLOVED App */}
-                <div className="absolute top-16 left-0 right-0 bottom-0 rounded-b-3xl overflow-hidden">
+                {/* Embedded PreLOVED App - Full scrollable container */}
+                <div className="absolute top-16 left-0 right-0 bottom-0 rounded-b-3xl">
                   <iframe
                     src="https://preloved-shoes.lovable.app/"
-                    className="w-full h-full border-0 bg-white"
+                    className="w-full h-full border-0 bg-white rounded-b-3xl"
                     title="PreLOVED Shoes App"
                     loading="lazy"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock"
+                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock allow-top-navigation-by-user-activation"
                     style={{ 
                       pointerEvents: 'auto',
-                      touchAction: 'auto'
+                      touchAction: 'auto',
+                      overflow: 'auto'
                     }}
                   />
                 </div>
