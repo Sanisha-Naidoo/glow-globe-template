@@ -361,7 +361,7 @@ const ParticleAnimation = () => {
     }
   }, []);
 
-  // Enhanced scroll-based control with performance optimization
+  // Enhanced scroll-based control with extended range and position movement
   useEffect(() => {
     let lastMorphProgress = -1;
     
@@ -371,8 +371,8 @@ const ParticleAnimation = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       
-      // Smoother, more gradual morph transition
-      const rawProgress = Math.min(scrollY / (windowHeight * 0.4), 1);
+      // Extended morph transition - globe expands over larger scroll range
+      const rawProgress = Math.min(scrollY / (windowHeight * 1.0), 1);
       const easedProgress = rawProgress < 0.5 
         ? 2 * rawProgress * rawProgress 
         : 1 - Math.pow(-2 * rawProgress + 2, 3) / 2;
@@ -382,8 +382,16 @@ const ParticleAnimation = () => {
         lastMorphProgress = easedProgress;
       }
       
-      // Extended visibility range for smoother fade out
-      const heroBottom = windowHeight * 1.2;
+      // Globe position movement - move down as user scrolls
+      const maxTranslateY = windowHeight * 0.8;
+      const translateY = Math.min(scrollY * 0.3, maxTranslateY);
+      
+      if (sceneRef.current.renderer.domElement) {
+        sceneRef.current.renderer.domElement.style.transform = `translateY(${translateY}px)`;
+      }
+      
+      // Extended visibility range for longer globe presence
+      const heroBottom = windowHeight * 2.0;
       const isVisible = scrollY < heroBottom;
       const targetVisibility = isVisible ? 1.0 : 0.0;
       

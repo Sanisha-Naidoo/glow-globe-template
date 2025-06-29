@@ -6,32 +6,28 @@ interface ProjectScaleOptions {
   startTrigger?: number;
   endTrigger?: number;
   maxScale?: number;
-  horizontalSpread?: number;
+  angleMovement?: number;
 }
 
 export const useProjectScaleAnimation = (options: ProjectScaleOptions = {}) => {
   const {
     startTrigger = 0.4,
     endTrigger = 0.8,
-    maxScale = 1.2,
-    horizontalSpread = 100
+    maxScale = 1.8,
+    angleMovement = 150
   } = options;
 
-  const leftBoxRef = useRef<HTMLDivElement>(null);
-  const rightBoxRef = useRef<HTMLDivElement>(null);
+  const projectBoxRef = useRef<HTMLDivElement>(null);
   const { subscribeToScroll } = useCinematicScroll();
 
   useEffect(() => {
-    const leftBox = leftBoxRef.current;
-    const rightBox = rightBoxRef.current;
+    const projectBox = projectBoxRef.current;
     
-    if (!leftBox || !rightBox) return;
+    if (!projectBox) return;
 
-    // Set initial styles
-    leftBox.style.transform = 'translate3d(0, 0, 0) scale(0.8)';
-    rightBox.style.transform = 'translate3d(0, 0, 0) scale(0.8)';
-    leftBox.style.willChange = 'transform';
-    rightBox.style.willChange = 'transform';
+    // Set initial styles - centered and smaller
+    projectBox.style.transform = 'translate3d(-50%, -50%, 0) scale(0.6)';
+    projectBox.style.willChange = 'transform';
 
     const unsubscribe = subscribeToScroll((progress) => {
       if (progress >= startTrigger && progress <= endTrigger) {
@@ -39,21 +35,20 @@ export const useProjectScaleAnimation = (options: ProjectScaleOptions = {}) => {
         const animationProgress = Math.min(1, (progress - startTrigger) / (endTrigger - startTrigger));
         const easeProgress = 1 - Math.pow(1 - animationProgress, 3); // Cubic ease out
         
-        // Scale calculation
-        const scale = 0.8 + (maxScale - 0.8) * easeProgress;
+        // Scale calculation - grow from 0.6 to maxScale
+        const scale = 0.6 + (maxScale - 0.6) * easeProgress;
         
-        // Horizontal movement calculation
-        const leftTranslateX = -horizontalSpread * easeProgress;
-        const rightTranslateX = horizontalSpread * easeProgress;
+        // Angled movement calculation - move diagonally (right and down)
+        const translateX = -50 + (angleMovement * easeProgress); // Start centered, move right
+        const translateY = -50 + (angleMovement * 0.6 * easeProgress); // Start centered, move down at angle
         
-        // Apply transforms
-        leftBox.style.transform = `translate3d(${leftTranslateX}px, 0, 0) scale(${scale})`;
-        rightBox.style.transform = `translate3d(${rightTranslateX}px, 0, 0) scale(${scale})`;
+        // Apply transforms with angled movement
+        projectBox.style.transform = `translate3d(${translateX}%, ${translateY}%, 0) scale(${scale})`;
       }
     });
 
     return unsubscribe;
-  }, [startTrigger, endTrigger, maxScale, horizontalSpread, subscribeToScroll]);
+  }, [startTrigger, endTrigger, maxScale, angleMovement, subscribeToScroll]);
 
-  return { leftBoxRef, rightBoxRef };
+  return { projectBoxRef };
 };

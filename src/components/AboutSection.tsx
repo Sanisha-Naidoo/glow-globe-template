@@ -9,11 +9,11 @@ const AboutSection = () => {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const { subscribeToScroll } = useCinematicScroll();
   
-  const { leftBoxRef, rightBoxRef } = useProjectScaleAnimation({
+  const { projectBoxRef } = useProjectScaleAnimation({
     startTrigger: 0.5,
     endTrigger: 0.9,
-    maxScale: 1.3,
-    horizontalSpread: 120
+    maxScale: 1.8,
+    angleMovement: 120
   });
 
   useEffect(() => {
@@ -46,14 +46,14 @@ const AboutSection = () => {
             style={{ willChange: 'transform, opacity' }}
           >
             <div>
-              <h2 className="text-5xl md:text-6xl lg:text-7xl text-white font-bold mb-12 md:mb-16 tracking-tight text-shadow-lg">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl text-white font-bold mb-12 md:mb-16 tracking-tight text-shadow-lg">
                 Vision
               </h2>
               <div className="w-24 h-px bg-gradient-to-r from-pink-accent to-transparent mb-16 md:mb-20 lg:mb-24"></div>
             </div>
             
             <div className="max-w-3xl">
-              <p className="text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed font-light text-shadow-md">
+              <p className="text-lg md:text-xl lg:text-2xl text-white leading-relaxed font-light text-shadow-md">
                 I craft digital experiences that transcend the ordinary — where every interaction 
                 feels cinematic, every transition tells a story, and every moment captivates through 
                 the seamless fusion of motion design and human psychology.
@@ -61,53 +61,37 @@ const AboutSection = () => {
             </div>
           </div>
 
-          {/* Project Previews - Now with absolute positioning for flexible movement */}
+          {/* Single Project Preview - Larger and positioned for angled movement */}
           <div className="relative h-[120vh] flex items-center justify-center">
             <div 
-              ref={leftBoxRef}
-              className="absolute left-1/2 top-1/2 -translate-x-full -translate-y-1/2 mr-8 group"
+              ref={projectBoxRef}
+              className="absolute left-1/2 top-1/2 group"
               style={{ willChange: 'transform' }}
             >
-              <div className="relative h-80 w-80 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-accent/50 transition-all duration-500 shadow-2xl">
+              <div className="relative h-96 w-80 md:h-[500px] md:w-96 lg:h-[600px] lg:w-[480px] rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-accent/50 transition-all duration-500 shadow-2xl">
                 <div className="absolute top-6 left-6 flex space-x-3">
                   <div className="w-4 h-4 rounded-full bg-red-500"></div>
                   <div className="w-4 h-4 rounded-full bg-yellow-500"></div>
                   <div className="w-4 h-4 rounded-full bg-green-500"></div>
                 </div>
-                <div className="p-8 pt-20 h-full flex items-center justify-center">
+                <div className="p-8 pt-20 h-full flex flex-col justify-between">
                   <div className="text-center space-y-6">
-                    <div className="w-20 h-20 bg-gradient-to-br from-pink-accent/30 to-pink-accent/10 rounded-xl mx-auto flex items-center justify-center shadow-lg">
-                      <div className="w-10 h-10 bg-pink-accent/60 rounded-lg"></div>
+                    <div className="w-24 h-24 bg-gradient-to-br from-pink-accent/30 to-pink-accent/10 rounded-xl mx-auto flex items-center justify-center shadow-lg">
+                      <div className="w-12 h-12 bg-pink-accent/60 rounded-lg"></div>
                     </div>
-                    <h3 className="text-2xl text-white font-bold text-shadow-md">Project Alpha</h3>
-                    <p className="text-lg text-gray-300 font-medium text-shadow-sm">Interactive motion experience</p>
+                    <h3 className="text-3xl text-white font-bold text-shadow-md">Featured Project</h3>
+                    <p className="text-xl text-gray-300 font-medium text-shadow-sm">Interactive Motion Experience</p>
+                  </div>
+                  
+                  {/* Mock preview content */}
+                  <div className="space-y-4 mt-8">
+                    <div className="h-32 bg-gradient-to-br from-pink-accent/20 to-purple-500/20 rounded-lg backdrop-blur-sm border border-pink-accent/20"></div>
+                    <div className="flex space-x-3">
+                      <div className="flex-1 h-20 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-lg backdrop-blur-sm"></div>
+                      <div className="flex-1 h-20 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-lg backdrop-blur-sm"></div>
+                    </div>
                   </div>
                 </div>
-                <div className="absolute inset-x-6 bottom-6 h-10 bg-gradient-to-r from-gray-800/50 to-gray-700/50 rounded-lg backdrop-blur-sm"></div>
-              </div>
-            </div>
-
-            <div 
-              ref={rightBoxRef}
-              className="absolute left-1/2 top-1/2 translate-x-0 -translate-y-1/2 ml-8 group"
-              style={{ willChange: 'transform' }}
-            >
-              <div className="relative h-80 w-80 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-accent/50 transition-all duration-500 shadow-2xl">
-                <div className="absolute top-6 left-6 flex space-x-3">
-                  <div className="w-4 h-4 rounded-full bg-red-500"></div>
-                  <div className="w-4 h-4 rounded-full bg-yellow-500"></div>
-                  <div className="w-4 h-4 rounded-full bg-green-500"></div>
-                </div>
-                <div className="p-8 pt-20 h-full flex items-center justify-center">
-                  <div className="text-center space-y-6">
-                    <div className="w-20 h-20 bg-gradient-to-br from-pink-accent/30 to-pink-accent/10 rounded-xl mx-auto flex items-center justify-center shadow-lg">
-                      <div className="w-10 h-10 bg-pink-accent/60 rounded-full"></div>
-                    </div>
-                    <h3 className="text-2xl text-white font-bold text-shadow-md">Project Beta</h3>
-                    <p className="text-lg text-gray-300 font-medium text-shadow-sm">Cinematic interface design</p>
-                  </div>
-                </div>
-                <div className="absolute inset-x-6 bottom-6 h-10 bg-gradient-to-r from-gray-800/50 to-gray-700/50 rounded-lg backdrop-blur-sm"></div>
               </div>
             </div>
           </div>
