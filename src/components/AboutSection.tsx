@@ -85,13 +85,13 @@ const AboutSection = () => {
           </div>
 
           {/* PreLOVED Project Preview */}
-          <div className="relative h-[120vh] flex items-center justify-center">
+          <div className="relative h-[140vh] flex items-center justify-center">
             <div 
               ref={projectBoxRef}
               className="absolute left-1/2 top-1/2"
               style={{ willChange: 'transform, opacity' }}
             >
-              <div className="relative w-[95vw] max-w-7xl h-[85vh] max-h-[1100px] rounded-3xl overflow-hidden backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] before:absolute before:inset-0 before:rounded-3xl before:p-px before:bg-gradient-to-br before:from-white/20 before:to-transparent before:mask-composite-exclude before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)]">
+              <div className="relative w-[85vw] max-w-5xl h-[120vh] max-h-[1400px] rounded-3xl overflow-hidden backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] before:absolute before:inset-0 before:rounded-3xl before:p-px before:bg-gradient-to-br before:from-white/20 before:to-transparent before:mask-composite-exclude before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)]">
                 
                 {/* Glass frame header */}
                 <div className="absolute top-0 left-0 right-0 h-16 backdrop-blur-md bg-white/10 border-b border-white/10 flex items-center justify-between px-8 z-10">
@@ -117,7 +117,12 @@ const AboutSection = () => {
                   className="w-full h-full border-0 bg-white rounded-b-3xl"
                   title="PreLOVED Shoes App"
                   loading="lazy"
-                  style={{ marginTop: '64px', height: 'calc(100% - 64px)' }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  style={{ 
+                    marginTop: '64px', 
+                    height: 'calc(100% - 64px)',
+                    pointerEvents: 'auto'
+                  }}
                 />
                 
                 {/* Subtle glow effect */}
