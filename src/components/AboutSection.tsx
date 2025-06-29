@@ -10,16 +10,13 @@ const AboutSection = () => {
   const { subscribeToScroll } = useCinematicScroll();
   
   const { projectBoxRef } = useProjectScaleAnimation({
-    startTrigger: 0.15,
-    endTrigger: 0.85,
-    maxScale: 4.5,
-    angleMovement: 200
+    startTrigger: 0.2,
+    endTrigger: 0.7
   });
 
   useEffect(() => {
     const unsubscribe = subscribeToScroll((progress) => {
       if (parallaxRef.current) {
-        // Gentler parallax that works with the scaling animation
         const aboutProgress = Math.max(0, Math.min(1, (progress - 0.2) * 2));
         const translateY = -aboutProgress * 6;
         const scale = 1 - aboutProgress * 0.015;
@@ -61,14 +58,14 @@ const AboutSection = () => {
             </div>
           </div>
 
-          {/* Single Large Project Preview - Positioned for massive scaling */}
-          <div className="relative h-[150vh] flex items-center justify-center overflow-hidden">
+          {/* Project Preview - Simplified and properly sized */}
+          <div className="relative h-[120vh] flex items-center justify-center">
             <div 
               ref={projectBoxRef}
-              className="absolute left-1/2 top-1/2 group"
-              style={{ willChange: 'transform' }}
+              className="absolute left-1/2 top-1/2"
+              style={{ willChange: 'transform, opacity' }}
             >
-              <div className="relative h-[500px] w-[400px] md:h-[600px] md:w-[480px] lg:h-[700px] lg:w-[560px] rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-accent/50 transition-all duration-500 shadow-2xl">
+              <div className="relative w-[90vw] max-w-5xl h-[70vh] max-h-[800px] rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-700 shadow-2xl">
                 <div className="absolute top-6 left-6 flex space-x-3">
                   <div className="w-4 h-4 rounded-full bg-red-500"></div>
                   <div className="w-4 h-4 rounded-full bg-yellow-500"></div>
@@ -83,7 +80,6 @@ const AboutSection = () => {
                     <p className="text-2xl text-gray-300 font-medium text-shadow-sm">Interactive Motion Experience</p>
                   </div>
                   
-                  {/* Enhanced mock preview content */}
                   <div className="space-y-6 mt-8">
                     <div className="h-40 bg-gradient-to-br from-pink-accent/20 to-purple-500/20 rounded-lg backdrop-blur-sm border border-pink-accent/20"></div>
                     <div className="flex space-x-4">

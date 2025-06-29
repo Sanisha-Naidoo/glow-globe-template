@@ -5,16 +5,12 @@ import { useCinematicScroll } from './useCinematicScroll';
 interface ProjectScaleOptions {
   startTrigger?: number;
   endTrigger?: number;
-  maxScale?: number;
-  angleMovement?: number;
 }
 
 export const useProjectScaleAnimation = (options: ProjectScaleOptions = {}) => {
   const {
-    startTrigger = 0.15,
-    endTrigger = 0.85,
-    maxScale = 4.5,
-    angleMovement = 200
+    startTrigger = 0.2,
+    endTrigger = 0.7
   } = options;
 
   const projectBoxRef = useRef<HTMLDivElement>(null);
@@ -25,30 +21,31 @@ export const useProjectScaleAnimation = (options: ProjectScaleOptions = {}) => {
     
     if (!projectBox) return;
 
-    // Set initial styles - centered and smaller
-    projectBox.style.transform = 'translate3d(-50%, -50%, 0) scale(0.4)';
-    projectBox.style.willChange = 'transform';
+    // Set initial styles - off-screen and small
+    projectBox.style.transform = 'translate3d(-50%, 100px, 0) scale(0.8)';
+    projectBox.style.opacity = '0';
+    projectBox.style.willChange = 'transform, opacity';
 
     const unsubscribe = subscribeToScroll((progress) => {
       if (progress >= startTrigger && progress <= endTrigger) {
         // Calculate animation progress within the trigger range
-        const animationProgress = Math.min(1, (progress - startTrigger) / (endTrigger - startTrigger));
-        const easeProgress = 1 - Math.pow(1 - animationProgress, 2.5); // Stronger ease for dramatic effect
+        const animationProgress = (progress - startTrigger) / (endTrigger - startTrigger);
+        const easeProgress = 1 - Math.pow(1 - animationProgress, 2);
         
-        // Scale calculation - grow from 0.4 to maxScale for massive final size
-        const scale = 0.4 + (maxScale - 0.4) * easeProgress;
+        // Opacity fade in
+        const opacity = Math.min(1, animationProgress * 2);
         
-        // Enhanced angled movement calculation - move diagonally (right and down)
-        const translateX = -50 + (angleMovement * 0.8 * easeProgress); // More horizontal movement
-        const translateY = -50 + (angleMovement * 0.5 * easeProgress); // Balanced vertical movement
+        // Move into view and scale up
+        const translateY = 100 - (100 * easeProgress); // Move from 100px down to 0
+        const scale = 0.8 + (0.2 * easeProgress); // Scale from 0.8 to 1.0
         
-        // Apply transforms with enhanced angled movement
-        projectBox.style.transform = `translate3d(${translateX}%, ${translateY}%, 0) scale(${scale})`;
+        projectBox.style.transform = `translate3d(-50%, ${translateY}px, 0) scale(${scale})`;
+        projectBox.style.opacity = opacity.toString();
       }
     });
 
     return unsubscribe;
-  }, [startTrigger, endTrigger, maxScale, angleMovement, subscribeToScroll]);
+  }, [startTrigger, endTrigger, subscribeToScroll]);
 
   return { projectBoxRef };
 };
