@@ -91,29 +91,37 @@ const AboutSection = () => {
               className="absolute left-1/2 top-1/2"
               style={{ willChange: 'transform, opacity' }}
             >
-              <div className="relative w-[90vw] max-w-6xl h-[80vh] max-h-[900px] rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-700 shadow-2xl">
-                <div className="absolute top-6 left-6 flex space-x-3 z-10">
-                  <div className="w-4 h-4 rounded-full bg-red-500"></div>
-                  <div className="w-4 h-4 rounded-full bg-yellow-500"></div>
-                  <div className="w-4 h-4 rounded-full bg-green-500"></div>
-                </div>
+              <div className="relative w-[95vw] max-w-7xl h-[85vh] max-h-[1100px] rounded-3xl overflow-hidden backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] before:absolute before:inset-0 before:rounded-3xl before:p-px before:bg-gradient-to-br before:from-white/20 before:to-transparent before:mask-composite-exclude before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)]">
                 
-                {/* Project Title and Info */}
-                <div className="absolute top-6 right-6 z-10 text-right">
-                  <h3 className="text-white font-bold text-lg">PreLOVED Shoes</h3>
+                {/* Glass frame header */}
+                <div className="absolute top-0 left-0 right-0 h-16 backdrop-blur-md bg-white/10 border-b border-white/10 flex items-center justify-between px-8 z-10">
+                  <div className="flex items-center space-x-4">
+                    <h3 className="text-white font-bold text-xl tracking-tight">PreLOVED Shoes</h3>
+                    <div className="w-px h-6 bg-white/20"></div>
+                    <span className="text-white/70 text-sm font-light">Circular Economy Platform</span>
+                  </div>
+                  
                   {publishDate && (
-                    <p className="text-gray-400 text-sm">{publishDate}</p>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 rounded-full bg-pink-accent animate-pulse"></div>
+                      <p className="text-pink-accent font-semibold text-sm tracking-wide uppercase">
+                        {publishDate}
+                      </p>
+                    </div>
                   )}
                 </div>
 
                 {/* Embedded PreLOVED App */}
                 <iframe
                   src="https://preloved-shoes.lovable.app/"
-                  className="w-full h-full border-0 bg-white"
+                  className="w-full h-full border-0 bg-white rounded-b-3xl"
                   title="PreLOVED Shoes App"
                   loading="lazy"
-                  style={{ marginTop: '60px', height: 'calc(100% - 60px)' }}
+                  style={{ marginTop: '64px', height: 'calc(100% - 64px)' }}
                 />
+                
+                {/* Subtle glow effect */}
+                <div className="absolute -inset-px rounded-3xl bg-gradient-to-br from-pink-accent/20 via-transparent to-white/10 opacity-50 pointer-events-none"></div>
               </div>
             </div>
           </div>
