@@ -361,7 +361,7 @@ const ParticleAnimation = () => {
     }
   }, []);
 
-  // Enhanced scroll-based control with extended range and position movement
+  // Enhanced scroll-based control with better positioning and morph behavior
   useEffect(() => {
     let lastMorphProgress = -1;
     
@@ -371,8 +371,10 @@ const ParticleAnimation = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       
-      // Extended morph transition - globe expands over larger scroll range
-      const rawProgress = Math.min(scrollY / (windowHeight * 1.0), 1);
+      // Extended morph transition - starts earlier and continues longer
+      const morphStartPoint = windowHeight * 0.2; // Start morphing sooner
+      const morphEndPoint = windowHeight * 1.2; // Continue morphing longer
+      const rawProgress = Math.max(0, Math.min(1, (scrollY - morphStartPoint) / (morphEndPoint - morphStartPoint)));
       const easedProgress = rawProgress < 0.5 
         ? 2 * rawProgress * rawProgress 
         : 1 - Math.pow(-2 * rawProgress + 2, 3) / 2;
@@ -382,16 +384,16 @@ const ParticleAnimation = () => {
         lastMorphProgress = easedProgress;
       }
       
-      // Globe position movement - move down as user scrolls
-      const maxTranslateY = windowHeight * 0.8;
-      const translateY = Math.min(scrollY * 0.3, maxTranslateY);
+      // Improved globe position movement - gentler downward motion
+      const maxTranslateY = windowHeight * 0.6;
+      const translateY = Math.min(scrollY * 0.2, maxTranslateY); // Reduced multiplier for smoother movement
       
       if (sceneRef.current.renderer.domElement) {
         sceneRef.current.renderer.domElement.style.transform = `translateY(${translateY}px)`;
       }
       
       // Extended visibility range for longer globe presence
-      const heroBottom = windowHeight * 2.0;
+      const heroBottom = windowHeight * 2.5; // Extended visibility range
       const isVisible = scrollY < heroBottom;
       const targetVisibility = isVisible ? 1.0 : 0.0;
       

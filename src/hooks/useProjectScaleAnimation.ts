@@ -11,10 +11,10 @@ interface ProjectScaleOptions {
 
 export const useProjectScaleAnimation = (options: ProjectScaleOptions = {}) => {
   const {
-    startTrigger = 0.4,
-    endTrigger = 0.8,
-    maxScale = 1.8,
-    angleMovement = 150
+    startTrigger = 0.15,
+    endTrigger = 0.85,
+    maxScale = 4.5,
+    angleMovement = 200
   } = options;
 
   const projectBoxRef = useRef<HTMLDivElement>(null);
@@ -26,23 +26,23 @@ export const useProjectScaleAnimation = (options: ProjectScaleOptions = {}) => {
     if (!projectBox) return;
 
     // Set initial styles - centered and smaller
-    projectBox.style.transform = 'translate3d(-50%, -50%, 0) scale(0.6)';
+    projectBox.style.transform = 'translate3d(-50%, -50%, 0) scale(0.4)';
     projectBox.style.willChange = 'transform';
 
     const unsubscribe = subscribeToScroll((progress) => {
       if (progress >= startTrigger && progress <= endTrigger) {
         // Calculate animation progress within the trigger range
         const animationProgress = Math.min(1, (progress - startTrigger) / (endTrigger - startTrigger));
-        const easeProgress = 1 - Math.pow(1 - animationProgress, 3); // Cubic ease out
+        const easeProgress = 1 - Math.pow(1 - animationProgress, 2.5); // Stronger ease for dramatic effect
         
-        // Scale calculation - grow from 0.6 to maxScale
-        const scale = 0.6 + (maxScale - 0.6) * easeProgress;
+        // Scale calculation - grow from 0.4 to maxScale for massive final size
+        const scale = 0.4 + (maxScale - 0.4) * easeProgress;
         
-        // Angled movement calculation - move diagonally (right and down)
-        const translateX = -50 + (angleMovement * easeProgress); // Start centered, move right
-        const translateY = -50 + (angleMovement * 0.6 * easeProgress); // Start centered, move down at angle
+        // Enhanced angled movement calculation - move diagonally (right and down)
+        const translateX = -50 + (angleMovement * 0.8 * easeProgress); // More horizontal movement
+        const translateY = -50 + (angleMovement * 0.5 * easeProgress); // Balanced vertical movement
         
-        // Apply transforms with angled movement
+        // Apply transforms with enhanced angled movement
         projectBox.style.transform = `translate3d(${translateX}%, ${translateY}%, 0) scale(${scale})`;
       }
     });
