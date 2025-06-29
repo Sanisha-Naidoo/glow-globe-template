@@ -83,14 +83,14 @@ const AboutSection = () => {
             </div>
           </div>
 
-          {/* PreLOVED Project Preview */}
-          <div className="relative h-[160vh] flex items-center justify-center">
+          {/* PreLOVED Project Preview - Full width container */}
+          <div className="relative h-[160vh] w-full flex items-center justify-center">
             <div 
               ref={projectBoxRef}
               className="absolute left-1/2 top-1/2"
               style={{ willChange: 'transform, opacity' }}
             >
-              <div className="relative w-[85vw] max-w-5xl h-[140vh] max-h-[1600px] rounded-3xl backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] overflow-hidden before:absolute before:inset-0 before:rounded-3xl before:p-px before:bg-gradient-to-br before:from-white/20 before:to-transparent before:mask-composite-exclude before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)]">
+              <div className="relative w-[90vw] max-w-6xl h-[140vh] max-h-[1600px] rounded-3xl backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] overflow-hidden before:absolute before:inset-0 before:rounded-3xl before:p-px before:bg-gradient-to-br before:from-white/20 before:to-transparent before:mask-composite-exclude before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)]">
                 
                 {/* Glass frame header */}
                 <div className="absolute top-0 left-0 right-0 h-16 backdrop-blur-md bg-white/10 border-b border-white/10 flex items-center justify-between px-8 z-10 rounded-t-3xl">
@@ -111,7 +111,7 @@ const AboutSection = () => {
                 </div>
 
                 {/* Embedded PreLOVED App - Full scrollable container */}
-                <div className="absolute top-16 left-0 right-0 bottom-0 rounded-b-3xl">
+                <div className="absolute top-16 left-0 right-0 bottom-0 rounded-b-3xl overflow-hidden">
                   <iframe
                     src="https://preloved-shoes.lovable.app/"
                     className="w-full h-full border-0 bg-white rounded-b-3xl"
@@ -121,8 +121,7 @@ const AboutSection = () => {
                     sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock allow-top-navigation-by-user-activation"
                     style={{ 
                       pointerEvents: 'auto',
-                      touchAction: 'auto',
-                      overflow: 'auto'
+                      touchAction: 'auto'
                     }}
                   />
                 </div>
