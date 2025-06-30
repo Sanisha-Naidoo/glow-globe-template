@@ -70,41 +70,41 @@ const AboutSection = () => {
             </p>
           </div>
 
-          {/* ✅ Project Preview Frame */}
-          <div className="w-full flex justify-center mb-16">
-            <div
-              ref={projectBoxRef}
-              className="w-full max-w-6xl h-[70vh] rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] relative"
-            >
-              {/* Header */}
-              <div className="absolute top-0 left-0 right-0 h-16 bg-white/10 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 z-10 rounded-t-3xl">
-                <div className="flex items-center space-x-4">
-                  <h3 className="text-white font-bold text-xl">PreLOVED Shoes</h3>
-                  <span className="text-white/70 text-sm font-light">Circular Economy Platform</span>
-                </div>
-                {publishDate && (
-                  <div className="flex items-center space-x-3">
-                    <div className="w-2 h-2 rounded-full bg-pink-accent animate-pulse"></div>
-                    <p className="text-pink-accent text-sm font-semibold uppercase">{publishDate}</p>
-                  </div>
-                )}
-              </div>
+        {/* ✅ Project Preview Frame (Centered) */}
+<div className="flex justify-center px-4 mb-16">
+  <div
+    ref={projectBoxRef}
+    className="w-full max-w-6xl h-[70vh] rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] relative"
+  >
+    {/* Header */}
+    <div className="absolute top-0 left-0 right-0 h-16 bg-white/10 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 z-10 rounded-t-3xl">
+      <div className="flex items-center space-x-4">
+        <h3 className="text-white font-bold text-xl">PreLOVED Shoes</h3>
+        <span className="text-white/70 text-sm font-light">Circular Economy Platform</span>
+      </div>
+      {publishDate && (
+        <div className="flex items-center space-x-3">
+          <div className="w-2 h-2 rounded-full bg-pink-accent animate-pulse"></div>
+          <p className="text-pink-accent text-sm font-semibold uppercase">{publishDate}</p>
+        </div>
+      )}
+    </div>
 
-              {/* Iframe */}
-              <iframe
-                src="https://preloved-shoes.lovable.app/"
-                className="w-full h-full pt-16 border-none"
-                title="PreLOVED Shoes App"
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock allow-top-navigation-by-user-activation"
-                style={{
-                  pointerEvents: 'auto',
-                  touchAction: 'auto',
-                }}
-              />
-            </div>
-          </div>
+    {/* Iframe */}
+    <iframe
+      src="https://preloved-shoes.lovable.app/"
+      className="w-full h-full pt-16 border-none"
+      title="PreLOVED Shoes App"
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock allow-top-navigation-by-user-activation"
+      style={{
+        pointerEvents: 'auto',
+        touchAction: 'auto',
+      }}
+    />
+  </div>
+</div>
         </div>
       </div>
     </section>
