@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export const useProjectScaleAnimation = ({ startTrigger, endTrigger }) => {
+export const useProjectScaleAnimation = ({ startTrigger, endTrigger, direction = 'left' }) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -12,8 +12,9 @@ export const useProjectScaleAnimation = ({ startTrigger, endTrigger }) => {
       let localProgress = (progress - startTrigger) / (endTrigger - startTrigger);
       localProgress = Math.max(0, Math.min(1, localProgress));
 
-      const translateX = (1 - localProgress) * -100; // from -100% (off screen) to 0%
-      const scale = 0.8 + localProgress * 0.2;       // from 0.8 to 1.0
+      const multiplier = direction === 'left' ? -1 : 1;
+      const translateX = (1 - localProgress) * 100 * multiplier; // from -100 or 100 to 0
+      const scale = 0.8 + localProgress * 0.2;
 
       if (ref.current) {
         ref.current.style.transform = `translateX(${translateX}%) scale(${scale})`;
@@ -22,7 +23,7 @@ export const useProjectScaleAnimation = ({ startTrigger, endTrigger }) => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [startTrigger, endTrigger]);
+  }, [startTrigger, endTrigger, direction]);
 
   return { projectBoxRef: ref };
 };
