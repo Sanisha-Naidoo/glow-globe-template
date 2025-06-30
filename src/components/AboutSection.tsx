@@ -119,7 +119,7 @@ const AboutSection = () => {
     <div className="absolute top-0 left-0 right-0 h-16 bg-white/10 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 z-10 rounded-t-3xl">
       <div className="flex items-center space-x-4">
         <h3 className="text-white font-bold text-xl">Shoe Store</h3>
-        <span className="text-white/70 text-sm font-light">Try-On & Sell</span>
+        <span className="text-white/70 text-sm font-light">Database of shoes collected</span>
       </div>
     </div>
 
