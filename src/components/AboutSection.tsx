@@ -45,12 +45,15 @@ const AboutSection = () => {
   }, []);
 
   return (
-    <section
-      id="about"
-      ref={parallaxRef}
-      className="min-h-screen py-16 relative bg-dark-bg"
-      style={{ willChange: 'transform' }}
-    >
+   <section
+  id="about"
+  ref={parallaxRef}
+  className="min-h-screen py-16 relative"
+  style={{
+    willChange: 'transform',
+    background: 'radial-gradient(ellipse at center, rgba(30, 41, 59, 0.1) 0%, rgba(15, 23, 42, 0.3) 70%, rgba(2, 6, 23, 0.8) 100%)'
+  }}
+>
       <div className="max-w-7xl mx-auto px-8">
         <div className="max-w-4xl mx-auto">
           <div
