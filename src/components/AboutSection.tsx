@@ -79,10 +79,10 @@ const AboutSection = () => {
           </div>
 
           {/* PreLOVED Project Preview - Responsive and non-overlapping */}
-<div className="relative w-full flex items-center justify-center py-12">
-  <div 
+<div className="w-full flex justify-center py-12">
+  <div
     ref={projectBoxRef}
-    className="relative w-[90vw] max-w-6xl h-[70vh] max-h-[800px] rounded-3xl backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] overflow-hidden before:absolute before:inset-0 before:rounded-3xl before:p-px before:bg-gradient-to-br before:from-white/20 before:to-transparent before:mask-composite-exclude before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)]"
+    className="w-[90vw] max-w-6xl h-[70vh] max-h-[800px] relative rounded-3xl backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] overflow-hidden before:absolute before:inset-0 before:rounded-3xl before:p-px before:bg-gradient-to-br before:from-white/20 before:to-transparent before:mask-composite-exclude before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)]"
   >
     {/* Glass frame header */}
     <div className="absolute top-0 left-0 right-0 h-16 backdrop-blur-md bg-white/10 border-b border-white/10 flex items-center justify-between px-8 z-10 rounded-t-3xl">
@@ -91,7 +91,7 @@ const AboutSection = () => {
         <div className="w-px h-6 bg-white/20"></div>
         <span className="text-white/70 text-sm font-light">Circular Economy Platform</span>
       </div>
-      
+
       {publishDate && (
         <div className="flex items-center space-x-3">
           <div className="w-2 h-2 rounded-full bg-pink-accent animate-pulse"></div>
@@ -115,12 +115,11 @@ const AboutSection = () => {
       />
     </div>
 
-    {/* Subtle glow effect */}
+    {/* Glow */}
     <div className="absolute -inset-px rounded-3xl bg-gradient-to-br from-pink-accent/20 via-transparent to-white/10 opacity-50 pointer-events-none"></div>
   </div>
 </div>
-                
-                {/* Subtle glow effect */}
+
                 <div className="absolute -inset-px rounded-3xl bg-gradient-to-br from-pink-accent/20 via-transparent to-white/10 opacity-50 pointer-events-none"></div>
               </div>
             </div>
