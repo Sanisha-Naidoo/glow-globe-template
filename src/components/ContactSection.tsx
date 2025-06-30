@@ -13,14 +13,14 @@ const ContactSection = () => {
       <div className="max-w-6xl mx-auto px-8">
         <div className="max-w-4xl mx-auto text-center">
           {/* Footer with Quote */}
-          <div className="space-y-8">
-            <p className="text-2xl md:text-3xl text-white font-medium leading-relaxed mb-6 md:mb-8 text-shadow-md italic">
+          <div className="space-y-6">
+            <p className="text-lg md:text-xl text-white font-light leading-relaxed mb-4 md:mb-6 text-shadow-sm italic">
               "Where there is love, there is always time and nothing is too much trouble"
             </p>
-            <p className="text-xl text-pink-accent/80 font-semibold tracking-wide mb-8 md:mb-12 text-shadow-sm">
+            <p className="text-base text-pink-accent/80 font-medium tracking-wide mb-6 md:mb-8 text-shadow-sm">
               — Abdu'l‑Baha
             </p>
-            <p className="text-white font-medium text-lg tracking-widest uppercase text-shadow-md">
+            <p className="text-white font-light text-sm tracking-wide uppercase text-shadow-sm">
               © 2024 — Crafted with intention and care
             </p>
           </div>

@@ -72,12 +72,6 @@ const AboutSection = () => {
             </div>
             
             <div className="max-w-3xl space-y-8">
-              <p className="text-lg md:text-xl lg:text-2xl text-white leading-relaxed font-light text-shadow-md">
-                I craft digital experiences that transcend the ordinary — where every interaction 
-                feels cinematic, every transition tells a story, and every moment captivates through 
-                the seamless fusion of motion design and human psychology.
-              </p>
-              
               <p className="text-base md:text-lg text-gray-300 leading-relaxed font-light text-shadow-sm">
                 PreLOVED app is a standalone PWA built to support the tracking of donated shoes from the collection to the distribution, connecting givers with receivers. The future state is to collect data to support manufacturers. The aim of the app is to close gaps in the circular economy. It is a non profit project.
               </p>
@@ -111,11 +105,11 @@ const AboutSection = () => {
                   )}
                 </div>
 
-                {/* Embedded PreLOVED App - Full container with no padding */}
-                <div className="absolute top-16 left-0 right-0 bottom-0 overflow-hidden rounded-b-3xl">
+                {/* Embedded PreLOVED App - Completely unrestricted iframe */}
+                <div className="absolute top-16 inset-x-0 bottom-0">
                   <iframe
                     src="https://preloved-shoes.lovable.app/"
-                    className="w-full h-full border-0 bg-white"
+                    className="w-full h-full border-0 bg-white rounded-b-3xl"
                     title="PreLOVED Shoes App"
                     loading="lazy"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
