@@ -105,6 +105,35 @@ const AboutSection = () => {
     />
   </div>
 </div>
+          {/* Second iframe – scrolls in from the right */}
+<div className="flex justify-center px-4 mb-16 overflow-visible">
+  <div
+    ref={useProjectScaleAnimation({ startTrigger: 0.5, endTrigger: 0.9, direction: 'right' }).projectBoxRef}
+    className="w-full max-w-6xl h-[70vh] rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] relative transition-transform duration-300 ease-out"
+    style={{ transformOrigin: 'right center' }}
+  >
+    {/* Header */}
+    <div className="absolute top-0 left-0 right-0 h-16 bg-white/10 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 z-10 rounded-t-3xl">
+      <div className="flex items-center space-x-4">
+        <h3 className="text-white font-bold text-xl">Shoe Store</h3>
+        <span className="text-white/70 text-sm font-light">Try-On & Sell</span>
+      </div>
+    </div>
+
+    <iframe
+      src="https://shoe-store.lovable.app/"
+      className="w-full h-full pt-16 border-none"
+      title="Shoe Store App"
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock allow-top-navigation-by-user-activation"
+      style={{
+        pointerEvents: 'auto',
+        touchAction: 'auto',
+      }}
+    />
+  </div>
+</div>
         </div>
       </div>
     </section>
