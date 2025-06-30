@@ -71,10 +71,11 @@ const AboutSection = () => {
           </div>
 
         {/* ✅ Project Preview Frame (Centered) */}
-<div className="flex justify-center px-4 mb-16">
+<div className="flex justify-center px-4 mb-16 overflow-visible">
   <div
     ref={projectBoxRef}
-    className="w-full max-w-6xl h-[70vh] rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] relative"
+    className="w-full max-w-6xl h-[70vh] rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] relative transition-transform duration-300 ease-out"
+    style={{ transformOrigin: 'left center' }}
   >
     {/* Header */}
     <div className="absolute top-0 left-0 right-0 h-16 bg-white/10 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 z-10 rounded-t-3xl">
@@ -90,7 +91,6 @@ const AboutSection = () => {
       )}
     </div>
 
-    {/* Iframe */}
     <iframe
       src="https://preloved-shoes.lovable.app/"
       className="w-full h-full pt-16 border-none"
