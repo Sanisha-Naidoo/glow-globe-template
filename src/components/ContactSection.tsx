@@ -1,15 +1,7 @@
-
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
-
 const ContactSection = () => {
   const sectionRef = useScrollAnimation();
-
-  return (
-    <section 
-      id="contact" 
-      ref={sectionRef}
-      className="min-h-screen py-8 md:py-12 lg:py-16 relative opacity-0 translate-y-8 transition-all duration-[1500ms] ease-out bg-dark-bg flex items-center justify-center"
-    >
+  return <section id="contact" ref={sectionRef} className="min-h-screen py-8 md:py-12 relative opacity-0 translate-y-8 transition-all duration-[1500ms] ease-out bg-dark-bg flex items-center justify-center lg:py-0">
       <div className="max-w-6xl mx-auto px-8">
         <div className="max-w-4xl mx-auto text-center">
           {/* Footer with Quote */}
@@ -26,8 +18,6 @@ const ContactSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ContactSection;
