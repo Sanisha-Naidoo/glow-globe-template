@@ -77,7 +77,7 @@ const AboutSection = () => {
 <div className="flex justify-center px-4 mb-16 overflow-visible">
   <div
     ref={projectBoxRef}
-    className="w-full max-w-6xl h-[70vh] rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] relative transition-transform duration-300 ease-out"
+    className="w-full max-w-6xl h-[70vh] rounded-3xl overflow-hidden bg-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] relative transition-transform duration-300 ease-out"
     style={{ transformOrigin: 'left center' }}
   >
     {/* Header */}
@@ -112,7 +112,7 @@ const AboutSection = () => {
 <div className="flex justify-center px-4 mb-16 overflow-visible">
   <div
     ref={useProjectScaleAnimation({ startTrigger: 0.5, endTrigger: 0.9, direction: 'right' }).projectBoxRef}
-    className="w-full max-w-6xl h-[70vh] rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] relative transition-transform duration-300 ease-out"
+    className="w-full max-w-6xl h-[70vh] rounded-3xl overflow-hidden bg-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] relative transition-transform duration-300 ease-out"
     style={{ transformOrigin: 'right center' }}
   >
     {/* Header */}
