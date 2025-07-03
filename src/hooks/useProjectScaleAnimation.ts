@@ -13,7 +13,7 @@ export const useProjectScaleAnimation = ({ startTrigger, endTrigger, direction =
       localProgress = Math.max(0, Math.min(1, localProgress));
 
       const multiplier = direction === 'left' ? -1 : 1;
-      const translateX = (1 - localProgress) * 100 * multiplier; // from -100 or 100 to 0
+      const translateX = (1 - localProgress) * 30 * multiplier; // from -30 or 30 to 0
       const scale = 0.8 + localProgress * 0.2;
 
       if (ref.current) {
