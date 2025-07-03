@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { useSplitTransition } from '../hooks/useSplitTransition';
 import { useProjectScaleAnimation } from '../hooks/useProjectScaleAnimation';
 import { useCinematicScroll } from '../hooks/useCinematicScroll';
@@ -7,7 +7,6 @@ const AboutSection = () => {
   const sectionRef = useSplitTransition({ direction: 'right', triggerPoint: 0.1 });
   const parallaxRef = useRef<HTMLDivElement>(null);
   const { subscribeToScroll } = useCinematicScroll();
-  const [publishDate, setPublishDate] = useState<string>('');
 
   const { projectBoxRef } = useProjectScaleAnimation({
     startTrigger: 0.2,
@@ -28,21 +27,6 @@ const AboutSection = () => {
     return unsubscribe;
   }, [subscribeToScroll]);
 
-  useEffect(() => {
-    const fetchProjectData = async () => {
-      try {
-        await fetch('https://preloved-shoes.lovable.app/', {
-          method: 'HEAD',
-          mode: 'no-cors'
-        });
-        setPublishDate('Recently updated on Lovable');
-      } catch (error) {
-        setPublishDate('Built with Lovable');
-      }
-    };
-
-    fetchProjectData();
-  }, []);
 
   return (
    <section
@@ -77,21 +61,15 @@ const AboutSection = () => {
 <div className="flex justify-center px-4 mb-16 overflow-visible">
   <div
     ref={projectBoxRef}
-    className="w-full max-w-6xl h-[70vh] rounded-3xl overflow-hidden bg-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] relative transition-transform duration-300 ease-out"
+    className="w-full max-w-6xl h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[75vh] rounded-3xl overflow-hidden bg-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] relative transition-transform duration-300 ease-out"
     style={{ transformOrigin: 'left center' }}
   >
     {/* Header */}
-    <div className="absolute top-0 left-0 right-0 h-16 bg-white/10 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 z-10 rounded-t-3xl">
+    <div className="absolute top-0 left-0 right-0 h-16 bg-white/10 backdrop-blur-md border-b border-white/10 flex items-center px-6 z-10 rounded-t-3xl">
       <div className="flex items-center space-x-4">
         <h3 className="text-white font-bold text-xl">PreLOVED Shoes</h3>
         <span className="text-white/70 text-sm font-light">Circular Economy Platform</span>
       </div>
-      {publishDate && (
-        <div className="flex items-center space-x-3">
-          <div className="w-2 h-2 rounded-full bg-pink-accent animate-pulse"></div>
-          <p className="text-pink-accent text-sm font-semibold uppercase">{publishDate}</p>
-        </div>
-      )}
     </div>
 
     <iframe
@@ -112,7 +90,7 @@ const AboutSection = () => {
 <div className="flex justify-center px-4 mb-16 overflow-visible">
   <div
     ref={useProjectScaleAnimation({ startTrigger: 0.5, endTrigger: 0.9, direction: 'right' }).projectBoxRef}
-    className="w-full max-w-6xl h-[70vh] rounded-3xl overflow-hidden bg-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] relative transition-transform duration-300 ease-out"
+    className="w-full max-w-6xl h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[75vh] rounded-3xl overflow-hidden bg-white/5 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] relative transition-transform duration-300 ease-out"
     style={{ transformOrigin: 'right center' }}
   >
     {/* Header */}
