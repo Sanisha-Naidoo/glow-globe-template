@@ -55,6 +55,9 @@ const AboutSection = () => {
               is to collect data to support manufacturers. The aim of the app is to close gaps in
               the circular economy. It is a non profit project.
             </p>
+            <p className="text-base text-pink-accent leading-relaxed font-light text-shadow-sm mt-4">
+              You can interact with the live app previews below — try clicking, scrolling, and exploring the interface to see the functionality in action.
+            </p>
           </div>
 
         {/* ✅ Project Preview Frame (Centered) */}
