@@ -18,6 +18,7 @@ const ContactSection = () => {
             
             {/* Contact Details */}
             <div className="space-y-4 mb-8">
+              <p className="text-white/90 font-light text-base">Sanisha C. Naidoo</p>
               <p className="text-white/90 font-light text-base">sanisha.c.naidoo@gmail.com</p>
               <p className="text-white/90 font-light text-base">+41 772 789 433</p>
               <div className="text-white/80 font-light text-sm leading-relaxed">
