@@ -56,7 +56,7 @@ const AboutSection = () => {
               the circular economy. It is a non profit project.
             </p>
             <p className="text-base text-pink-accent leading-relaxed font-light text-shadow-sm mt-4">
-              You can interact with the live app previews below — try clicking, scrolling, and exploring the interface to see the functionality in action.
+              You can interact with the live app previews below — explore the interfaces and give it a try!
             </p>
           </div>
 
