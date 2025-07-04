@@ -97,7 +97,7 @@ const AboutSection = () => {
       <h3 className="text-white text-2xl xl:text-3xl font-bold leading-tight">
         <span className="block">Register</span>
         <span className="block">your</span>
-        <span className="block text-pink-accent">shoes</span>
+        <span className="block text-pink-accent">PreLOVED shoes</span>
       </h3>
     </div>
   </div>
@@ -123,8 +123,8 @@ const AboutSection = () => {
     >
       <h3 className="text-white text-2xl xl:text-3xl font-bold leading-tight">
         <span className="block">...which</span>
-        <span className="block">triggers</span>
-        <span className="block">a tracking</span>
+        <span className="block">updates</span>
+        <span className="block">the tracking</span>
         <span className="block text-pink-accent">system</span>
       </h3>
     </div>
