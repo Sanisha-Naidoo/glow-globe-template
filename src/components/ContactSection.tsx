@@ -56,9 +56,9 @@ const ContactSection = () => {
             </Button>
           </div>
 
-          <p className="text-white font-light text-sm tracking-wide uppercase text-shadow-sm">
-            © 2024 — Crafted with intention and care
-          </p>
+        <p className="text-white font-light text-sm tracking-wide uppercase text-shadow-sm">
+  © 2025 IMAGINATION LAB
+</p>
         </div>
       </div>
     </section>
