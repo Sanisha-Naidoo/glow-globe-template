@@ -69,11 +69,19 @@ const AboutSection = () => {
       style={{ transformOrigin: 'left center' }}
     >
       {/* Header */}
-      <div className="absolute top-0 left-0 right-0 h-16 bg-white/10 backdrop-blur-md border-b border-white/10 flex items-center px-6 z-10 rounded-t-3xl">
+      <div className="absolute top-0 left-0 right-0 h-16 bg-white/10 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 z-10 rounded-t-3xl">
         <div className="flex items-center space-x-4">
           <h3 className="text-white font-bold text-xl">PreLOVED Shoes</h3>
           <span className="text-white/70 text-sm font-light">Circular Economy Platform</span>
         </div>
+        <a 
+          href="https://preloved-shoes.lovable.app/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-pink-accent hover:text-pink-accent/80 text-sm font-medium transition-colors"
+        >
+          Visit App →
+        </a>
       </div>
 
       <iframe
@@ -140,6 +148,14 @@ const AboutSection = () => {
           <h3 className="text-white font-bold text-xl">Shoe Store</h3>
           <span className="text-white/70 text-sm font-light">Database of shoes collected</span>
         </div>
+        <a 
+          href="https://shoe-store.lovable.app/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-white hover:text-white/80 text-sm font-medium transition-colors"
+        >
+          Visit App →
+        </a>
       </div>
 
       <iframe
