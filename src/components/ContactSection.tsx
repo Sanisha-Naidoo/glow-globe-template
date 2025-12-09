@@ -1,7 +1,6 @@
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { Button } from './ui/button';
 import { Linkedin, ExternalLink, ArrowUp } from 'lucide-react';
-import ParticleAnimation from './ParticleAnimation';
 
 const ContactSection = () => {
   const sectionRef = useScrollAnimation();
@@ -19,11 +18,6 @@ const ContactSection = () => {
       ref={sectionRef}
       className="min-h-screen py-8 md:py-12 relative opacity-0 translate-y-8 transition-all duration-[1500ms] ease-out bg-dark-bg flex flex-col items-center justify-center lg:py-0"
     >
-      {/* Particle Animation */}
-      <div className="relative w-full h-[50vh] mb-8">
-        <ParticleAnimation />
-      </div>
-
       {/* Back to Top Button */}
       <button onClick={scrollToTop} className="mb-12 group">
         <div className="flex flex-col items-center space-y-3 text-text-light hover:text-pink-accent transition-all duration-700 ease-out">
