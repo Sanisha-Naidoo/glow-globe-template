@@ -1,6 +1,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useCinematicScroll } from '../hooks/useCinematicScroll';
+import ParticleAnimation from './ParticleAnimation';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -24,6 +25,9 @@ const HeroSection = () => {
 
   return (
     <section id="home" className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-dark-bg">
+      <div className="relative w-full h-full">
+        <ParticleAnimation />
+      </div>
     </section>
   );
 };
