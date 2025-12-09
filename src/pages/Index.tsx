@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
 import ContactSection from '../components/ContactSection';
+import ParticleAnimation from '../components/ParticleAnimation';
 
 const Index = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -15,6 +16,9 @@ const Index = () => {
         <HeroSection />
         <AboutSection />
         <ContactSection />
+        <div className="relative w-full h-[80vh]">
+          <ParticleAnimation />
+        </div>
       </div>
     </div>
   );
