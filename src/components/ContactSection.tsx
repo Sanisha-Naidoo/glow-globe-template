@@ -27,9 +27,9 @@ const ContactSection = () => {
       {/* Back to Top Button */}
       <button onClick={scrollToTop} className="mb-12 group">
         <div className="flex flex-col items-center space-y-3 text-text-light hover:text-pink-accent transition-all duration-700 ease-out">
-          <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform duration-700 ease-out" />
-          <div className="w-px h-8 bg-gradient-to-t from-text-light to-transparent"></div>
           <span className="text-sm font-light tracking-widest uppercase">Back to Top</span>
+          <div className="w-px h-8 bg-gradient-to-b from-text-light to-transparent"></div>
+          <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform duration-700 ease-out" />
         </div>
       </button>
 
