@@ -45,8 +45,8 @@ const CursorParticleAnimation = () => {
         powerPreference: "high-performance"
       });
       
-      const baseSize = 60;
-      renderer.setSize(baseSize, baseSize);
+      const canvasSize = 200; // Large enough for scaled version
+      renderer.setSize(canvasSize, canvasSize);
       renderer.setClearColor(0x000000, 0);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       mountRef.current.appendChild(renderer.domElement);
@@ -226,8 +226,8 @@ const CursorParticleAnimation = () => {
         isResting: false,
         morphProgress: 0,
         targetMorphProgress: 0,
-        scale: 1,
-        targetScale: 1,
+        scale: 0.3,
+        targetScale: 0.3,
         heartPositions,
         spherePositions,
         cleanup: () => {
@@ -288,10 +288,11 @@ const CursorParticleAnimation = () => {
           sceneRef.current.particles.rotation.z += wobbleZ;
         }
 
-        // Update renderer size based on scale
-        const baseSize = 60;
-        const scaledSize = baseSize * sceneRef.current.scale;
-        sceneRef.current.renderer.setSize(scaledSize, scaledSize);
+        // Update container scale via CSS transform for smooth scaling
+        if (mountRef.current) {
+          const cssScale = sceneRef.current.scale;
+          mountRef.current.style.transform = `translate(-50%, -50%) scale(${cssScale})`;
+        }
 
         sceneRef.current.renderer.render(sceneRef.current.scene, sceneRef.current.camera);
         sceneRef.current.animationId = requestAnimationFrame(animate);
@@ -316,7 +317,7 @@ const CursorParticleAnimation = () => {
     if (sceneRef.current) {
       sceneRef.current.isResting = false;
       sceneRef.current.targetMorphProgress = 0;
-      sceneRef.current.targetScale = 1;
+      sceneRef.current.targetScale = 0.3; // Small heart
     }
     
     if (restTimeoutRef.current) {
@@ -328,7 +329,7 @@ const CursorParticleAnimation = () => {
       if (sceneRef.current) {
         sceneRef.current.isResting = true;
         sceneRef.current.targetMorphProgress = 1;
-        sceneRef.current.targetScale = 2.5;
+        sceneRef.current.targetScale = 0.8; // Larger sphere
       }
     }, 500);
   };
@@ -375,11 +376,11 @@ const CursorParticleAnimation = () => {
   return (
     <div 
       ref={mountRef} 
-      className="fixed pointer-events-none z-[9999]"
+      className="fixed pointer-events-none z-[9999] rounded-full overflow-hidden"
       style={{
-        width: '60px',
-        height: '60px',
-        transform: 'translate(-50%, -50%)',
+        width: '200px',
+        height: '200px',
+        transform: 'translate(-50%, -50%) scale(0.3)',
         mixBlendMode: 'screen'
       }}
     />
