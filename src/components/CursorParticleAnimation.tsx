@@ -11,12 +11,16 @@ const CursorParticleAnimation = () => {
     material: THREE.ShaderMaterial;
     animationId: number | null;
     isResting: boolean;
-    restingTime: number;
+    morphProgress: number;
+    targetMorphProgress: number;
+    scale: number;
+    targetScale: number;
+    heartPositions: Float32Array;
+    spherePositions: Float32Array;
     cleanup: () => void;
   } | null>(null);
   
   const cursorRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
-  const lastMoveRef = useRef(Date.now());
   const restTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -41,8 +45,8 @@ const CursorParticleAnimation = () => {
         powerPreference: "high-performance"
       });
       
-      const size = 80; // Cursor size
-      renderer.setSize(size, size);
+      const baseSize = 60;
+      renderer.setSize(baseSize, baseSize);
       renderer.setClearColor(0x000000, 0);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       mountRef.current.appendChild(renderer.domElement);
@@ -52,19 +56,60 @@ const CursorParticleAnimation = () => {
       const positions = new Float32Array(particleCount * 3);
       const colors = new Float32Array(particleCount * 3);
       const sizes = new Float32Array(particleCount);
+      const heartPositions = new Float32Array(particleCount * 3);
+      const spherePositions = new Float32Array(particleCount * 3);
 
       // Create heart shape
-      for (let i = 0; i < particleCount; i++) {
-        const i3 = i * 3;
-        const t = (i / particleCount) * Math.PI * 4;
+      const createHeartShape = (index: number) => {
+        const t = (index / particleCount) * Math.PI * 4;
         const x = 16 * Math.pow(Math.sin(t), 3);
         const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
         const z = Math.sin(t * 1.5) * 3;
-        
         const noise = (Math.random() - 0.5) * 0.1;
-        positions[i3] = (x + noise) * 0.06;
-        positions[i3 + 1] = (y + noise) * 0.06;
-        positions[i3 + 2] = (z + noise) * 0.06;
+        return { 
+          x: (x + noise) * 0.04, 
+          y: (y + noise) * 0.04, 
+          z: (z + noise) * 0.04 
+        };
+      };
+
+      // Create sphere shape using Fibonacci distribution
+      const createSphereShape = (index: number) => {
+        const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+        const y = 1 - (index / (particleCount - 1)) * 2;
+        const radius = Math.sqrt(1 - y * y);
+        const theta = goldenAngle * index;
+        
+        const x = Math.cos(theta) * radius;
+        const z = Math.sin(theta) * radius;
+        
+        const sphereRadius = 1.2;
+        const scatter = 0.02;
+        
+        return {
+          x: (x * sphereRadius) + (Math.random() - 0.5) * scatter,
+          y: (y * sphereRadius) + (Math.random() - 0.5) * scatter,
+          z: (z * sphereRadius) + (Math.random() - 0.5) * scatter
+        };
+      };
+
+      for (let i = 0; i < particleCount; i++) {
+        const i3 = i * 3;
+        
+        const heartPos = createHeartShape(i);
+        heartPositions[i3] = heartPos.x;
+        heartPositions[i3 + 1] = heartPos.y;
+        heartPositions[i3 + 2] = heartPos.z;
+
+        const spherePos = createSphereShape(i);
+        spherePositions[i3] = spherePos.x;
+        spherePositions[i3 + 1] = spherePos.y;
+        spherePositions[i3 + 2] = spherePos.z;
+
+        // Start with heart positions
+        positions[i3] = heartPos.x;
+        positions[i3 + 1] = heartPos.y;
+        positions[i3 + 2] = heartPos.z;
 
         // Color palette
         const tNorm = i / particleCount;
@@ -117,7 +162,6 @@ const CursorParticleAnimation = () => {
             vColor = color;
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
             
-            // Animate only when resting (animationIntensity > 0)
             float motion = animationIntensity;
             mvPosition.x += sin(time * 1.5 + position.y * 3.0) * 0.08 * motion;
             mvPosition.y += cos(time * 1.2 + position.x * 3.0) * 0.08 * motion;
@@ -180,7 +224,12 @@ const CursorParticleAnimation = () => {
         material,
         animationId: null,
         isResting: false,
-        restingTime: 0,
+        morphProgress: 0,
+        targetMorphProgress: 0,
+        scale: 1,
+        targetScale: 1,
+        heartPositions,
+        spherePositions,
         cleanup: () => {
           if (mountRef.current && renderer.domElement) {
             mountRef.current.removeChild(renderer.domElement);
@@ -203,8 +252,30 @@ const CursorParticleAnimation = () => {
         const targetIntensity = sceneRef.current.isResting ? 1 : 0;
         currentIntensity += (targetIntensity - currentIntensity) * 0.05;
         
+        // Smoothly transition morph progress (heart to sphere)
+        sceneRef.current.morphProgress += (sceneRef.current.targetMorphProgress - sceneRef.current.morphProgress) * 0.03;
+        
+        // Smoothly transition scale
+        sceneRef.current.scale += (sceneRef.current.targetScale - sceneRef.current.scale) * 0.05;
+        
         sceneRef.current.material.uniforms.time.value = time;
         sceneRef.current.material.uniforms.animationIntensity.value = currentIntensity;
+
+        // Morph between heart and sphere
+        const positionAttribute = sceneRef.current.particles.geometry.getAttribute('position') as THREE.BufferAttribute;
+        const currentPositions = positionAttribute.array as Float32Array;
+        const t = sceneRef.current.morphProgress;
+
+        for (let i = 0; i < particleCount; i++) {
+          const i3 = i * 3;
+          currentPositions[i3] = THREE.MathUtils.lerp(sceneRef.current.heartPositions[i3], sceneRef.current.spherePositions[i3], t);
+          currentPositions[i3 + 1] = THREE.MathUtils.lerp(sceneRef.current.heartPositions[i3 + 1], sceneRef.current.spherePositions[i3 + 1], t);
+          currentPositions[i3 + 2] = THREE.MathUtils.lerp(sceneRef.current.heartPositions[i3 + 2], sceneRef.current.spherePositions[i3 + 2], t);
+        }
+        positionAttribute.needsUpdate = true;
+
+        // Apply scale
+        sceneRef.current.particles.scale.setScalar(sceneRef.current.scale);
 
         // Rotation when resting
         if (sceneRef.current.isResting) {
@@ -216,6 +287,11 @@ const CursorParticleAnimation = () => {
           sceneRef.current.particles.rotation.x += wobbleX;
           sceneRef.current.particles.rotation.z += wobbleZ;
         }
+
+        // Update renderer size based on scale
+        const baseSize = 60;
+        const scaledSize = baseSize * sceneRef.current.scale;
+        sceneRef.current.renderer.setSize(scaledSize, scaledSize);
 
         sceneRef.current.renderer.render(sceneRef.current.scene, sceneRef.current.camera);
         sceneRef.current.animationId = requestAnimationFrame(animate);
@@ -235,29 +311,38 @@ const CursorParticleAnimation = () => {
     }
   }, []);
 
+  // Reset to heart on activity
+  const resetToHeart = () => {
+    if (sceneRef.current) {
+      sceneRef.current.isResting = false;
+      sceneRef.current.targetMorphProgress = 0;
+      sceneRef.current.targetScale = 1;
+    }
+    
+    if (restTimeoutRef.current) {
+      clearTimeout(restTimeoutRef.current);
+    }
+    
+    // After 500ms of no activity, morph to sphere and scale up
+    restTimeoutRef.current = window.setTimeout(() => {
+      if (sceneRef.current) {
+        sceneRef.current.isResting = true;
+        sceneRef.current.targetMorphProgress = 1;
+        sceneRef.current.targetScale = 2.5;
+      }
+    }, 500);
+  };
+
   // Cursor tracking
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       cursorRef.current.targetX = e.clientX;
       cursorRef.current.targetY = e.clientY;
-      lastMoveRef.current = Date.now();
-      
-      // Mark as not resting
-      if (sceneRef.current) {
-        sceneRef.current.isResting = false;
-      }
-      
-      // Clear existing timeout
-      if (restTimeoutRef.current) {
-        clearTimeout(restTimeoutRef.current);
-      }
-      
-      // Set new timeout to start animation after 500ms of no movement
-      restTimeoutRef.current = window.setTimeout(() => {
-        if (sceneRef.current) {
-          sceneRef.current.isResting = true;
-        }
-      }, 500);
+      resetToHeart();
+    };
+
+    const handleScroll = () => {
+      resetToHeart();
     };
 
     // Smooth cursor following
@@ -276,9 +361,11 @@ const CursorParticleAnimation = () => {
     
     updateCursorPosition();
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
       if (restTimeoutRef.current) {
         clearTimeout(restTimeoutRef.current);
       }
@@ -290,8 +377,8 @@ const CursorParticleAnimation = () => {
       ref={mountRef} 
       className="fixed pointer-events-none z-[9999]"
       style={{
-        width: '80px',
-        height: '80px',
+        width: '60px',
+        height: '60px',
         transform: 'translate(-50%, -50%)',
         mixBlendMode: 'screen'
       }}
