@@ -16,7 +16,7 @@ const Index = () => {
         <HeroSection />
         <AboutSection />
         <ContactSection />
-        <div className="relative w-full h-[80vh]">
+        <div className="relative w-full h-[80vh] bg-dark-bg">
           <ParticleAnimation />
         </div>
       </div>

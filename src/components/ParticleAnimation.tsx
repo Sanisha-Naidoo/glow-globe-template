@@ -409,10 +409,7 @@ const ParticleAnimation = () => {
   return (
     <div 
       ref={mountRef} 
-      className="absolute inset-0 z-10"
-      style={{
-        background: 'radial-gradient(ellipse at center, rgba(30, 41, 59, 0.1) 0%, rgba(15, 23, 42, 0.3) 70%, rgba(2, 6, 23, 0.8) 100%)'
-      }}
+      className="absolute inset-0 z-10 bg-dark-bg"
     />
   );
 };
