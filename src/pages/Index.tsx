@@ -15,15 +15,18 @@ const Index = () => {
     <div className={`${darkMode ? 'dark' : ''} transition-all duration-500`}>
       <div className="bg-dark-bg text-text-light min-h-screen relative overflow-x-hidden">
         <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
-        <HeroSection />
+        
+        {/* Hero with particle animation overlay */}
+        <div className="relative">
+          <ParticleAnimation />
+          <HeroSection />
+        </div>
+        
         <BuildingInPublicSection />
         <PastProjectsSection />
         <ComingSoonSection />
         <BrandShowcase />
         <ContactSection />
-        <div className="relative w-full h-[60vh] bg-dark-bg">
-          <ParticleAnimation />
-        </div>
       </div>
     </div>
   );

@@ -409,7 +409,7 @@ const ParticleAnimation = () => {
   return (
     <div 
       ref={mountRef} 
-      className="absolute inset-0 z-10 bg-dark-bg"
+      className="absolute inset-0 z-0 pointer-events-none"
     />
   );
 };

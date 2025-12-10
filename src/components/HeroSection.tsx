@@ -20,8 +20,8 @@ const HeroSection = () => {
   }, [subscribeToScroll]);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark-bg">
-      <div ref={heroRef} className="max-w-6xl mx-auto px-8 text-center" style={{ willChange: 'transform, opacity' }}>
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <div ref={heroRef} className="max-w-6xl mx-auto px-8 text-center relative z-10" style={{ willChange: 'transform, opacity' }}>
         {/* Swiss-style uppercase label */}
         <p className="text-sm tracking-[0.3em] text-cyan-accent uppercase mb-8">
           Vibe Coding Portfolio
@@ -29,7 +29,7 @@ const HeroSection = () => {
         
         {/* Main heading with clean Swiss typography */}
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-text-light tracking-tight mb-10">
-          <span className="font-chalk text-3xl md:text-4xl lg:text-5xl font-normal lowercase mr-2 text-text-light/80">my</span>
+          <span className="font-chalk text-5xl md:text-7xl lg:text-8xl font-semibold lowercase mr-3 text-text-light/90 drop-shadow-[0_2px_4px_rgba(255,255,255,0.3)]" style={{ textShadow: '0 0 8px rgba(255,255,255,0.4), 0 2px 2px rgba(0,0,0,0.5)' }}>my</span>
           IMAGINATION
           <span className="block bg-gradient-to-r from-cyan-accent to-violet-accent bg-clip-text text-transparent">LAB</span>
         </h1>

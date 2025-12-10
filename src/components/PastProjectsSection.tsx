@@ -61,8 +61,8 @@ const PastProjectsSection = () => {
           <div className="w-32 h-px bg-gradient-to-r from-cyan-accent to-violet-accent" />
         </div>
 
-        {/* Projects Grid - Larger Cards */}
-        <div className="grid lg:grid-cols-2 gap-10">
+        {/* Projects Grid - Stacked Vertically */}
+        <div className="flex flex-col gap-10">
           {projects.map((project, index) => (
             <ProjectCard
               key={index}
@@ -178,7 +178,7 @@ const ProjectCard = ({ project, onClick, index }: ProjectCardProps) => {
     <div
       ref={projectBoxRef}
       onClick={onClick}
-      className="group cursor-pointer p-10 rounded-2xl bg-foreground/5 border border-foreground/10 hover:border-cyan-accent/30 transition-all duration-500 hover:bg-foreground/10"
+      className="group cursor-pointer p-10 rounded-2xl bg-foreground/5 border border-foreground/10 hover:border-cyan-accent/30 transition-all duration-500 hover:bg-foreground/10 w-full"
     >
       <div className="flex items-start gap-6 mb-6">
         <div className="w-20 h-20 rounded-xl overflow-hidden bg-foreground/5 p-2 flex-shrink-0">
