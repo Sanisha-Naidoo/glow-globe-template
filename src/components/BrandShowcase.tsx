@@ -9,11 +9,11 @@ const BrandShowcase = () => {
   const sectionRef = useScrollAnimation();
 
   const logos = [
-    { src: globalhourLogo, name: 'Global Hour' },
-    { src: trusteeLogo, name: 'Trustee' },
-    { src: prelovedLogo, name: 'PreLoved' },
-    { src: familytreeLogo, name: 'Family Tree' },
-    { src: spilltheTeeLogo, name: 'Spill the Tee' },
+    { src: globalhourLogo, name: 'Global Hour', url: 'https://globalhour.lovable.app', isLive: true },
+    { src: trusteeLogo, name: 'Trustee', url: 'https://trustee.lovable.app', isLive: true },
+    { src: prelovedLogo, name: 'PreLoved', url: 'https://preloved.lovable.app', isLive: true },
+    { src: familytreeLogo, name: 'Family Tree', url: null, isLive: false },
+    { src: spilltheTeeLogo, name: 'Spill the Tee', url: null, isLive: false },
   ];
 
   return (
@@ -35,23 +35,41 @@ const BrandShowcase = () => {
 
         {/* Logo Strip - Larger Logos */}
         <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16">
-          {logos.map((logo, index) => (
-            <div
-              key={index}
-              className="group flex flex-col items-center gap-4"
-            >
-              <div className="w-24 h-24 md:w-28 md:h-28 rounded-2xl overflow-hidden bg-foreground/5 p-3 transition-all duration-300 group-hover:bg-foreground/10 group-hover:scale-110">
-                <img
-                  src={logo.src}
-                  alt={logo.name}
-                  className="w-full h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity"
-                />
+          {logos.map((logo, index) => {
+            const content = (
+              <>
+                <div className={`w-24 h-24 md:w-28 md:h-28 rounded-2xl overflow-hidden bg-foreground/5 p-3 transition-all duration-300 ${logo.isLive ? 'group-hover:bg-foreground/10 group-hover:scale-110' : ''}`}>
+                  <img
+                    src={logo.src}
+                    alt={logo.name}
+                    className={`w-full h-full object-contain transition-opacity ${logo.isLive ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'}`}
+                  />
+                </div>
+                <span className={`text-sm tracking-wider uppercase transition-colors ${logo.isLive ? 'text-text-light/40 group-hover:text-cyan-accent' : 'text-text-light/20'}`}>
+                  {logo.name}
+                </span>
+              </>
+            );
+
+            return logo.isLive ? (
+              <a
+                key={index}
+                href={logo.url!}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col items-center gap-4 cursor-pointer"
+              >
+                {content}
+              </a>
+            ) : (
+              <div
+                key={index}
+                className="flex flex-col items-center gap-4 cursor-default"
+              >
+                {content}
               </div>
-              <span className="text-sm text-text-light/40 group-hover:text-cyan-accent transition-colors tracking-wider uppercase">
-                {logo.name}
-              </span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
