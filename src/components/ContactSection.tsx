@@ -16,66 +16,69 @@ const ContactSection = () => {
     <section
       id="contact"
       ref={sectionRef}
-      className="min-h-screen py-8 md:py-12 relative opacity-0 translate-y-8 transition-all duration-[1500ms] ease-out bg-dark-bg flex flex-col items-center justify-center lg:py-0"
+      className="py-24 relative opacity-0 translate-y-8 transition-all duration-1000 ease-out bg-dark-bg flex flex-col items-center justify-center"
     >
-      {/* Back to Top Button */}
-      <button onClick={scrollToTop} className="mb-12 group">
-        <div className="flex flex-col items-center space-y-3 text-text-light hover:text-pink-accent transition-all duration-700 ease-out">
-          <span className="text-sm font-light tracking-widest uppercase">Back to Top</span>
-          <div className="w-px h-8 bg-gradient-to-b from-text-light to-transparent"></div>
-          <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform duration-700 ease-out" />
-        </div>
-      </button>
-
-      <div className="max-w-6xl mx-auto px-8">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          {/* Quote */}
-          <p className="text-lg md:text-xl text-white font-light leading-relaxed mb-4 md:mb-6 text-shadow-sm italic">
+      <div className="max-w-4xl mx-auto px-8 text-center">
+        {/* Quote */}
+        <blockquote className="mb-12">
+          <p className="text-xl md:text-2xl text-text-light font-light leading-relaxed mb-4 italic">
             "Where there is love, there is always time and nothing is too much trouble"
           </p>
-          <p className="text-base text-pink-accent/80 font-medium tracking-wide mb-6 md:mb-8 text-shadow-sm">
+          <cite className="text-sm text-pink-accent/80 font-medium tracking-wide not-italic">
             — 'Abdu'l‑Bahá
-          </p>
+          </cite>
+        </blockquote>
 
-          {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-            <Button
-              variant="outline"
-              className="bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/30 transition-all duration-300 backdrop-blur-sm"
-              asChild
+        {/* Divider */}
+        <div className="w-16 h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent mx-auto mb-12" />
+
+        {/* Links */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+          <Button
+            variant="outline"
+            className="bg-foreground/5 border-foreground/10 text-text-light hover:bg-foreground/10 hover:border-pink-accent/30 transition-all duration-300"
+            asChild
+          >
+            <a
+              href="https://sanisha.imaginationlab.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2"
             >
-              <a
-                href="https://sanisha.imaginationlab.ai/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                <ExternalLink className="w-4 h-4" />
-                Personal Website
-              </a>
-            </Button>
+              <ExternalLink className="w-4 h-4" />
+              Personal Website
+            </a>
+          </Button>
 
-            <Button
-              variant="outline"
-              className="bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/30 transition-all duration-300 backdrop-blur-sm"
-              asChild
+          <Button
+            variant="outline"
+            className="bg-foreground/5 border-foreground/10 text-text-light hover:bg-foreground/10 hover:border-pink-accent/30 transition-all duration-300"
+            asChild
+          >
+            <a
+              href="https://www.linkedin.com/in/sanishacnaidoo/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2"
             >
-              <a
-                href="https://www.linkedin.com/in/sanishacnaidoo/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                <Linkedin className="w-4 h-4" />
-                LinkedIn
-              </a>
-            </Button>
-          </div>
-
-          <p className="text-white font-light text-sm tracking-wide uppercase text-shadow-sm">
-            © 2025 IMAGINATION LAB
-          </p>
+              <Linkedin className="w-4 h-4" />
+              LinkedIn
+            </a>
+          </Button>
         </div>
+
+        {/* Copyright */}
+        <p className="text-text-light/40 font-light text-xs tracking-[0.2em] uppercase mb-12">
+          © 2025 IMAGINATION LAB
+        </p>
+
+        {/* Back to Top */}
+        <button onClick={scrollToTop} className="group">
+          <div className="flex flex-col items-center space-y-2 text-text-light/40 hover:text-pink-accent transition-all duration-300">
+            <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform duration-300" />
+            <span className="text-xs tracking-[0.2em] uppercase">Back to Top</span>
+          </div>
+        </button>
       </div>
     </section>
   );
