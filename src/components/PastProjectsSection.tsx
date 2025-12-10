@@ -49,16 +49,16 @@ const PastProjectsSection = () => {
     <section
       id="projects"
       ref={sectionRef}
-      className="min-h-screen py-32 relative bg-dark-bg opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+      className="min-h-screen py-16 sm:py-32 relative bg-dark-bg opacity-0 translate-y-8 transition-all duration-1000 ease-out"
     >
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8">
         {/* Section Header */}
-        <div className="mb-20">
-          <p className="text-sm tracking-[0.3em] text-cyan-accent uppercase mb-6">Portfolio</p>
-          <h2 className="text-5xl lg:text-6xl text-text-light font-bold tracking-tight mb-8">
+        <div className="mb-12 sm:mb-20">
+          <p className="text-sm tracking-[0.3em] text-cyan-accent uppercase mb-4 sm:mb-6">Portfolio</p>
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl text-text-light font-bold tracking-tight mb-6 sm:mb-8">
             Past Projects
           </h2>
-          <div className="w-32 h-px bg-gradient-to-r from-cyan-accent to-violet-accent" />
+          <div className="w-24 sm:w-32 h-px bg-gradient-to-r from-cyan-accent to-violet-accent" />
         </div>
 
         {/* Projects Grid - Stacked Vertically */}
@@ -178,21 +178,21 @@ const ProjectCard = ({ project, onClick, index }: ProjectCardProps) => {
     <div
       ref={projectBoxRef}
       onClick={onClick}
-      className="group cursor-pointer p-10 rounded-2xl bg-foreground/5 border border-foreground/10 hover:border-cyan-accent/30 transition-all duration-500 hover:bg-foreground/10 w-full"
+      className="group cursor-pointer p-6 sm:p-10 rounded-xl sm:rounded-2xl bg-foreground/5 border border-foreground/10 hover:border-cyan-accent/30 transition-all duration-500 hover:bg-foreground/10 w-full"
     >
-      <div className="flex items-start gap-6 mb-6">
-        <div className="w-20 h-20 rounded-xl overflow-hidden bg-foreground/5 p-2 flex-shrink-0">
+      <div className="flex items-start gap-4 sm:gap-6 mb-4 sm:mb-6">
+        <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl overflow-hidden bg-foreground/5 p-1.5 sm:p-2 flex-shrink-0">
           <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
         </div>
         <div className="flex-1">
-          <h3 className="text-2xl font-bold text-text-light group-hover:text-cyan-accent transition-colors mb-2">{project.name}</h3>
-          <p className="text-text-light/60 text-base">{project.tagline}</p>
+          <h3 className="text-xl sm:text-2xl font-bold text-text-light group-hover:text-cyan-accent transition-colors mb-1 sm:mb-2">{project.name}</h3>
+          <p className="text-text-light/60 text-sm sm:text-base">{project.tagline}</p>
         </div>
       </div>
 
-      <p className="text-text-light/70 text-base leading-relaxed mb-6">{project.motivation}</p>
+      <p className="text-text-light/70 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">{project.motivation}</p>
 
-      <div className="flex flex-wrap gap-3 mb-6">
+      <div className="flex flex-wrap gap-2 sm:gap-3 mb-4 sm:mb-6">
         {project.tools.map((tool) => (
           <span key={tool} className="px-3 py-1.5 text-sm tracking-wider uppercase bg-foreground/5 text-text-light/60 rounded-full">
             {tool}
