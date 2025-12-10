@@ -28,7 +28,8 @@ const HeroSection = () => {
         </p>
         
         {/* Main heading with clean Swiss typography */}
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-text-light tracking-tight mb-10">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-text-light tracking-tight mb-10">
+          <span className="font-chalk text-3xl md:text-4xl lg:text-5xl font-normal lowercase mr-2 text-text-light/80">my</span>
           IMAGINATION
           <span className="block bg-gradient-to-r from-cyan-accent to-violet-accent bg-clip-text text-transparent">LAB</span>
         </h1>
