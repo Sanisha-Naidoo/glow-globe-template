@@ -49,9 +49,36 @@ const BuildingInPublicSection = () => {
         {/* Featured Project */}
         {currentProjects.map((project, index) => (
           <div key={index} className="mb-16">
-            {/* Project Info Card */}
+            {/* Project Info Card - Text Left, Preview Right */}
             <div className="grid lg:grid-cols-5 gap-12 mb-8">
-              <div className="lg:col-span-2 space-y-8">
+              {/* Live Preview - Now on Left for desktop */}
+              <div className="lg:col-span-3 order-2 lg:order-1">
+                <div
+                  ref={projectBoxRef}
+                  className="w-full h-[65vh] rounded-2xl overflow-hidden bg-foreground/5 backdrop-blur-xl shadow-2xl relative"
+                  style={{ transformOrigin: 'center center' }}
+                >
+                  <div className="absolute top-0 left-0 right-0 h-14 bg-foreground/10 backdrop-blur-md border-b border-foreground/10 flex items-center justify-between px-6 z-10">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 rounded-full bg-foreground/20" />
+                      <div className="w-3 h-3 rounded-full bg-foreground/20" />
+                      <div className="w-3 h-3 rounded-full bg-foreground/20" />
+                    </div>
+                    <span className="text-text-light/50 text-sm">{project.url}</span>
+                  </div>
+                  <iframe
+                    src={project.url}
+                    className="w-full h-full pt-14 border-none"
+                    title={project.name}
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock allow-top-navigation-by-user-activation"
+                  />
+                </div>
+              </div>
+
+              {/* Text Content - Now on Right for desktop */}
+              <div className="lg:col-span-2 space-y-8 order-1 lg:order-2">
                 <div className="w-24 h-24 rounded-2xl overflow-hidden bg-foreground/5 p-3">
                   <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
                 </div>
@@ -76,32 +103,6 @@ const BuildingInPublicSection = () => {
                   <ExternalLink className="w-5 h-5" />
                   Visit Live App
                 </a>
-              </div>
-
-              {/* Live Preview */}
-              <div className="lg:col-span-3">
-                <div
-                  ref={projectBoxRef}
-                  className="w-full h-[65vh] rounded-2xl overflow-hidden bg-foreground/5 backdrop-blur-xl shadow-2xl relative"
-                  style={{ transformOrigin: 'center center' }}
-                >
-                  <div className="absolute top-0 left-0 right-0 h-14 bg-foreground/10 backdrop-blur-md border-b border-foreground/10 flex items-center justify-between px-6 z-10">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 rounded-full bg-foreground/20" />
-                      <div className="w-3 h-3 rounded-full bg-foreground/20" />
-                      <div className="w-3 h-3 rounded-full bg-foreground/20" />
-                    </div>
-                    <span className="text-text-light/50 text-sm">{project.url}</span>
-                  </div>
-                  <iframe
-                    src={project.url}
-                    className="w-full h-full pt-14 border-none"
-                    title={project.name}
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock allow-top-navigation-by-user-activation"
-                  />
-                </div>
               </div>
             </div>
           </div>
