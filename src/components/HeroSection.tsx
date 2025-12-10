@@ -34,8 +34,8 @@ const HeroSection = () => {
           <span className="block bg-gradient-to-r from-cyan-accent to-violet-accent bg-clip-text text-transparent">LAB</span>
         </h1>
         
-        {/* Tagline */}
-        <p className="text-xl md:text-2xl text-text-light/70 font-light max-w-3xl mx-auto mb-16 leading-relaxed">
+        {/* Tagline - added more top margin for particle space */}
+        <p className="text-xl md:text-2xl text-text-light/70 font-light max-w-3xl mx-auto mb-16 leading-relaxed mt-24">
           Building in public. Designing with intention. Creating apps that close gaps and connect communities.
         </p>
         

@@ -41,7 +41,7 @@ const ParticleAnimation = () => {
       });
       
       renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
-      renderer.setClearColor(0x000000, 0);
+      renderer.setClearColor(0x000000, 0); // Fully transparent background
       // Cap pixel ratio for better performance on high-DPI displays
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       mountRef.current.appendChild(renderer.domElement);
