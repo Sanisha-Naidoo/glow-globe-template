@@ -29,7 +29,7 @@ const BuildingInPublicSection = () => {
       tagline: 'Connecting communities across time zones',
       url: 'https://globalhour.lovable.app/',
       logo: globalhourLogo,
-      tools: ['React', 'TypeScript', 'Supabase', 'Tailwind'],
+      tools: ['React', 'TypeScript', 'Lovable Cloud', 'Tailwind CSS'],
       motivation: 'A platform designed to facilitate global collaboration by bridging time zone gaps and fostering international connections.'
     }
   ];
