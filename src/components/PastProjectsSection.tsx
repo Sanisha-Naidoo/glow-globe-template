@@ -24,7 +24,7 @@ const PastProjectsSection = () => {
 
   const projects: Project[] = [
     {
-      name: 'Trustee',
+      name: 'Trustee App',
       tagline: 'Trust management platform',
       url: 'https://trustee.lovable.app/',
       logo: trusteeLogo,
