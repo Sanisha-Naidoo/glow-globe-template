@@ -1,11 +1,21 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCinematicScroll } from '../hooks/useCinematicScroll';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const { subscribeToScroll } = useCinematicScroll();
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return; // Skip scroll animations on mobile
+    
     const unsubscribe = subscribeToScroll(progress => {
       if (heroRef.current) {
         const heroProgress = Math.min(progress * 1.5, 1);
@@ -17,7 +27,7 @@ const HeroSection = () => {
       }
     });
     return unsubscribe;
-  }, [subscribeToScroll]);
+  }, [subscribeToScroll, isMobile]);
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -35,17 +45,17 @@ const HeroSection = () => {
         </h1>
         
         {/* Tagline - added more top margin for particle space */}
-        <p className="text-lg sm:text-xl md:text-2xl text-text-light/70 font-light max-w-3xl mx-auto mb-12 sm:mb-16 leading-relaxed mt-16 sm:mt-24 px-2">
+        <p className="text-lg sm:text-xl md:text-2xl text-text-light/70 font-light max-w-3xl mx-auto mb-12 sm:mb-16 leading-relaxed mt-24 sm:mt-32 px-2">
           Building in public. Designing with intention. Creating apps that close gaps and connect communities.
         </p>
         
         {/* Swiss-style divider */}
-        <div className="w-32 h-px bg-gradient-to-r from-transparent via-cyan-accent to-transparent mx-auto mb-10" />
+        <div className="w-32 h-px bg-gradient-to-r from-transparent via-cyan-accent to-transparent mx-auto mb-8 sm:mb-10 mt-4" />
         
         {/* Scroll indicator */}
         <div className="flex flex-col items-center space-y-3 text-text-light/40">
           <span className="text-sm tracking-[0.2em] uppercase">Scroll to explore</span>
-          <div className="w-px h-16 bg-gradient-to-b from-cyan-accent/60 to-transparent" />
+          <div className="w-px h-12 sm:h-16 bg-gradient-to-b from-cyan-accent/60 to-transparent" />
         </div>
       </div>
     </section>
