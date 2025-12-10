@@ -21,30 +21,30 @@ const HeroSection = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark-bg">
-      <div ref={heroRef} className="max-w-5xl mx-auto px-8 text-center" style={{ willChange: 'transform, opacity' }}>
+      <div ref={heroRef} className="max-w-6xl mx-auto px-8 text-center" style={{ willChange: 'transform, opacity' }}>
         {/* Swiss-style uppercase label */}
-        <p className="text-xs tracking-[0.3em] text-text-light/60 uppercase mb-6">
+        <p className="text-sm tracking-[0.3em] text-cyan-accent uppercase mb-8">
           Vibe Coding Portfolio
         </p>
         
         {/* Main heading with clean Swiss typography */}
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-text-light tracking-tight mb-8">
+        <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-text-light tracking-tight mb-10">
           IMAGINATION
-          <span className="block text-pink-accent">LAB</span>
+          <span className="block bg-gradient-to-r from-cyan-accent to-violet-accent bg-clip-text text-transparent">LAB</span>
         </h1>
         
         {/* Tagline */}
-        <p className="text-lg md:text-xl text-text-light/70 font-light max-w-2xl mx-auto mb-12 leading-relaxed">
+        <p className="text-xl md:text-2xl text-text-light/70 font-light max-w-3xl mx-auto mb-16 leading-relaxed">
           Building in public. Designing with intention. Creating apps that close gaps and connect communities.
         </p>
         
         {/* Swiss-style divider */}
-        <div className="w-24 h-px bg-gradient-to-r from-transparent via-pink-accent to-transparent mx-auto mb-8" />
+        <div className="w-32 h-px bg-gradient-to-r from-transparent via-cyan-accent to-transparent mx-auto mb-10" />
         
         {/* Scroll indicator */}
-        <div className="flex flex-col items-center space-y-2 text-text-light/40">
-          <span className="text-xs tracking-[0.2em] uppercase">Scroll to explore</span>
-          <div className="w-px h-12 bg-gradient-to-b from-text-light/40 to-transparent" />
+        <div className="flex flex-col items-center space-y-3 text-text-light/40">
+          <span className="text-sm tracking-[0.2em] uppercase">Scroll to explore</span>
+          <div className="w-px h-16 bg-gradient-to-b from-cyan-accent/60 to-transparent" />
         </div>
       </div>
     </section>

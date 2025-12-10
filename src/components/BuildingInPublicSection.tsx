@@ -35,34 +35,34 @@ const BuildingInPublicSection = () => {
   ];
 
   return (
-    <section id="building" ref={parallaxRef} className="min-h-screen py-24 relative bg-dark-bg" style={{ willChange: 'transform' }}>
+    <section id="building" ref={parallaxRef} className="min-h-screen py-32 relative bg-dark-bg" style={{ willChange: 'transform' }}>
       <div className="max-w-7xl mx-auto px-8">
         {/* Section Header */}
-        <div className="mb-16">
-          <p className="text-xs tracking-[0.3em] text-pink-accent uppercase mb-4">Currently Building</p>
-          <h2 className="text-4xl lg:text-5xl text-text-light font-bold tracking-tight mb-6">
+        <div className="mb-20">
+          <p className="text-sm tracking-[0.3em] text-cyan-accent uppercase mb-6">Currently Building</p>
+          <h2 className="text-5xl lg:text-6xl text-text-light font-bold tracking-tight mb-8">
             Building in Public
           </h2>
-          <div className="w-24 h-px bg-gradient-to-r from-pink-accent to-transparent" />
+          <div className="w-32 h-px bg-gradient-to-r from-cyan-accent to-violet-accent" />
         </div>
 
         {/* Featured Project */}
         {currentProjects.map((project, index) => (
           <div key={index} className="mb-16">
             {/* Project Info Card */}
-            <div className="grid lg:grid-cols-3 gap-8 mb-8">
-              <div className="lg:col-span-1 space-y-6">
-                <div className="w-20 h-20 rounded-2xl overflow-hidden bg-foreground/5 p-2">
+            <div className="grid lg:grid-cols-5 gap-12 mb-8">
+              <div className="lg:col-span-2 space-y-8">
+                <div className="w-24 h-24 rounded-2xl overflow-hidden bg-foreground/5 p-3">
                   <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-text-light mb-2">{project.name}</h3>
-                  <p className="text-text-light/60 font-light">{project.tagline}</p>
+                  <h3 className="text-3xl font-bold text-text-light mb-3">{project.name}</h3>
+                  <p className="text-text-light/60 text-lg font-light">{project.tagline}</p>
                 </div>
-                <p className="text-text-light/70 text-sm leading-relaxed">{project.motivation}</p>
-                <div className="flex flex-wrap gap-2">
+                <p className="text-text-light/70 text-base leading-relaxed">{project.motivation}</p>
+                <div className="flex flex-wrap gap-3">
                   {project.tools.map((tool) => (
-                    <span key={tool} className="px-3 py-1 text-xs tracking-wider uppercase bg-foreground/5 text-text-light/80 rounded-full border border-foreground/10">
+                    <span key={tool} className="px-4 py-2 text-sm tracking-wider uppercase bg-foreground/5 text-text-light/80 rounded-full border border-foreground/10">
                       {tool}
                     </span>
                   ))}
@@ -71,31 +71,31 @@ const BuildingInPublicSection = () => {
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-pink-accent hover:text-pink-accent/80 transition-colors text-sm font-medium"
+                  className="inline-flex items-center gap-2 text-cyan-accent hover:text-violet-accent transition-colors text-base font-medium"
                 >
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLink className="w-5 h-5" />
                   Visit Live App
                 </a>
               </div>
 
               {/* Live Preview */}
-              <div className="lg:col-span-2">
+              <div className="lg:col-span-3">
                 <div
                   ref={projectBoxRef}
-                  className="w-full h-[60vh] rounded-2xl overflow-hidden bg-foreground/5 backdrop-blur-xl shadow-2xl relative"
+                  className="w-full h-[65vh] rounded-2xl overflow-hidden bg-foreground/5 backdrop-blur-xl shadow-2xl relative"
                   style={{ transformOrigin: 'center center' }}
                 >
-                  <div className="absolute top-0 left-0 right-0 h-12 bg-foreground/10 backdrop-blur-md border-b border-foreground/10 flex items-center justify-between px-6 z-10">
+                  <div className="absolute top-0 left-0 right-0 h-14 bg-foreground/10 backdrop-blur-md border-b border-foreground/10 flex items-center justify-between px-6 z-10">
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500/60" />
-                      <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
-                      <div className="w-3 h-3 rounded-full bg-green-500/60" />
+                      <div className="w-3 h-3 rounded-full bg-foreground/20" />
+                      <div className="w-3 h-3 rounded-full bg-foreground/20" />
+                      <div className="w-3 h-3 rounded-full bg-foreground/20" />
                     </div>
-                    <span className="text-text-light/50 text-xs">{project.url}</span>
+                    <span className="text-text-light/50 text-sm">{project.url}</span>
                   </div>
                   <iframe
                     src={project.url}
-                    className="w-full h-full pt-12 border-none"
+                    className="w-full h-full pt-14 border-none"
                     title={project.name}
                     loading="lazy"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
