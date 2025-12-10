@@ -16,12 +16,12 @@ const ContactSection = () => {
     <section
       id="contact"
       ref={sectionRef}
-      className="py-32 relative opacity-0 translate-y-8 transition-all duration-1000 ease-out bg-dark-bg flex flex-col items-center justify-center"
+      className="py-16 sm:py-32 relative opacity-0 translate-y-8 transition-all duration-1000 ease-out bg-dark-bg flex flex-col items-center justify-center"
     >
-      <div className="max-w-4xl mx-auto px-8 text-center">
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 text-center">
         {/* Quote */}
-        <blockquote className="mb-16">
-          <p className="text-2xl md:text-3xl text-text-light font-light leading-relaxed mb-6 italic">
+        <blockquote className="mb-10 sm:mb-16">
+          <p className="text-xl sm:text-2xl md:text-3xl text-text-light font-light leading-relaxed mb-4 sm:mb-6 italic px-2">
             "Where there is love, there is always time and nothing is too much trouble"
           </p>
           <cite className="text-base text-cyan-accent font-medium tracking-wide not-italic">
