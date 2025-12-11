@@ -55,7 +55,7 @@ const BuildingInPublicSection = () => {
               <div className="lg:col-span-3 order-2 lg:order-1">
                 <div
                   ref={projectBoxRef}
-                  className="w-full h-[50vh] sm:h-[65vh] rounded-xl sm:rounded-2xl overflow-hidden bg-foreground/5 backdrop-blur-xl shadow-2xl relative"
+                  className="w-full h-[40vh] sm:h-[65vh] rounded-xl sm:rounded-2xl overflow-hidden bg-foreground/5 backdrop-blur-xl shadow-2xl relative"
                   style={{ transformOrigin: 'center center' }}
                 >
                   <div className="absolute top-0 left-0 right-0 h-14 bg-foreground/10 backdrop-blur-md border-b border-foreground/10 flex items-center justify-between px-6 z-10">

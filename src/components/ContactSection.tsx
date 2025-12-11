@@ -68,7 +68,7 @@ const ContactSection = () => {
         </div>
 
         {/* Copyright */}
-        <p className="text-text-light/40 font-light text-sm tracking-[0.2em] uppercase mb-16">
+        <p className="text-text-light/40 font-light text-sm tracking-[0.2em] uppercase mb-10 sm:mb-16">
           © 2025 IMAGINATION LAB
         </p>
 

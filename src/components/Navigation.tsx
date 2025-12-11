@@ -31,7 +31,7 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
       className="fixed top-0 w-full z-50 nav-hidden transition-all duration-700 ease-out"
     >
       <div className="backdrop-blur-2xl bg-dark-bg/10 border-b border-text-light/10">
-        <div className="max-w-7xl mx-auto px-8 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 sm:py-6">
           <div className="flex justify-between items-center">
             <button 
               onClick={() => scrollToSection('home')}
@@ -67,7 +67,7 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <div className="md:hidden backdrop-blur-2xl bg-dark-bg/90 border-t border-text-light/10">
-            <div className="px-8 py-8 space-y-6">
+            <div className="px-4 py-6 space-y-4">
               {navItems.map((item) => (
                 <button
                   key={item.name}
