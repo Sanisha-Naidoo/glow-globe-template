@@ -34,7 +34,7 @@ const BrandShowcase = () => {
         </div>
 
         {/* Logo Strip - Larger Logos */}
-        <div className="flex flex-wrap justify-center items-center gap-8 sm:gap-12 md:gap-16">
+        <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-12 md:gap-16">
           {logos.map((logo, index) => {
             const content = (
               <>

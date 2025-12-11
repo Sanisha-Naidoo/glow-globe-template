@@ -45,7 +45,7 @@ const HeroSection = () => {
         </h1>
         
         {/* Tagline - added more top margin for particle space */}
-        <p className="text-lg sm:text-xl md:text-2xl text-text-light/70 font-light max-w-3xl mx-auto mb-12 sm:mb-16 leading-relaxed mt-24 sm:mt-32 px-2">
+        <p className="text-lg sm:text-xl md:text-2xl text-text-light/70 font-light max-w-3xl mx-auto mb-10 sm:mb-16 leading-relaxed mt-12 sm:mt-32 px-2">
           Building in public. Designing with intention. Creating apps that close gaps and connect communities.
         </p>
         

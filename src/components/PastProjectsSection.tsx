@@ -80,7 +80,7 @@ const PastProjectsSection = () => {
           {selectedProject && (
             <>
               <DialogHeader>
-                <div className="flex items-center gap-6 mb-6">
+                <div className="flex items-center gap-4 sm:gap-6 mb-4 sm:mb-6">
                   <div className="w-20 h-20 rounded-xl overflow-hidden bg-foreground/5 p-3">
                     <img src={selectedProject.logo} alt={selectedProject.name} className="w-full h-full object-contain" />
                   </div>
