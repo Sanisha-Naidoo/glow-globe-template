@@ -5,10 +5,6 @@ export const shareToLinkedIn = (url: string, title: string) => {
   window.open(linkedInUrl, '_blank', 'width=600,height=600');
 };
 
-export const shareToTwitter = (url: string, title: string) => {
-  const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
-  window.open(twitterUrl, '_blank', 'width=600,height=400');
-};
 
 export const copyToClipboard = async (url: string) => {
   try {
