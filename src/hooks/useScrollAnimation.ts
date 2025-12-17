@@ -54,23 +54,57 @@ export const useScrollNavigation = () => {
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    let isHoveringTop = false;
+
+    const showNav = () => {
+      if (!navRef.current) return;
+      navRef.current.classList.add('nav-visible');
+      navRef.current.classList.remove('nav-hidden');
+    };
+
+    const hideNav = () => {
+      if (!navRef.current) return;
+      navRef.current.classList.add('nav-hidden');
+      navRef.current.classList.remove('nav-visible');
+    };
+
     const handleScroll = () => {
       if (!navRef.current) return;
       
       const scrollY = window.scrollY;
       const triggerPoint = window.innerHeight * 0.5;
       
-      if (scrollY > triggerPoint) {
-        navRef.current.classList.add('nav-visible');
-        navRef.current.classList.remove('nav-hidden');
+      if (scrollY > triggerPoint || isHoveringTop) {
+        showNav();
       } else {
-        navRef.current.classList.add('nav-hidden');
-        navRef.current.classList.remove('nav-visible');
+        hideNav();
       }
     };
 
+    const handleMouseMove = (e: MouseEvent) => {
+      const hoverZone = 80; // pixels from top
+      const wasHovering = isHoveringTop;
+      isHoveringTop = e.clientY <= hoverZone;
+      
+      if (isHoveringTop !== wasHovering) {
+        handleScroll();
+      }
+    };
+
+    const handleMouseLeave = () => {
+      isHoveringTop = false;
+      handleScroll();
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseleave', handleMouseLeave);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+    };
   }, []);
 
   return navRef;
