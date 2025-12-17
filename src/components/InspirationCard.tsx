@@ -1,4 +1,4 @@
-import { ExternalLink, Linkedin, Link2, BookOpen, Package, FileText, Lightbulb, Wrench, Play } from 'lucide-react';
+import { ExternalLink, Linkedin, Link2, BookOpen, Package, FileText, Lightbulb, Wrench, Eye } from 'lucide-react';
 import { InspirationPost, InspirationCategory } from '@/data/inspirations';
 import { shareToLinkedIn, copyToClipboard, getPostUrl } from '@/utils/share';
 import { cn } from '@/lib/utils';
@@ -59,7 +59,7 @@ const InspirationCard = ({ post, onOpenGamma }: InspirationCardProps) => {
       {post.gammaUrl && (
         <div className="mb-4 -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 overflow-hidden rounded-t-xl sm:rounded-t-2xl bg-gradient-to-br from-cyan-accent/20 to-purple-500/20 h-32 flex items-center justify-center">
           <div className="w-12 h-12 rounded-full bg-cyan-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-            <Play size={20} className="text-cyan-accent ml-1" />
+            <Eye size={20} className="text-cyan-accent" />
           </div>
         </div>
       )}
