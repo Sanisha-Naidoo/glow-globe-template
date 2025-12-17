@@ -1,6 +1,6 @@
-import { ExternalLink, Linkedin, Twitter, Link2, BookOpen, Package, FileText, Lightbulb, Wrench } from 'lucide-react';
+import { ExternalLink, Linkedin, Link2, BookOpen, Package, FileText, Lightbulb, Wrench, Play } from 'lucide-react';
 import { InspirationPost, InspirationCategory } from '@/data/inspirations';
-import { shareToLinkedIn, shareToTwitter, copyToClipboard, getPostUrl } from '@/utils/share';
+import { shareToLinkedIn, copyToClipboard, getPostUrl } from '@/utils/share';
 import { cn } from '@/lib/utils';
 
 const categoryIcons: Record<InspirationCategory, React.ReactNode> = {
@@ -21,23 +21,27 @@ const categoryColors: Record<InspirationCategory, string> = {
 
 interface InspirationCardProps {
   post: InspirationPost;
+  onOpenGamma?: (post: InspirationPost) => void;
 }
 
-const InspirationCard = ({ post }: InspirationCardProps) => {
+const InspirationCard = ({ post, onOpenGamma }: InspirationCardProps) => {
   const postUrl = getPostUrl(post.id);
   
-  const sizeClasses = {
-    small: 'break-inside-avoid',
-    medium: 'break-inside-avoid',
-    large: 'break-inside-avoid'
+  const handleCardClick = () => {
+    if (post.gammaUrl && onOpenGamma) {
+      onOpenGamma(post);
+    }
   };
+
+  const isClickable = post.gammaUrl && onOpenGamma;
 
   return (
     <article
       id={post.id}
+      onClick={handleCardClick}
       className={cn(
-        'group bg-foreground/5 border border-text-light/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6 hover:border-cyan-accent/30 transition-all duration-300',
-        sizeClasses[post.size || 'medium']
+        'group bg-foreground/5 border border-text-light/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6 transition-all duration-300 break-inside-avoid',
+        isClickable && 'cursor-pointer hover:border-cyan-accent/30 hover:bg-foreground/10'
       )}
     >
       {/* Image */}
@@ -48,6 +52,15 @@ const InspirationCard = ({ post }: InspirationCardProps) => {
             alt={post.title}
             className="w-full h-40 sm:h-48 object-cover group-hover:scale-105 transition-transform duration-500"
           />
+        </div>
+      )}
+
+      {/* Gamma indicator */}
+      {post.gammaUrl && (
+        <div className="mb-4 -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 overflow-hidden rounded-t-xl sm:rounded-t-2xl bg-gradient-to-br from-cyan-accent/20 to-purple-500/20 h-32 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-cyan-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <Play size={20} className="text-cyan-accent ml-1" />
+          </div>
         </div>
       )}
 
@@ -66,7 +79,7 @@ const InspirationCard = ({ post }: InspirationCardProps) => {
       </h3>
 
       {/* Content */}
-      <div className="text-text-light/70 text-sm sm:text-base leading-relaxed mb-4 whitespace-pre-line">
+      <div className="text-text-light/70 text-sm sm:text-base leading-relaxed mb-4">
         {post.content}
       </div>
 
@@ -86,17 +99,22 @@ const InspirationCard = ({ post }: InspirationCardProps) => {
 
       {/* Footer */}
       <div className="flex items-center justify-between pt-4 border-t border-text-light/10">
-        {/* External Link */}
+        {/* External Link or Date */}
         {post.link ? (
           <a
             href={post.link}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             className="inline-flex items-center gap-1.5 text-cyan-accent hover:text-cyan-accent/80 text-sm font-medium transition-colors"
           >
             <ExternalLink size={14} />
             <span>Visit</span>
           </a>
+        ) : post.gammaUrl ? (
+          <span className="text-cyan-accent/70 text-xs font-medium">
+            Click to view
+          </span>
         ) : (
           <span className="text-text-light/40 text-xs">
             {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
@@ -106,21 +124,20 @@ const InspirationCard = ({ post }: InspirationCardProps) => {
         {/* Share Buttons */}
         <div className="flex items-center gap-2">
           <button
-            onClick={() => shareToLinkedIn(postUrl, post.title)}
+            onClick={(e) => {
+              e.stopPropagation();
+              shareToLinkedIn(postUrl, post.title);
+            }}
             className="p-2 text-text-light/50 hover:text-[#0077b5] hover:bg-[#0077b5]/10 rounded-lg transition-all duration-200"
             title="Share on LinkedIn"
           >
             <Linkedin size={16} />
           </button>
           <button
-            onClick={() => shareToTwitter(postUrl, post.title)}
-            className="p-2 text-text-light/50 hover:text-text-light hover:bg-text-light/10 rounded-lg transition-all duration-200"
-            title="Share on X"
-          >
-            <Twitter size={16} />
-          </button>
-          <button
-            onClick={() => copyToClipboard(postUrl)}
+            onClick={(e) => {
+              e.stopPropagation();
+              copyToClipboard(postUrl);
+            }}
             className="p-2 text-text-light/50 hover:text-cyan-accent hover:bg-cyan-accent/10 rounded-lg transition-all duration-200"
             title="Copy link"
           >

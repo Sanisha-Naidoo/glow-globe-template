@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { inspirations, categories, InspirationCategory } from '@/data/inspirations';
+import { inspirations, categories, InspirationCategory, InspirationPost } from '@/data/inspirations';
 import InspirationCard from '@/components/InspirationCard';
+import GammaModal from '@/components/GammaModal';
 import { cn } from '@/lib/utils';
 
 const Inspirations = () => {
   const [activeCategory, setActiveCategory] = useState<InspirationCategory | 'all'>('all');
+  const [selectedPost, setSelectedPost] = useState<InspirationPost | null>(null);
 
   const filteredPosts = activeCategory === 'all'
     ? inspirations
@@ -65,11 +67,22 @@ const Inspirations = () => {
         ) : (
           <div className="columns-1 md:columns-2 lg:columns-3 gap-4 sm:gap-6">
             {filteredPosts.map((post) => (
-              <InspirationCard key={post.id} post={post} />
+              <InspirationCard 
+                key={post.id} 
+                post={post} 
+                onOpenGamma={setSelectedPost}
+              />
             ))}
           </div>
         )}
       </main>
+
+      {/* Gamma Modal */}
+      <GammaModal
+        post={selectedPost}
+        open={!!selectedPost}
+        onClose={() => setSelectedPost(null)}
+      />
 
       {/* Footer */}
       <footer className="border-t border-text-light/10 py-8 sm:py-12">
