@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useScrollNavigation } from '../hooks/useScrollAnimation';
 
 interface NavigationProps {
@@ -10,6 +11,7 @@ interface NavigationProps {
 const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navRef = useScrollNavigation();
+  const navigate = useNavigate();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -17,11 +19,20 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
     setIsMobileMenuOpen(false);
   };
 
+  const handleNavClick = (item: { name: string; id: string; isPage?: boolean; path?: string }) => {
+    if (item.isPage && item.path) {
+      navigate(item.path);
+      setIsMobileMenuOpen(false);
+    } else {
+      scrollToSection(item.id);
+    }
+  };
+
   const navItems = [
     { name: 'Home', id: 'home' },
     { name: 'Building', id: 'building' },
     { name: 'Projects', id: 'projects' },
-    { name: 'Coming Soon', id: 'coming-soon' },
+    { name: 'Inspirations', id: 'inspirations', isPage: true, path: '/inspirations' },
     { name: 'Contact', id: 'contact' }
   ];
 
@@ -45,7 +56,7 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
               {navItems.map((item) => (
                 <button
                   key={item.name}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => handleNavClick(item)}
                   className="text-text-light/70 hover:text-cyan-accent transition-all duration-300 text-sm font-medium tracking-[0.15em] relative group uppercase"
                 >
                   {item.name}
@@ -71,7 +82,7 @@ const Navigation = ({ darkMode, setDarkMode }: NavigationProps) => {
               {navItems.map((item) => (
                 <button
                   key={item.name}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => handleNavClick(item)}
                   className="block w-full text-left text-text-light/70 hover:text-cyan-accent transition-colors duration-300 text-base font-medium tracking-[0.15em] py-2 uppercase"
                 >
                   {item.name}
