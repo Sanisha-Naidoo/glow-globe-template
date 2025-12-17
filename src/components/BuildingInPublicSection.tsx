@@ -36,7 +36,7 @@ const BuildingInPublicSection = () => {
 
   return (
     <section id="building" ref={parallaxRef} className="min-h-screen py-16 sm:py-32 relative bg-dark-bg" style={{ willChange: 'transform' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+      <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-8">
         {/* Section Header */}
         <div className="mb-12 sm:mb-20">
           <p className="text-sm tracking-[0.3em] text-cyan-accent uppercase mb-4 sm:mb-6">Currently Building</p>
@@ -50,9 +50,9 @@ const BuildingInPublicSection = () => {
         {currentProjects.map((project, index) => (
           <div key={index} className="mb-16">
             {/* Project Info Card - Text Left, Preview Right */}
-            <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 mb-8">
+            <div className="grid xl:grid-cols-5 gap-6 lg:gap-8 xl:gap-10 2xl:gap-12 mb-8">
               {/* Live Preview - Now on Left for desktop */}
-              <div className="lg:col-span-3 order-2 lg:order-1">
+              <div className="xl:col-span-3 order-2 xl:order-1">
                 <div
                   ref={projectBoxRef}
                   className="w-full h-[40vh] sm:h-[65vh] rounded-xl sm:rounded-2xl overflow-hidden bg-foreground/5 backdrop-blur-xl shadow-2xl relative"
@@ -78,7 +78,7 @@ const BuildingInPublicSection = () => {
               </div>
 
               {/* Text Content - Now on Right for desktop */}
-              <div className="lg:col-span-2 space-y-6 sm:space-y-8 order-1 lg:order-2">
+              <div className="xl:col-span-2 space-y-6 sm:space-y-8 order-1 xl:order-2">
                 <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-xl sm:rounded-2xl overflow-hidden bg-foreground/5 p-2 sm:p-3">
                   <img src={project.logo} alt={project.name} className="w-full h-full object-contain rounded-xl sm:rounded-2xl" />
                 </div>

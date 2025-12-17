@@ -6,15 +6,33 @@ interface ProjectScaleAnimationOptions {
   direction?: 'left' | 'right';
 }
 
+const getViewportMultiplier = (width: number): number => {
+  if (width >= 1600) return 30;
+  if (width >= 1400) return 20;
+  if (width >= 1200) return 12;
+  return 5;
+};
+
+const getStartScale = (width: number): number => {
+  if (width >= 1600) return 0.8;
+  if (width >= 1200) return 0.85;
+  return 0.9;
+};
+
 export const useProjectScaleAnimation = ({ startTrigger, endTrigger, direction = 'left' }: ProjectScaleAnimationOptions) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1920);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const checkViewport = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+      setViewportWidth(width);
+    };
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    return () => window.removeEventListener('resize', checkViewport);
   }, []);
 
   useEffect(() => {
@@ -35,8 +53,11 @@ export const useProjectScaleAnimation = ({ startTrigger, endTrigger, direction =
       localProgress = Math.max(0, Math.min(1, localProgress));
 
       const multiplier = direction === 'left' ? -1 : 1;
-      const translateX = (1 - localProgress) * 30 * multiplier;
-      const scale = 0.8 + localProgress * 0.2;
+      const translateMultiplier = getViewportMultiplier(viewportWidth);
+      const startScale = getStartScale(viewportWidth);
+      
+      const translateX = (1 - localProgress) * translateMultiplier * multiplier;
+      const scale = startScale + localProgress * (1 - startScale);
 
       if (ref.current) {
         ref.current.style.transform = `translateX(${translateX}%) scale(${scale})`;
@@ -44,8 +65,9 @@ export const useProjectScaleAnimation = ({ startTrigger, endTrigger, direction =
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial call
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [startTrigger, endTrigger, direction, isMobile]);
+  }, [startTrigger, endTrigger, direction, isMobile, viewportWidth]);
 
   return { projectBoxRef: ref };
 };
