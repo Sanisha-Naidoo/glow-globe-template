@@ -39,10 +39,10 @@ const BrandShowcase = () => {
             const content = (
               <>
                 <div className={`w-16 h-16 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl sm:rounded-3xl overflow-hidden bg-foreground/5 p-2 sm:p-3 transition-all duration-300 ${logo.isLive ? 'group-hover:bg-foreground/10 group-hover:scale-110' : ''}`}>
-                  <img
+                <img
                     src={logo.src}
                     alt={logo.name}
-                    className={`w-full h-full object-contain transition-opacity ${logo.isLive ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'}`}
+                    className={`w-full h-full object-contain rounded-xl sm:rounded-2xl transition-opacity ${logo.isLive ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'}`}
                   />
                 </div>
                 <span className={`text-sm tracking-wider uppercase transition-colors ${logo.isLive ? 'text-text-light/40 group-hover:text-cyan-accent' : 'text-text-light/20'}`}>
