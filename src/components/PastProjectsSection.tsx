@@ -82,7 +82,7 @@ const PastProjectsSection = () => {
               <DialogHeader>
                 <div className="flex items-center gap-4 sm:gap-6 mb-4 sm:mb-6">
                   <div className="w-20 h-20 rounded-xl overflow-hidden bg-foreground/5 p-3">
-                    <img src={selectedProject.logo} alt={selectedProject.name} className="w-full h-full object-contain" />
+                    <img src={selectedProject.logo} alt={selectedProject.name} className="w-full h-full object-contain rounded-xl sm:rounded-2xl" />
                   </div>
                   <div>
                     <DialogTitle className="text-3xl font-bold text-text-light">{selectedProject.name}</DialogTitle>
@@ -182,7 +182,7 @@ const ProjectCard = ({ project, onClick, index }: ProjectCardProps) => {
     >
       <div className="flex items-start gap-4 sm:gap-6 mb-4 sm:mb-6">
         <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl overflow-hidden bg-foreground/5 p-1.5 sm:p-2 flex-shrink-0">
-          <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
+          <img src={project.logo} alt={project.name} className="w-full h-full object-contain rounded-xl sm:rounded-2xl" />
         </div>
         <div className="flex-1">
           <h3 className="text-xl sm:text-2xl font-bold text-text-light group-hover:text-cyan-accent transition-colors mb-1 sm:mb-2">{project.name}</h3>
