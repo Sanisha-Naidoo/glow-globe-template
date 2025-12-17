@@ -80,7 +80,7 @@ const BuildingInPublicSection = () => {
               {/* Text Content - Now on Right for desktop */}
               <div className="lg:col-span-2 space-y-6 sm:space-y-8 order-1 lg:order-2">
                 <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-xl sm:rounded-2xl overflow-hidden bg-foreground/5 p-2 sm:p-3">
-                  <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
+                  <img src={project.logo} alt={project.name} className="w-full h-full object-contain rounded-xl sm:rounded-2xl" />
                 </div>
                 <div>
                   <h3 className="text-2xl sm:text-3xl font-bold text-text-light mb-2 sm:mb-3">{project.name}</h3>

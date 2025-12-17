@@ -62,7 +62,7 @@ const ComingSoonSection = () => {
 
               <div className="flex items-start gap-4 sm:gap-6 mb-5 sm:mb-8 mt-6 sm:mt-0">
                 <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl overflow-hidden bg-foreground/5 p-1.5 sm:p-2 flex-shrink-0 opacity-80">
-                  <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
+                  <img src={project.logo} alt={project.name} className="w-full h-full object-contain rounded-xl sm:rounded-2xl" />
                 </div>
                 <div>
                   <h3 className="text-xl sm:text-2xl font-bold text-text-light mb-1 sm:mb-2">{project.name}</h3>

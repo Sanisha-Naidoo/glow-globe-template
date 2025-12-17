@@ -42,7 +42,7 @@ const BrandShowcase = () => {
                 <img
                     src={logo.src}
                     alt={logo.name}
-                    className={`w-full h-full object-contain rounded-2xl sm:rounded-3xl transition-opacity ${logo.isLive ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'}`}
+                    className={`w-full h-full object-contain rounded-xl sm:rounded-2xl transition-opacity ${logo.isLive ? 'opacity-70 group-hover:opacity-100' : 'opacity-30'}`}
                   />
                 </div>
                 <span className={`text-sm tracking-wider uppercase transition-colors ${logo.isLive ? 'text-text-light/40 group-hover:text-cyan-accent' : 'text-text-light/20'}`}>
