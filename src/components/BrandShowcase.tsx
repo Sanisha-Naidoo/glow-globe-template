@@ -38,7 +38,7 @@ const BrandShowcase = () => {
           {logos.map((logo, index) => {
             const content = (
               <>
-                <div className={`w-16 h-16 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-xl sm:rounded-2xl overflow-hidden bg-foreground/5 p-2 sm:p-3 transition-all duration-300 ${logo.isLive ? 'group-hover:bg-foreground/10 group-hover:scale-110' : ''}`}>
+                <div className={`w-16 h-16 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl sm:rounded-3xl overflow-hidden bg-foreground/5 p-2 sm:p-3 transition-all duration-300 ${logo.isLive ? 'group-hover:bg-foreground/10 group-hover:scale-110' : ''}`}>
                   <img
                     src={logo.src}
                     alt={logo.name}
