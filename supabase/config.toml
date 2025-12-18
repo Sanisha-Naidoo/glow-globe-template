@@ -1,0 +1,4 @@
+project_id = "rxsnfjbjypiisnelrshq"
+
+[functions.og-inspiration]
+verify_jwt = false

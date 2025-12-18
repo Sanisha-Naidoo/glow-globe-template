@@ -1,6 +1,6 @@
 import { ExternalLink, Linkedin, Link2, BookOpen, Package, FileText, Lightbulb, Wrench, Eye } from 'lucide-react';
 import { InspirationPost, InspirationCategory } from '@/data/inspirations';
-import { shareToLinkedIn, copyToClipboard, getPostUrl } from '@/utils/share';
+import { shareToLinkedIn, copyToClipboard, getPostUrl, getShareUrl } from '@/utils/share';
 import { cn } from '@/lib/utils';
 
 const categoryIcons: Record<InspirationCategory, React.ReactNode> = {
@@ -26,6 +26,7 @@ interface InspirationCardProps {
 
 const InspirationCard = ({ post, onOpenGamma }: InspirationCardProps) => {
   const postUrl = getPostUrl(post.id);
+  const shareUrl = getShareUrl(post.id); // OG-optimized URL for social sharing
   
   const handleCardClick = () => {
     if (post.gammaUrl && onOpenGamma) {
@@ -126,7 +127,7 @@ const InspirationCard = ({ post, onOpenGamma }: InspirationCardProps) => {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              shareToLinkedIn(postUrl, post.title);
+              shareToLinkedIn(shareUrl, post.title);
             }}
             className="p-2 text-text-light/50 hover:text-[#0077b5] hover:bg-[#0077b5]/10 rounded-lg transition-all duration-200"
             title="Share on LinkedIn"
