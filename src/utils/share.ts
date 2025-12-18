@@ -23,5 +23,12 @@ export const copyToClipboard = async (url: string) => {
 };
 
 export const getPostUrl = (postId: string) => {
-  return `${window.location.origin}/inspirations#${postId}`;
+  return `${window.location.origin}/inspirations/${postId}`;
+};
+
+// Get the OG-optimized share URL that goes through the edge function
+export const getShareUrl = (postId: string) => {
+  // Use the edge function URL for social sharing to get proper OG tags
+  const projectId = 'rxsnfjbjypiisnelrshq';
+  return `https://${projectId}.supabase.co/functions/v1/og-inspiration?id=${postId}`;
 };
