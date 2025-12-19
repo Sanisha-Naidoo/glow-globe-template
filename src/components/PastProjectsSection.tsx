@@ -76,7 +76,7 @@ const PastProjectsSection = () => {
 
       {/* Project Detail Modal */}
       <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
-        <DialogContent className="w-full max-w-[95vw] sm:max-w-6xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto bg-dark-bg border-foreground/10">
+        <DialogContent className="w-full max-w-[92vw] sm:max-w-6xl max-h-[90vh] sm:max-h-[90vh] overflow-y-auto bg-dark-bg border-foreground/10 pt-14 sm:pt-6">
           {selectedProject && (
             <>
               <DialogHeader>
