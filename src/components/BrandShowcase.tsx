@@ -4,6 +4,7 @@ import trusteeLogo from '../assets/logos/trustee.png';
 import prelovedLogo from '../assets/logos/preloved.png';
 import familytreeLogo from '../assets/logos/familytree.png';
 import spilltheTeeLogo from '../assets/logos/spillthetee.png';
+import rememberingLogo from '../assets/logos/remembering.jpeg';
 
 const BrandShowcase = () => {
   const sectionRef = useScrollAnimation();
@@ -14,6 +15,7 @@ const BrandShowcase = () => {
     { src: prelovedLogo, name: 'PreLoved', url: 'https://preloved.lovable.app', isLive: true },
     { src: familytreeLogo, name: 'Family Tree', url: null, isLive: false },
     { src: spilltheTeeLogo, name: 'Spill the Tee', url: null, isLive: false },
+    { src: rememberingLogo, name: 'Remembering', url: 'https://remembering.lovable.app/', isLive: false },
   ];
 
   return (
@@ -51,24 +53,43 @@ const BrandShowcase = () => {
               </>
             );
 
-            return logo.isLive ? (
-              <a
-                key={index}
-                href={logo.url!}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex flex-col items-center gap-4 cursor-pointer"
-              >
-                {content}
-              </a>
-            ) : (
-              <div
-                key={index}
-                className="flex flex-col items-center gap-4 cursor-default"
-              >
-                {content}
-              </div>
-            );
+            // If live, show active link with hover effects
+            // If not live but has URL, show greyed-out link (still clickable)
+            // If not live and no URL, show static div
+            if (logo.isLive) {
+              return (
+                <a
+                  key={index}
+                  href={logo.url!}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col items-center gap-4 cursor-pointer"
+                >
+                  {content}
+                </a>
+              );
+            } else if (logo.url) {
+              return (
+                <a
+                  key={index}
+                  href={logo.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-4 cursor-pointer"
+                >
+                  {content}
+                </a>
+              );
+            } else {
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col items-center gap-4 cursor-default"
+                >
+                  {content}
+                </div>
+              );
+            }
           })}
         </div>
       </div>
