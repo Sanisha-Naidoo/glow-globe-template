@@ -13,8 +13,8 @@ export const useHorizontalScroll = (options: HorizontalScrollOptions = {}) => {
   const handleWheel = useCallback((e: WheelEvent) => {
     if (!containerRef.current) return;
     
-    // Check if we're over the horizontal scroll container
-    const rect = containerRef.current.getBoundingClientRect();
+    const container = containerRef.current;
+    const rect = container.getBoundingClientRect();
     const isOverContainer = 
       e.clientY >= rect.top && 
       e.clientY <= rect.bottom &&
@@ -22,9 +22,17 @@ export const useHorizontalScroll = (options: HorizontalScrollOptions = {}) => {
       e.clientX <= rect.right;
 
     if (isOverContainer) {
-      e.preventDefault();
-      const scrollAmount = e.deltaY * scrollSpeed;
-      containerRef.current.scrollLeft += scrollAmount;
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+      const canScrollLeft = container.scrollLeft > 0 && e.deltaY < 0;
+      const canScrollRight = container.scrollLeft < maxScrollLeft && e.deltaY > 0;
+      
+      // Only prevent default if there's room to scroll horizontally
+      if (canScrollLeft || canScrollRight) {
+        e.preventDefault();
+        const scrollAmount = e.deltaY * scrollSpeed;
+        container.scrollLeft += scrollAmount;
+      }
+      // Otherwise, allow native vertical scroll to continue
     }
   }, [scrollSpeed]);
 

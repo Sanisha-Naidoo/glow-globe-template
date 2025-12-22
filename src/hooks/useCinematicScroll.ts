@@ -37,19 +37,6 @@ export const useCinematicScroll = () => {
     }
   }, []);
 
-  const handleWheel = useCallback((e: WheelEvent) => {
-    const scrollData = scrollDataRef.current;
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    
-    // Allow full range scrolling
-    const delta = e.deltaY * 1.2;
-    scrollData.target = Math.max(0, Math.min(maxScroll, scrollData.target + delta));
-
-    // Start smooth scroll animation
-    if (!animationRef.current) {
-      animationRef.current = requestAnimationFrame(smoothScroll);
-    }
-  }, [smoothScroll]);
 
   const subscribeToScroll = useCallback((callback: (progress: number, velocity: number) => void) => {
     callbacksRef.current.push(callback);
