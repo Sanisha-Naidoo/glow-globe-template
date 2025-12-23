@@ -12,7 +12,7 @@ const BrandShowcase = () => {
   const logos = [
     { src: globalhourLogo, name: 'Global Hour', url: 'https://globalhour.lovable.app', isLive: true },
     { src: trusteeLogo, name: 'Trustee App', url: 'https://trustee.lovable.app', isLive: true },
-    { src: prelovedLogo, name: 'PreLoved', url: 'https://preloved.lovable.app', isLive: true },
+    { src: prelovedLogo, name: 'PreLoved', url: 'https://preloved-shoes.lovable.app', isLive: true },
     { src: familytreeLogo, name: 'Family Tree', url: null, isLive: false },
     { src: spilltheTeeLogo, name: 'Spill the Tee', url: null, isLive: false },
     { src: rememberingLogo, name: 'Remembering', url: 'https://remembering.lovable.app/', isLive: false },
