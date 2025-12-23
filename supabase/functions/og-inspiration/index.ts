@@ -19,6 +19,25 @@ const inspirations = [
   }
 ];
 
+// HTML escape function to prevent XSS
+function escapeHtml(text: string): string {
+  const htmlEntities: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  };
+  return text.replace(/[&<>"']/g, (char) => htmlEntities[char] || char);
+}
+
+// Validate postId format - alphanumeric, hyphens, underscores only, max 50 chars
+function isValidPostId(postId: string | null): postId is string {
+  if (!postId) return false;
+  if (postId.length > 50) return false;
+  return /^[a-zA-Z0-9_-]+$/.test(postId);
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -29,22 +48,28 @@ serve(async (req) => {
     const url = new URL(req.url);
     const postId = url.searchParams.get('id');
     
-    console.log('OG request for post ID:', postId);
-
-    if (!postId) {
-      return new Response('Missing post ID', { status: 400, headers: corsHeaders });
+    // Input validation
+    if (!isValidPostId(postId)) {
+      console.log('Invalid post ID format received');
+      return new Response('Invalid request', { status: 400, headers: corsHeaders });
     }
+
+    console.log('OG request for post ID:', postId);
 
     const post = inspirations.find(p => p.id === postId);
     
     if (!post) {
       console.log('Post not found for ID:', postId);
-      return new Response('Post not found', { status: 404, headers: corsHeaders });
+      return new Response('Not found', { status: 404, headers: corsHeaders });
     }
 
     const siteUrl = 'https://imaginationlab.ai';
-    const postUrl = `${siteUrl}/inspirations/${post.id}`;
-    const ogImage = `${siteUrl}/og-default.png`; // Default OG image
+    const postUrl = `${siteUrl}/inspirations/${escapeHtml(post.id)}`;
+    const ogImage = `${siteUrl}/og-default.png`;
+    
+    // Escape all user-controllable content for HTML output
+    const safeTitle = escapeHtml(post.title);
+    const safeContent = escapeHtml(post.content);
     
     // Generate HTML with OG meta tags and redirect
     const html = `<!DOCTYPE html>
@@ -54,23 +79,23 @@ serve(async (req) => {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- Primary Meta Tags -->
-  <title>${post.title} | Imagination Lab</title>
-  <meta name="title" content="${post.title} | Imagination Lab">
-  <meta name="description" content="${post.content}">
+  <title>${safeTitle} | Imagination Lab</title>
+  <meta name="title" content="${safeTitle} | Imagination Lab">
+  <meta name="description" content="${safeContent}">
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
   <meta property="og:url" content="${postUrl}">
-  <meta property="og:title" content="${post.title}">
-  <meta property="og:description" content="${post.content}">
+  <meta property="og:title" content="${safeTitle}">
+  <meta property="og:description" content="${safeContent}">
   <meta property="og:image" content="${ogImage}">
   <meta property="og:site_name" content="Imagination Lab">
   
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="${postUrl}">
-  <meta property="twitter:title" content="${post.title}">
-  <meta property="twitter:description" content="${post.content}">
+  <meta property="twitter:title" content="${safeTitle}">
+  <meta property="twitter:description" content="${safeContent}">
   <meta property="twitter:image" content="${ogImage}">
   
   <!-- Redirect to actual page -->
@@ -78,7 +103,7 @@ serve(async (req) => {
   <link rel="canonical" href="${postUrl}">
 </head>
 <body>
-  <p>Redirecting to <a href="${postUrl}">${post.title}</a>...</p>
+  <p>Redirecting to <a href="${postUrl}">${safeTitle}</a>...</p>
   <script>window.location.href = "${postUrl}";</script>
 </body>
 </html>`;
@@ -92,9 +117,10 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error('Error in og-inspiration function:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    // Return generic error without exposing internal details
+    return new Response('Server error', {
       status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'text/plain' },
     });
   }
 });
