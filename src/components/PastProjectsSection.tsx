@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { useProjectScaleAnimation } from '../hooks/useProjectScaleAnimation';
+import { useIsMobile } from '../hooks/use-mobile';
 import { ExternalLink, Link2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import trusteeLogo from '../assets/logos/trustee.png';
@@ -21,6 +22,7 @@ interface Project {
 const PastProjectsSection = () => {
   const sectionRef = useScrollAnimation();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const isMobile = useIsMobile();
 
   const projects: Project[] = [
     {
@@ -135,22 +137,32 @@ const PastProjectsSection = () => {
 
                 {/* Live Preview */}
                 <div className="w-full h-[55vh] rounded-xl overflow-hidden bg-foreground/5 relative">
-                  <div className="absolute top-0 left-0 right-0 h-12 bg-foreground/10 flex items-center justify-between px-5 z-10">
+                  <div className="absolute top-0 left-0 right-0 h-10 sm:h-12 bg-foreground/10 flex items-center justify-between px-3 sm:px-5 z-10">
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 rounded-full bg-foreground/20" />
-                      <div className="w-3 h-3 rounded-full bg-foreground/20" />
-                      <div className="w-3 h-3 rounded-full bg-foreground/20" />
+                      <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-foreground/20" />
+                      <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-foreground/20" />
+                      <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-foreground/20" />
                     </div>
-                    <span className="text-text-light/40 text-sm">{selectedProject.url}</span>
+                    <span className="text-text-light/40 text-xs sm:text-sm truncate max-w-[60%]">{selectedProject.url}</span>
                   </div>
-                  <iframe
-                    src={selectedProject.url}
-                    className="w-full h-full pt-12 border-none"
-                    title={selectedProject.name}
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock allow-top-navigation-by-user-activation"
-                  />
+                  {/* Iframe container with scaling for mobile */}
+                  <div 
+                    className="absolute inset-0 pt-10 sm:pt-12 origin-top-left"
+                    style={{
+                      width: isMobile ? '166.67%' : '100%',
+                      height: isMobile ? '166.67%' : '100%',
+                      transform: isMobile ? 'scale(0.6)' : 'none',
+                    }}
+                  >
+                    <iframe
+                      src={selectedProject.url}
+                      className="w-full h-full border-none"
+                      title={selectedProject.name}
+                      loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock allow-top-navigation-by-user-activation"
+                    />
+                  </div>
                 </div>
               </div>
             </>
