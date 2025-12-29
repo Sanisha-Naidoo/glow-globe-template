@@ -50,7 +50,7 @@ export const inspirations: InspirationPost[] = [
     id: '1',
     title: 'Reflections on 2025',
     content: 'Personal reflections and insights on the year ahead.',
-    gammaUrl: 'https://gamma.app/embed/g4i7szzblqeltb8',
+    gammaUrl: 'https://gamma.app/docs/Reflections-on-2025-g4i7szzblqeltb8',
     contentType: 'gamma',
     category: 'ideas',
     date: '2025-01-01',

@@ -43,13 +43,13 @@ const ParticleAnimation = () => {
       renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
       renderer.setClearColor(0x000000, 0); // Fully transparent background
       // Cap pixel ratio for better performance on high-DPI displays
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
       mountRef.current.appendChild(renderer.domElement);
 
       console.log('✅ WebGL renderer initialized successfully');
 
-      // Increased particle count for better definition
-      const particleCount = 6000;
+      // Optimized particle count for better performance
+      const particleCount = 3000;
       console.log(`🔵 Creating ${particleCount} particles for dynamic globe...`);
       
       const particles = new THREE.BufferGeometry();
@@ -176,10 +176,10 @@ const ParticleAnimation = () => {
             vColor = color;
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
             
-            // Dramatically increased floating motion for visible movement
-            mvPosition.x += sin(time * 1.5 + position.y * 3.0) * 0.08;
-            mvPosition.y += cos(time * 1.2 + position.x * 3.0) * 0.08;
-            mvPosition.z += sin(time * 0.8 + position.z * 2.5) * 0.06;
+            // Optimized floating motion for smooth movement
+            mvPosition.x += sin(time * 1.2 + position.y * 2.5) * 0.05;
+            mvPosition.y += cos(time * 1.0 + position.x * 2.5) * 0.05;
+            mvPosition.z += sin(time * 0.6 + position.z * 2.0) * 0.04;
             
             // Enhanced wave motion across the globe surface
             float wave1 = sin(time * 2.0 + position.x * 4.0 + position.y * 3.0) * 0.04;
@@ -284,18 +284,9 @@ const ParticleAnimation = () => {
       const animate = () => {
         if (!sceneRef.current || !isAnimating) return;
         
-        // Increased time increment for much faster animations
-        time += 0.015;
+        // Optimized time increment for smooth animations
+        time += 0.012;
         frameCount++;
-        
-        if (frameCount % 120 === 0) {
-          const now = performance.now();
-          const fps = 120000 / (now - lastFpsTime);
-          if (fps < 45) {
-            console.warn(`⚡ Performance warning: ${fps.toFixed(1)} FPS`);
-          }
-          lastFpsTime = now;
-        }
         
         sceneRef.current.material.uniforms.time.value = time;
         sceneRef.current.material.uniforms.morphProgress.value = sceneRef.current.morphProgress;
