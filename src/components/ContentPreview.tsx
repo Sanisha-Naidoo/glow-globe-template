@@ -17,14 +17,17 @@ const ContentPreview = ({ post, className }: ContentPreviewProps) => {
   const renderContent = () => {
     switch (contentType) {
       case 'gamma':
-        // Convert gamma URL to embed format if needed
+        // Convert gamma URL to embed format and hide the header
         let gammaEmbedUrl = post.gammaUrl || '';
         if (gammaEmbedUrl && !gammaEmbedUrl.includes('/embed/')) {
           // Extract the ID and convert to embed URL
           const match = gammaEmbedUrl.match(/gamma\.app\/(?:docs|public)\/[^/]+-([a-zA-Z0-9]+)/);
           if (match) {
-            gammaEmbedUrl = `https://gamma.app/embed/${match[1]}`;
+            gammaEmbedUrl = `https://gamma.app/embed/${match[1]}?style=no-header`;
           }
+        } else if (gammaEmbedUrl && !gammaEmbedUrl.includes('style=')) {
+          // Add no-header style if not already present
+          gammaEmbedUrl += (gammaEmbedUrl.includes('?') ? '&' : '?') + 'style=no-header';
         }
         return (
           <div className="relative w-full h-full">
