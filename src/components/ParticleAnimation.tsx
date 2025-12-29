@@ -48,8 +48,8 @@ const ParticleAnimation = () => {
 
       console.log('✅ WebGL renderer initialized successfully');
 
-      // Optimized particle count for better performance
-      const particleCount = 3000;
+      // Full particle count - component is hidden on mobile for performance
+      const particleCount = 6000;
       console.log(`🔵 Creating ${particleCount} particles for dynamic globe...`);
       
       const particles = new THREE.BufferGeometry();
