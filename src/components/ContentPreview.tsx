@@ -17,6 +17,15 @@ const ContentPreview = ({ post, className }: ContentPreviewProps) => {
   const renderContent = () => {
     switch (contentType) {
       case 'gamma':
+        // Convert gamma URL to embed format if needed
+        let gammaEmbedUrl = post.gammaUrl || '';
+        if (gammaEmbedUrl && !gammaEmbedUrl.includes('/embed/')) {
+          // Extract the ID and convert to embed URL
+          const match = gammaEmbedUrl.match(/gamma\.app\/(?:docs|public)\/[^/]+-([a-zA-Z0-9]+)/);
+          if (match) {
+            gammaEmbedUrl = `https://gamma.app/embed/${match[1]}`;
+          }
+        }
         return (
           <div className="relative w-full h-full">
             {isLoading && (
@@ -25,7 +34,7 @@ const ContentPreview = ({ post, className }: ContentPreviewProps) => {
               </div>
             )}
             <iframe
-              src={post.gammaUrl}
+              src={gammaEmbedUrl}
               className={cn(
                 'w-full h-full border-none transition-opacity duration-300',
                 isLoading ? 'opacity-0' : 'opacity-100'
