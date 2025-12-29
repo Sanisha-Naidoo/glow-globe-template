@@ -27,14 +27,11 @@ const GammaModal = ({ post, open, onClose }: GammaModalProps) => {
         >
           <DialogPrimitive.Title className="sr-only">{post.title}</DialogPrimitive.Title>
           
-          {/* Header */}
-          <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-text-light/10 shrink-0">
-            <h2 className="text-lg font-semibold text-text-light truncate pr-4">
-              {post.title}
-            </h2>
+          {/* Close button */}
+          <div className="absolute top-2 right-2 z-10">
             <button
               onClick={onClose}
-              className="p-2 text-text-light/50 hover:text-text-light hover:bg-text-light/10 rounded-lg transition-colors"
+              className="p-2 text-text-light/70 hover:text-text-light bg-dark-bg/80 hover:bg-dark-bg rounded-full transition-colors backdrop-blur-sm"
             >
               <X size={20} />
             </button>
