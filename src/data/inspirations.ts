@@ -2,6 +2,16 @@ export type InspirationCategory = 'books' | 'products' | 'articles' | 'ideas' | 
 
 export type CardSize = 'small' | 'medium' | 'large';
 
+// Content types for future-proofing
+export type ContentType = 
+  | 'gamma'      // Gamma.app embed
+  | 'image'      // Single image or gallery
+  | 'video'      // YouTube, Vimeo, or direct video
+  | 'audio'      // Podcast, audio file
+  | 'pdf'        // PDF embed
+  | 'article'    // Text/markdown content
+  | 'link';      // External link with preview
+
 export interface InspirationPost {
   id: string;
   title: string;
@@ -13,7 +23,26 @@ export interface InspirationPost {
   date: string;
   tags?: string[];
   size?: CardSize;
+  
+  // Future-proof content fields
+  contentType?: ContentType;
+  embedUrl?: string;      // For video/audio embeds
+  images?: string[];      // For galleries
+  pdfUrl?: string;        // For PDF embeds
+  articleContent?: string; // For long-form text (markdown)
 }
+
+// Helper to determine content type from post
+export const getContentType = (post: InspirationPost): ContentType => {
+  if (post.contentType) return post.contentType;
+  if (post.gammaUrl) return 'gamma';
+  if (post.images && post.images.length > 0) return 'image';
+  if (post.pdfUrl) return 'pdf';
+  if (post.embedUrl) return 'video';
+  if (post.articleContent) return 'article';
+  if (post.link) return 'link';
+  return 'article'; // default to article for text content
+};
 
 // Add your inspiration posts here
 export const inspirations: InspirationPost[] = [
@@ -22,6 +51,7 @@ export const inspirations: InspirationPost[] = [
     title: 'Reflections on 2025',
     content: 'Personal reflections and insights on the year ahead.',
     gammaUrl: 'https://gamma.app/embed/g4i7szzblqeltb8',
+    contentType: 'gamma',
     category: 'ideas',
     date: '2025-01-01',
     tags: ['reflections', '2025'],

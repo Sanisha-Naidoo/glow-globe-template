@@ -1,0 +1,226 @@
+import { InspirationPost, getContentType } from '@/data/inspirations';
+import { ExternalLink, Play, FileText, Image, Music, File, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
+
+interface ContentPreviewProps {
+  post: InspirationPost;
+  className?: string;
+}
+
+const ContentPreview = ({ post, className }: ContentPreviewProps) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const contentType = getContentType(post);
+
+  const handleIframeLoad = () => setIsLoading(false);
+
+  const renderContent = () => {
+    switch (contentType) {
+      case 'gamma':
+        return (
+          <div className="relative w-full h-full">
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-foreground/5">
+                <Loader2 className="w-8 h-8 text-cyan-accent animate-spin" />
+              </div>
+            )}
+            <iframe
+              src={post.gammaUrl}
+              className={cn(
+                'w-full h-full border-none transition-opacity duration-300',
+                isLoading ? 'opacity-0' : 'opacity-100'
+              )}
+              title={post.title}
+              loading="lazy"
+              onLoad={handleIframeLoad}
+              allow="fullscreen"
+            />
+          </div>
+        );
+
+      case 'video':
+        // Parse YouTube/Vimeo URLs
+        const embedUrl = getVideoEmbedUrl(post.embedUrl || post.link || '');
+        return (
+          <div className="relative w-full h-full">
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-foreground/5">
+                <Loader2 className="w-8 h-8 text-cyan-accent animate-spin" />
+              </div>
+            )}
+            {embedUrl ? (
+              <iframe
+                src={embedUrl}
+                className={cn(
+                  'w-full h-full border-none transition-opacity duration-300',
+                  isLoading ? 'opacity-0' : 'opacity-100'
+                )}
+                title={post.title}
+                loading="lazy"
+                onLoad={handleIframeLoad}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <div className="flex flex-col items-center justify-center h-full text-text-light/50 gap-4">
+                <Play className="w-16 h-16" />
+                <p>Video not available</p>
+              </div>
+            )}
+          </div>
+        );
+
+      case 'image':
+        const images = post.images || (post.image ? [post.image] : []);
+        return (
+          <div className="w-full h-full overflow-auto p-4 sm:p-6">
+            {images.length === 1 ? (
+              <img
+                src={images[0]}
+                alt={post.title}
+                className="w-full h-full object-contain rounded-lg"
+              />
+            ) : (
+              <div className="grid grid-cols-2 gap-4">
+                {images.map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={img}
+                    alt={`${post.title} - ${idx + 1}`}
+                    className="w-full h-48 object-cover rounded-lg hover:scale-105 transition-transform cursor-pointer"
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        );
+
+      case 'audio':
+        return (
+          <div className="flex flex-col items-center justify-center h-full gap-6 p-8">
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-cyan-accent/30 to-purple-500/30 flex items-center justify-center">
+              <Music className="w-16 h-16 text-cyan-accent" />
+            </div>
+            <h3 className="text-xl font-bold text-text-light">{post.title}</h3>
+            {post.embedUrl && (
+              <audio controls className="w-full max-w-md">
+                <source src={post.embedUrl} />
+                Your browser does not support audio.
+              </audio>
+            )}
+          </div>
+        );
+
+      case 'pdf':
+        return (
+          <div className="relative w-full h-full">
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-foreground/5">
+                <Loader2 className="w-8 h-8 text-cyan-accent animate-spin" />
+              </div>
+            )}
+            <iframe
+              src={post.pdfUrl}
+              className={cn(
+                'w-full h-full border-none transition-opacity duration-300',
+                isLoading ? 'opacity-0' : 'opacity-100'
+              )}
+              title={post.title}
+              loading="lazy"
+              onLoad={handleIframeLoad}
+            />
+          </div>
+        );
+
+      case 'article':
+        return (
+          <div className="w-full h-full overflow-auto p-6 sm:p-8">
+            <article className="prose prose-invert prose-cyan max-w-none">
+              <h1 className="text-2xl sm:text-3xl font-bold text-text-light mb-4">{post.title}</h1>
+              <p className="text-text-light/70 text-sm mb-6">
+                {new Date(post.date).toLocaleDateString('en-US', { 
+                  month: 'long', day: 'numeric', year: 'numeric' 
+                })}
+              </p>
+              <div className="text-text-light/80 leading-relaxed whitespace-pre-wrap">
+                {post.articleContent || post.content}
+              </div>
+            </article>
+          </div>
+        );
+
+      case 'link':
+        return (
+          <div className="flex flex-col items-center justify-center h-full gap-6 p-8">
+            <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-cyan-accent/20 to-purple-500/20 flex items-center justify-center">
+              <ExternalLink className="w-10 h-10 text-cyan-accent" />
+            </div>
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-text-light mb-2">{post.title}</h3>
+              <p className="text-text-light/60 mb-6">{post.content}</p>
+              <a
+                href={post.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-accent text-dark-bg font-medium rounded-lg hover:bg-cyan-accent/90 transition-colors"
+              >
+                <ExternalLink size={18} />
+                Visit Link
+              </a>
+            </div>
+          </div>
+        );
+
+      default:
+        return (
+          <div className="flex flex-col items-center justify-center h-full text-text-light/50 gap-4">
+            <File className="w-16 h-16" />
+            <p>No preview available</p>
+          </div>
+        );
+    }
+  };
+
+  return (
+    <div className={cn('w-full h-full bg-foreground/5 rounded-xl overflow-hidden', className)}>
+      {renderContent()}
+    </div>
+  );
+};
+
+// Helper to convert YouTube/Vimeo URLs to embed URLs
+function getVideoEmbedUrl(url: string): string | null {
+  if (!url) return null;
+
+  // YouTube
+  const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+  if (ytMatch) {
+    return `https://www.youtube.com/embed/${ytMatch[1]}`;
+  }
+
+  // Vimeo
+  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+  if (vimeoMatch) {
+    return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+  }
+
+  // Already an embed URL or direct video
+  if (url.includes('embed') || url.endsWith('.mp4')) {
+    return url;
+  }
+
+  return null;
+}
+
+// Content type icons for list view
+export const contentTypeIcons: Record<string, React.ReactNode> = {
+  gamma: <FileText size={14} />,
+  video: <Play size={14} />,
+  image: <Image size={14} />,
+  audio: <Music size={14} />,
+  pdf: <File size={14} />,
+  article: <FileText size={14} />,
+  link: <ExternalLink size={14} />,
+};
+
+export default ContentPreview;
