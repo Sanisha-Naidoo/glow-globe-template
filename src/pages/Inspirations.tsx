@@ -6,6 +6,11 @@ import InspirationListItem from '@/components/InspirationListItem';
 import ContentPreview from '@/components/ContentPreview';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  ResizablePanelGroup,
+  ResizablePanel,
+  ResizableHandle,
+} from '@/components/ui/resizable';
 
 const Inspirations = () => {
   const [activeCategory, setActiveCategory] = useState<InspirationCategory | 'all'>('all');
@@ -62,49 +67,40 @@ const Inspirations = () => {
         </div>
       </header>
 
-      {/* Category Tabs */}
-      <div className="sticky top-[73px] sm:top-[89px] z-40 backdrop-blur-2xl bg-dark-bg/80 border-b border-text-light/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3 sm:py-4">
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setActiveCategory(category.id)}
-                className={cn(
-                  'px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-all duration-200',
-                  activeCategory === category.id
-                    ? 'bg-cyan-accent text-dark-bg'
-                    : 'bg-text-light/5 text-text-light/70 hover:bg-text-light/10 hover:text-text-light'
-                )}
-              >
-                {category.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content - Split View */}
+      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-8">
         {filteredPosts.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-text-light/50 text-lg">No posts in this category yet.</p>
           </div>
-        ) : (
-          <div className={cn(
-            'flex gap-6',
-            isMobile ? 'flex-col' : 'flex-row'
-          )}>
-            {/* Left: List of Posts */}
-            <div className={cn(
-              'flex-shrink-0 space-y-3',
-              isMobile ? 'w-full' : 'w-80'
-            )}>
-              <div className="flex items-center justify-between mb-4">
+        ) : isMobile ? (
+          // Mobile Layout
+          <div className="flex flex-col gap-6">
+            {/* Category Tabs - Mobile */}
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={cn(
+                    'px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200',
+                    activeCategory === category.id
+                      ? 'bg-cyan-accent text-dark-bg'
+                      : 'bg-text-light/5 text-text-light/70 hover:bg-text-light/10 hover:text-text-light'
+                  )}
+                >
+                  {category.label}
+                </button>
+              ))}
+            </div>
+
+            {/* List of Posts - Mobile */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
                 <h2 className="text-sm font-medium text-text-light/60 uppercase tracking-wider">
                   {filteredPosts.length} {filteredPosts.length === 1 ? 'Post' : 'Posts'}
                 </h2>
-                {isMobile && selectedPost && (
+                {selectedPost && (
                   <button
                     onClick={() => previewRef.current?.scrollIntoView({ behavior: 'smooth' })}
                     className="flex items-center gap-1 text-xs text-cyan-accent"
@@ -114,10 +110,7 @@ const Inspirations = () => {
                 )}
               </div>
               
-              <div className={cn(
-                'space-y-3',
-                isMobile ? 'max-h-[40vh] overflow-y-auto pr-2' : 'max-h-[calc(100vh-250px)] overflow-y-auto pr-2'
-              )}>
+              <div className="max-h-[40vh] overflow-y-auto pr-2 space-y-3">
                 {filteredPosts.map((post) => (
                   <InspirationListItem
                     key={post.id}
@@ -129,13 +122,10 @@ const Inspirations = () => {
               </div>
             </div>
 
-            {/* Right: Content Preview */}
+            {/* Content Preview - Mobile */}
             <div
               ref={previewRef}
-              className={cn(
-                'flex-1 rounded-2xl border border-text-light/10 overflow-hidden',
-                isMobile ? 'h-[60vh]' : 'h-[calc(100vh-250px)] sticky top-[180px]'
-              )}
+              className="h-[60vh] rounded-2xl border border-text-light/10 overflow-hidden"
             >
               {selectedPost ? (
                 <ContentPreview post={selectedPost} className="h-full" />
@@ -146,6 +136,73 @@ const Inspirations = () => {
               )}
             </div>
           </div>
+        ) : (
+          // Desktop Layout - Resizable Split Pane
+          <ResizablePanelGroup
+            direction="horizontal"
+            className="min-h-[calc(100vh-180px)] rounded-2xl border border-text-light/10 overflow-hidden"
+          >
+            {/* Left Panel - List */}
+            <ResizablePanel defaultSize={35} minSize={25} maxSize={50}>
+              <div className="h-full flex flex-col bg-dark-bg/50">
+                {/* Category Tabs - Inline */}
+                <div className="p-4 border-b border-text-light/10">
+                  <div className="flex gap-2 flex-wrap">
+                    {categories.map((category) => (
+                      <button
+                        key={category.id}
+                        onClick={() => setActiveCategory(category.id)}
+                        className={cn(
+                          'px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200',
+                          activeCategory === category.id
+                            ? 'bg-cyan-accent text-dark-bg'
+                            : 'bg-text-light/5 text-text-light/70 hover:bg-text-light/10 hover:text-text-light'
+                        )}
+                      >
+                        {category.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Posts Count */}
+                <div className="px-4 py-3 border-b border-text-light/5">
+                  <h2 className="text-xs font-medium text-text-light/40 uppercase tracking-wider">
+                    {filteredPosts.length} {filteredPosts.length === 1 ? 'Post' : 'Posts'}
+                  </h2>
+                </div>
+
+                {/* Posts List */}
+                <div className="flex-1 overflow-y-auto p-3 space-y-2">
+                  {filteredPosts.map((post) => (
+                    <InspirationListItem
+                      key={post.id}
+                      post={post}
+                      isSelected={selectedPost?.id === post.id}
+                      onClick={() => handlePostSelect(post)}
+                      compact
+                    />
+                  ))}
+                </div>
+              </div>
+            </ResizablePanel>
+
+            {/* Resize Handle */}
+            <ResizableHandle withHandle className="bg-text-light/5 hover:bg-cyan-accent/20 transition-colors" />
+
+            {/* Right Panel - Preview */}
+            <ResizablePanel defaultSize={65}>
+              <div className="h-full bg-foreground/5">
+                {selectedPost ? (
+                  <ContentPreview post={selectedPost} className="h-full" showFullMetadata />
+                ) : (
+                  <div className="h-full flex items-center justify-center text-text-light/40">
+                    Select a post to preview
+                  </div>
+                )}
+              </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
         )}
       </main>
 
