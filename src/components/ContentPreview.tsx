@@ -1,7 +1,8 @@
 import { InspirationPost, getContentType } from '@/data/inspirations';
-import { ExternalLink, Play, FileText, Image, Music, File, Loader2 } from 'lucide-react';
+import { ExternalLink, Play, FileText, Image, Music, File, Loader2, Linkedin, Link2 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { shareToLinkedIn, copyToClipboard, getPostUrl, getShareUrl } from '@/utils/share';
 
 interface ContentPreviewProps {
   post: InspirationPost;
@@ -193,9 +194,35 @@ const ContentPreview = ({ post, className }: ContentPreviewProps) => {
     }
   };
 
+  const postUrl = getPostUrl(post.id);
+  const shareUrl = getShareUrl(post.id);
+
   return (
-    <div className={cn('w-full h-full bg-foreground/5 rounded-xl overflow-hidden', className)}>
-      {renderContent()}
+    <div className={cn('w-full h-full bg-foreground/5 rounded-xl overflow-hidden flex flex-col', className)}>
+      {/* Share Header */}
+      <div className="flex items-center justify-between p-3 border-b border-text-light/10 shrink-0">
+        <h2 className="text-sm font-medium text-text-light truncate mr-4">{post.title}</h2>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => shareToLinkedIn(shareUrl, post.title)}
+            className="p-2 text-text-light/50 hover:text-[#0077b5] hover:bg-[#0077b5]/10 rounded-lg transition-all duration-200"
+            title="Share on LinkedIn"
+          >
+            <Linkedin size={16} />
+          </button>
+          <button
+            onClick={() => copyToClipboard(postUrl)}
+            className="p-2 text-text-light/50 hover:text-cyan-accent hover:bg-cyan-accent/10 rounded-lg transition-all duration-200"
+            title="Copy link"
+          >
+            <Link2 size={16} />
+          </button>
+        </div>
+      </div>
+      {/* Content */}
+      <div className="flex-1 min-h-0">
+        {renderContent()}
+      </div>
     </div>
   );
 };
