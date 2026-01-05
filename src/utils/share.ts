@@ -1,10 +1,12 @@
 import { toast } from '@/hooks/use-toast';
 
+// Production site URL - update this when deploying to custom domain
+const SITE_URL = 'https://imaginationlab.ai';
+
 export const shareToLinkedIn = (url: string, title: string) => {
   const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
   window.open(linkedInUrl, '_blank', 'width=600,height=600');
 };
-
 
 export const copyToClipboard = async (url: string) => {
   try {
@@ -26,9 +28,8 @@ export const getPostUrl = (postId: string) => {
   return `${window.location.origin}/inspirations/${postId}`;
 };
 
-// Get the OG-optimized share URL that goes through the edge function
+// Get the shareable URL for social media
+// Uses the production site URL so links work properly when shared
 export const getShareUrl = (postId: string) => {
-  // Use the edge function URL for social sharing to get proper OG tags
-  const projectId = 'rxsnfjbjypiisnelrshq';
-  return `https://${projectId}.supabase.co/functions/v1/og-inspiration?id=${postId}`;
+  return `${SITE_URL}/inspirations/${postId}`;
 };
