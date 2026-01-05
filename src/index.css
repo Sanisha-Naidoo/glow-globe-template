@@ -60,6 +60,13 @@ body {
 html {
   scroll-behavior: auto;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* Ensure touch scrolling works on mobile */
+body {
+  touch-action: pan-y pan-x;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Subtle scrollbar styling - visible but minimal */
