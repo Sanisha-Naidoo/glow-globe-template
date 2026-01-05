@@ -70,12 +70,25 @@ const ContentPreview = ({
                 {images.map((img, idx) => <img key={idx} src={img} alt={`${post.title} - ${idx + 1}`} className="w-full h-48 object-cover rounded-lg hover:scale-105 transition-transform cursor-pointer" />)}
               </div>}
             {/* Summary and link */}
-            {(post.content || post.link) && <div className="mt-4 text-center space-y-4">
-                {post.content && <p className="text-text-light/70 text-sm leading-relaxed">{post.content}</p>}
-                {post.link && <a href={post.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-cyan-accent text-dark-bg font-medium rounded-lg hover:bg-cyan-accent/90 transition-colors text-sm">
-                    <ExternalLink size={16} />
-                    View Original
-                  </a>}
+            {(post.content || post.link) && <div className="mt-6 p-4 sm:p-6 bg-gradient-to-br from-cyan-accent/5 to-purple-500/5 border border-text-light/10 rounded-xl">
+                {post.content && <p className="text-text-light/80 text-sm sm:text-base leading-relaxed text-center font-medium">
+                    {post.content.split(/(\d+[KM]?%?|\d+\/\d+|National Treasure)/g).map((part, i) => 
+                      /\d+[KM]?%?|\d+\/\d+|National Treasure/.test(part) 
+                        ? <span key={i} className="text-cyan-accent font-bold">{part}</span>
+                        : part
+                    )}
+                  </p>}
+                {post.link && <div className="mt-5 text-center">
+                    <a 
+                      href={post.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="group inline-flex items-center gap-2 px-6 py-3 bg-transparent border border-cyan-accent/50 text-cyan-accent font-medium rounded-full hover:bg-cyan-accent hover:text-dark-bg transition-all duration-300 text-sm"
+                    >
+                      <span>View Original</span>
+                      <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </a>
+                  </div>}
               </div>}
           </div>;
       case 'audio':
