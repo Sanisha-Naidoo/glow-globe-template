@@ -76,6 +76,6 @@ export const categories: { id: InspirationCategory | 'all'; label: string }[] = 
   { id: 'books', label: 'Books' },
   { id: 'products', label: 'Products' },
   { id: 'articles', label: 'Articles' },
-  { id: 'ideas', label: 'Ideas' },
+  { id: 'ideas', label: 'TLDR' },
   { id: 'tools', label: 'Tools' }
 ];
