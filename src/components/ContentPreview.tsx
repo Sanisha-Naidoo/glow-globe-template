@@ -103,12 +103,12 @@ const ContentPreview = ({ post, className, showFullMetadata = false }: ContentPr
       case 'image':
         const images = post.images || (post.image ? [post.image] : []);
         return (
-          <div className="w-full h-full overflow-auto p-4 sm:p-6">
+          <div className="w-full h-full overflow-auto p-4 sm:p-6 flex flex-col">
             {images.length === 1 ? (
               <img
                 src={images[0]}
                 alt={post.title}
-                className="w-full h-full object-contain rounded-lg"
+                className="w-full max-h-[60%] object-contain rounded-lg"
               />
             ) : (
               <div className="grid grid-cols-2 gap-4">
@@ -120,6 +120,25 @@ const ContentPreview = ({ post, className, showFullMetadata = false }: ContentPr
                     className="w-full h-48 object-cover rounded-lg hover:scale-105 transition-transform cursor-pointer"
                   />
                 ))}
+              </div>
+            )}
+            {/* Summary and link */}
+            {(post.content || post.link) && (
+              <div className="mt-4 text-center space-y-4">
+                {post.content && (
+                  <p className="text-text-light/70 text-sm leading-relaxed">{post.content}</p>
+                )}
+                {post.link && (
+                  <a
+                    href={post.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-cyan-accent text-dark-bg font-medium rounded-lg hover:bg-cyan-accent/90 transition-colors text-sm"
+                  >
+                    <ExternalLink size={16} />
+                    View Original
+                  </a>
+                )}
               </div>
             )}
           </div>
