@@ -54,7 +54,7 @@ export const inspirations: InspirationPost[] = [
     content: 'Top 1% globally for code written with 697K lines, 1.9K messages sent, and a 9/10 politeness score. National Treasure status achieved!',
     image: lovableVibes2025,
     link: 'https://lovable.dev/vibes/xw86xPulfAX2nL5l1RBSRqSpydR2/summary',
-    contentType: 'link',
+    contentType: 'image',
     category: 'ideas',
     date: '2025-01-05',
     tags: ['lovable', '2025', 'vibes', 'stats'],
