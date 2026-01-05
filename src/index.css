@@ -15,12 +15,17 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  touch-action: pan-y;
+  overscroll-behavior-y: auto;
   font-feature-settings: "liga" 1, "kern" 1;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-optical-sizing: auto;
 }
+
 
 /* Enhanced text shadow utilities for better contrast */
 .text-shadow-sm {
@@ -63,11 +68,6 @@ html {
   -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
-/* Ensure touch scrolling works on mobile */
-body {
-  touch-action: pan-y pan-x;
-  -webkit-overflow-scrolling: touch;
-}
 
 /* Subtle scrollbar styling - visible but minimal */
 * {
