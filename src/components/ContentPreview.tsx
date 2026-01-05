@@ -73,7 +73,6 @@ const ContentPreview = ({
             {(post.content || post.link) && <div className="mt-4 text-center space-y-4">
                 {post.content && <p className="text-text-light/70 text-sm leading-relaxed">{post.content}</p>}
                 {post.link && <a href={post.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-cyan-accent text-dark-bg font-medium rounded-lg hover:bg-cyan-accent/90 transition-colors text-sm">
-                    <ExternalLink size={16} />
                     View Original
                   </a>}
               </div>}
