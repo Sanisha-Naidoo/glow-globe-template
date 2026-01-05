@@ -1,3 +1,5 @@
+import lovableVibes2025 from '@/assets/lovable-vibes-2025.png';
+
 export type InspirationCategory = 'books' | 'products' | 'articles' | 'ideas' | 'tools';
 
 export type CardSize = 'small' | 'medium' | 'large';
@@ -50,7 +52,7 @@ export const inspirations: InspirationPost[] = [
     id: '2',
     title: 'My 2025 Lovable Vibes',
     content: 'Top 1% globally for code written with 697K lines, 1.9K messages sent, and a 9/10 politeness score. National Treasure status achieved!',
-    image: 'https://storage.googleapis.com/gpt-engineer-file-uploads/xw86xPulfAX2nL5l1RBSRqSpydR2/vibes/2025/summary-1767633616591.png',
+    image: lovableVibes2025,
     link: 'https://lovable.dev/vibes/xw86xPulfAX2nL5l1RBSRqSpydR2/summary',
     contentType: 'link',
     category: 'ideas',
