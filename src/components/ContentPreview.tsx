@@ -73,6 +73,7 @@ const ContentPreview = ({
             {(post.content || post.link) && <div className="mt-4 text-center space-y-4">
                 {post.content && <p className="text-text-light/70 text-sm leading-relaxed">{post.content}</p>}
                 {post.link && <a href={post.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-cyan-accent text-dark-bg font-medium rounded-lg hover:bg-cyan-accent/90 transition-colors text-sm">
+                    <ExternalLink size={16} />
                     View Original
                   </a>}
               </div>}
@@ -142,10 +143,7 @@ const ContentPreview = ({
       <div className="space-y-3">
             {/* Top row: Category, Content Type, Date */}
             <div className="flex items-center gap-3 flex-wrap">
-              <span className={cn('inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium border', categoryColors[post.category])}>
-                {categoryIcons[post.category]}
-                <span className="capitalize">{post.category}</span>
-              </span>
+              
               
               <span className="inline-flex items-center gap-1.5 text-xs text-text-light/40">
                 <Calendar size={12} />
