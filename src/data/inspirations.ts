@@ -47,6 +47,18 @@ export const getContentType = (post: InspirationPost): ContentType => {
 // Add your inspiration posts here
 export const inspirations: InspirationPost[] = [
   {
+    id: '2',
+    title: 'My 2025 Lovable Vibes',
+    content: 'Top 1% globally for code written with 697K lines, 1.9K messages sent, and a 9/10 politeness score. National Treasure status achieved!',
+    image: 'https://storage.googleapis.com/gpt-engineer-file-uploads/xw86xPulfAX2nL5l1RBSRqSpydR2/vibes/2025/summary-1767633616591.png',
+    link: 'https://lovable.dev/vibes/xw86xPulfAX2nL5l1RBSRqSpydR2/summary',
+    contentType: 'link',
+    category: 'ideas',
+    date: '2025-01-05',
+    tags: ['lovable', '2025', 'vibes', 'stats'],
+    size: 'medium'
+  },
+  {
     id: '1',
     title: 'Reflections on 2025',
     content: 'Personal reflections and insights on the year ahead.',
