@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { inspirations, InspirationPost as InspirationPostType } from '@/data/inspirations';
+import { inspirations, InspirationPost as InspirationPostType, getContentType } from '@/data/inspirations';
 import GammaModal from '@/components/GammaModal';
+import ContentPreview from '@/components/ContentPreview';
+import { X } from 'lucide-react';
 
 const InspirationPost = () => {
   const { id } = useParams<{ id: string }>();
@@ -33,13 +35,36 @@ const InspirationPost = () => {
     );
   }
 
+  const contentType = getContentType(post);
+
+  // For gamma content, use the modal
+  if (contentType === 'gamma' && post.gammaUrl) {
+    return (
+      <div className="min-h-screen bg-dark-bg">
+        <GammaModal
+          post={post}
+          open={true}
+          onClose={handleClose}
+        />
+      </div>
+    );
+  }
+
+  // For all other content types, show a full-page view
   return (
     <div className="min-h-screen bg-dark-bg">
-      <GammaModal
-        post={post}
-        open={true}
-        onClose={handleClose}
-      />
+      {/* Close button */}
+      <button
+        onClick={handleClose}
+        className="fixed top-4 right-4 z-50 p-3 text-text-light/70 hover:text-text-light bg-dark-bg/80 hover:bg-dark-bg rounded-full transition-colors backdrop-blur-sm border border-text-light/10"
+      >
+        <X size={24} />
+      </button>
+      
+      {/* Content */}
+      <div className="max-w-4xl mx-auto px-4 py-8 pt-20">
+        <ContentPreview post={post} showFullMetadata={true} className="min-h-[70vh]" />
+      </div>
     </div>
   );
 };

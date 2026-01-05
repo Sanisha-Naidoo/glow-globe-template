@@ -8,12 +8,21 @@ const corsHeaders = {
 // Inspiration posts data (mirrored from frontend)
 const inspirations = [
   {
+    id: '2',
+    title: 'My 2025 Lovable Vibes',
+    content: 'Top 1% globally for code written with 697K lines, 1.9K messages sent, and a 9/10 politeness score. National Treasure status achieved!',
+    category: 'articles',
+    date: '2025-01-05',
+    tags: ['lovable', '2025', 'vibes', 'stats'],
+    size: 'medium'
+  },
+  {
     id: '1',
     title: 'Reflections on 2025',
     content: 'Personal reflections and insights on the year ahead.',
     gammaUrl: 'https://gamma.app/embed/g4i7szzblqeltb8',
-    category: 'ideas',
-    date: '2025-01-01',
+    category: 'articles',
+    date: '2025-12-21',
     tags: ['reflections', '2025'],
     size: 'large'
   }
