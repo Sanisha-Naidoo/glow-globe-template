@@ -146,10 +146,7 @@ const ContentPreview = ({
                 {categoryIcons[post.category]}
                 <span className="capitalize">{post.category}</span>
               </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-text-light/5 text-text-light/60 border border-text-light/10">
-                {contentTypeIcons[contentType]}
-                
-              </span>
+              
               <span className="inline-flex items-center gap-1.5 text-xs text-text-light/40">
                 <Calendar size={12} />
                 {new Date(post.date).toLocaleDateString('en-US', {
