@@ -55,7 +55,7 @@ export const inspirations: InspirationPost[] = [
     image: lovableVibes2025,
     link: 'https://lovable.dev/vibes/xw86xPulfAX2nL5l1RBSRqSpydR2/summary',
     contentType: 'image',
-    category: 'ideas',
+    category: 'articles',
     date: '2025-01-05',
     tags: ['lovable', '2025', 'vibes', 'stats'],
     size: 'medium'
@@ -66,7 +66,7 @@ export const inspirations: InspirationPost[] = [
     content: 'Personal reflections and insights on the year ahead.',
     gammaUrl: 'https://gamma.app/docs/Reflections-on-2025-g4i7szzblqeltb8',
     contentType: 'gamma',
-    category: 'ideas',
+    category: 'articles',
     date: '2025-12-21',
     tags: ['reflections', '2025'],
     size: 'large'
