@@ -3,6 +3,7 @@ import { useCinematicScroll } from '../hooks/useCinematicScroll';
 import { useProjectScaleAnimation } from '../hooks/useProjectScaleAnimation';
 import { ExternalLink } from 'lucide-react';
 import globalhourLogo from '../assets/logos/globalhour.png';
+import familytreeLogo from '../assets/logos/familytree.png';
 
 const BuildingInPublicSection = () => {
   const parallaxRef = useRef<HTMLDivElement>(null);
@@ -24,6 +25,14 @@ const BuildingInPublicSection = () => {
   }, [subscribeToScroll]);
 
   const currentProjects = [
+    {
+      name: 'Family Tree Wiki',
+      tagline: 'Map your heritage',
+      url: 'https://familytreewiki.lovable.app',
+      logo: familytreeLogo,
+      tools: ['React', 'TypeScript', 'Supabase', 'D3.js'],
+      motivation: 'A visual and interactive way to map family heritage, preserving stories and connections across generations.'
+    },
     {
       name: 'Global Hour',
       tagline: 'Connecting communities across time zones',
