@@ -10,7 +10,7 @@ const BrandShowcase = () => {
   const sectionRef = useScrollAnimation();
 
   const logos = [
-    { src: globalhourLogo, name: 'Global Hour', url: 'https://globalhour.lovable.app', isLive: true },
+    { src: globalhourLogo, name: 'Global Hour', url: 'https://goldenhour.imaginationlab.ai/', isLive: true },
     { src: trusteeLogo, name: 'Trustee App', url: 'https://trustee.lovable.app', isLive: true },
     { src: prelovedLogo, name: 'PreLoved', url: 'https://preloved-shoes.lovable.app', isLive: true },
     { src: familytreeLogo, name: 'Family Tree', url: 'https://familytreewiki.lovable.app', isLive: true },

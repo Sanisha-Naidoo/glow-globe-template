@@ -36,7 +36,7 @@ const BuildingInPublicSection = () => {
     {
       name: 'Global Hour',
       tagline: 'Connecting communities across time zones',
-      url: 'https://globalhour.lovable.app/',
+      url: 'https://goldenhour.imaginationlab.ai/',
       logo: globalhourLogo,
       tools: ['React', 'TypeScript', 'Lovable Cloud', 'Tailwind CSS'],
       motivation: 'A platform designed to facilitate global collaboration by bridging time zone gaps and fostering international connections.'
