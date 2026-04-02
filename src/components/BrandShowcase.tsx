@@ -15,7 +15,7 @@ const BrandShowcase = () => {
     { src: trusteeLogo, name: 'Trustee App', url: 'https://trustee.lovable.app', isLive: true },
     { src: prelovedLogo, name: 'PreLoved', url: 'https://preloved-shoes.lovable.app', isLive: true },
     { src: familytreeLogo, name: 'Family Tree', url: 'https://familytreewiki.lovable.app', isLive: true },
-    { src: countermeltdownLogo, name: 'Counter Meltdown', url: 'https://ambient-view.lovable.app/', isLive: true },
+    { src: countermeltdownLogo, name: 'Counter Meltdown', url: 'https://meltdown.imaginationlab.ai/', isLive: true },
     { src: spilltheTeeLogo, name: 'Spill the Tee', url: null, isLive: false },
     { src: rememberingLogo, name: 'Remembering', url: 'https://remembering.lovable.app/', isLive: false },
   ];

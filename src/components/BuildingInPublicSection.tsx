@@ -45,7 +45,7 @@ const BuildingInPublicSection = () => {
     {
       name: 'Counter Meltdown',
       tagline: 'Ambient break timer',
-      url: 'https://ambient-view.lovable.app/',
+      url: 'https://meltdown.imaginationlab.ai/',
       logo: countermeltdownLogo,
       tools: ['React', 'TypeScript', 'Canvas API', 'Wake Lock API'],
       motivation: 'A ambient countdown timer with generative snow particle effects that intensify as your break approaches — designed to keep you mindful of screen time without being intrusive.'
