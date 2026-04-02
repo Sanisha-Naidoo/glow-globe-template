@@ -41,6 +41,14 @@ const BuildingInPublicSection = () => {
       logo: globalhourLogo,
       tools: ['React', 'TypeScript', 'Lovable Cloud', 'Tailwind CSS'],
       motivation: 'A platform designed to facilitate global collaboration by bridging time zone gaps and fostering international connections.'
+    },
+    {
+      name: 'Counter Meltdown',
+      tagline: 'Ambient break timer',
+      url: 'https://ambient-view.lovable.app/',
+      logo: countermeltdownLogo,
+      tools: ['React', 'TypeScript', 'Canvas API', 'Wake Lock API'],
+      motivation: 'A ambient countdown timer with generative snow particle effects that intensify as your break approaches — designed to keep you mindful of screen time without being intrusive.'
     }
   ];
 
