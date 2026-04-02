@@ -4,6 +4,7 @@ import { useProjectScaleAnimation } from '../hooks/useProjectScaleAnimation';
 import { ExternalLink } from 'lucide-react';
 import globalhourLogo from '../assets/logos/globalhour.png';
 import familytreeLogo from '../assets/logos/familytree.png';
+import countermeltdownLogo from '../assets/logos/countermeltdown.png';
 
 const BuildingInPublicSection = () => {
   const parallaxRef = useRef<HTMLDivElement>(null);
