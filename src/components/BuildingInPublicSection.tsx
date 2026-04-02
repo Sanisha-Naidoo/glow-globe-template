@@ -44,11 +44,11 @@ const BuildingInPublicSection = () => {
     },
     {
       name: 'Counter Meltdown',
-      tagline: 'Ambient break timer',
+      tagline: 'Ambient screen-break companion',
       url: 'https://meltdown.imaginationlab.ai/',
       logo: countermeltdownLogo,
-      tools: ['React', 'TypeScript', 'Canvas API', 'Wake Lock API'],
-      motivation: 'A ambient countdown timer with generative snow particle effects that intensify as your break approaches — designed to keep you mindful of screen time without being intrusive.'
+      tools: ['React', 'TypeScript', 'Canvas 2D', 'Wake Lock API'],
+      motivation: 'A fullscreen ambient clock with a procedural crystalline snowflake that gradually melts as your break timer counts down — a calm, visual nudge to step away from the screen.'
     }
   ];
 
