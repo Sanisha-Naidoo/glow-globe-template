@@ -5,6 +5,7 @@ import prelovedLogo from '../assets/logos/preloved.png';
 import familytreeLogo from '../assets/logos/familytree.png';
 import spilltheTeeLogo from '../assets/logos/spillthetee.png';
 import rememberingLogo from '../assets/logos/remembering.jpeg';
+import countermeltdownLogo from '../assets/logos/countermeltdown.png';
 
 const BrandShowcase = () => {
   const sectionRef = useScrollAnimation();
