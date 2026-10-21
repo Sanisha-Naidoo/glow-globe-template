@@ -31,7 +31,7 @@ const CursorParticleAnimation = () => {
   const restTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!mountRef.current) return;
+    if (!mountRef.current || touchDeviceRef.current) return;
 
     try {
       const scene = new THREE.Scene();
@@ -343,6 +343,7 @@ const CursorParticleAnimation = () => {
 
   // Cursor tracking
   useEffect(() => {
+    if (touchDeviceRef.current) return;
     const handleMouseMove = (e: MouseEvent) => {
       cursorRef.current.targetX = e.clientX;
       cursorRef.current.targetY = e.clientY;
@@ -380,9 +381,11 @@ const CursorParticleAnimation = () => {
     };
   }, []);
 
+  if (touchDeviceRef.current) return null;
+
   return (
-    <div 
-      ref={mountRef} 
+    <div
+      ref={mountRef}
       className="fixed pointer-events-none z-[9999] rounded-full overflow-hidden"
       style={{
         width: '200px',
