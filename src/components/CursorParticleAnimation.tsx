@@ -1,8 +1,15 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
+// Cursor-following effect is meaningless on touch devices (no continuous
+// mousemove), so skip it entirely there — otherwise it renders stuck at (0,0).
+const isTouchDevice = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
 const CursorParticleAnimation = () => {
   const mountRef = useRef<HTMLDivElement>(null);
+  const touchDeviceRef = useRef(isTouchDevice());
   const sceneRef = useRef<{
     scene: THREE.Scene;
     camera: THREE.PerspectiveCamera;
