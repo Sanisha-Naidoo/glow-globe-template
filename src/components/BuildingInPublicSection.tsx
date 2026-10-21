@@ -4,7 +4,6 @@ import { useProjectScaleAnimation } from '../hooks/useProjectScaleAnimation';
 import { ExternalLink } from 'lucide-react';
 import globalhourLogo from '../assets/logos/globalhour.png';
 import familytreeLogo from '../assets/logos/familytree.png';
-import countermeltdownLogo from '../assets/logos/countermeltdown.png';
 
 const BuildingInPublicSection = () => {
   const parallaxRef = useRef<HTMLDivElement>(null);
@@ -41,14 +40,6 @@ const BuildingInPublicSection = () => {
       logo: globalhourLogo,
       tools: ['React', 'TypeScript', 'Lovable Cloud', 'Tailwind CSS'],
       motivation: 'A platform designed to facilitate global collaboration by bridging time zone gaps and fostering international connections.'
-    },
-    {
-      name: 'Counter Meltdown',
-      tagline: 'Ambient screen-break companion',
-      url: 'https://meltdown.imaginationlab.ai/',
-      logo: countermeltdownLogo,
-      tools: ['React', 'TypeScript', 'Canvas 2D', 'Wake Lock API'],
-      motivation: 'A fullscreen ambient clock with a procedural crystalline snowflake that gradually melts as your break timer counts down — a calm, visual nudge to step away from the screen.'
     }
   ];
 
